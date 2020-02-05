@@ -63,15 +63,11 @@ footer > div > nav > ul > li > a:hover{
 #tabs > li{
   width: 200px;
 }
-#hometab{
+#tabs > .active > a{
   background-color: #FAFAFA;
   color: #CC9137;
 }
-#menu1{
-  background-color: #F7AF42;
-  color: #FAFAFA;
-}
-#menu2{
+#tabs > li > a{
   background-color: #F7AF42;
   color: #FAFAFA;
 }
