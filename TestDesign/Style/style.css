@@ -1,6 +1,8 @@
 header{
+  position: sticky;
+  top: 0%;
   background-color: #F2E3CD;
-  height: 145px;
+  padding: 50px;
 }
 main{
 	background-color: #FAFAFA;
@@ -8,40 +10,40 @@ main{
   height: 800px;
 }
 footer{
-  position: absolute;
+  /*position: absolute;*/
   bottom: 0%;
-  height: 4.5%;
   width: 100%;
+  padding: 10px 0;
   background-color: #F2E3CD;
+}
+#wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 h1{
   color: #F7AF42;
 }
-footer > nav > ul > li{
+h2{
+  
+}
+footer > div > nav > ul > li{
 	text-align: center;
-	display: inline-block;
-	font-family: 'Roboto';
 	display: inline-block;
 	margin-right: 10px;
 
 }
-footer > nav > ul > li > a{
+footer > div > nav > ul > li > a{
     color: #DEB67C;
 }
-footer > nav > ul > li > a:hover{
+footer > div > nav > ul > li > a:hover{
     color: #F7AF42;
 }
-footer > nav > ul > #contact{
+footer > div > nav > ul > #contact{
   color: #DEB67C;
-  position: absolute;
-  left: 2%;
-  bottom: 20%;
 }
-footer > nav > ul > #sponsors {
+footer > div > nav > ul > #sponsors {
   color: #DEB67C;
-  position: absolute;
-  right: 2%;
-  bottom: 20%;
 }
 #head_title > h1{
   position: absolute;
@@ -49,7 +51,7 @@ footer > nav > ul > #sponsors {
   left: 44%;
 }
 #logo{
-  width: 150px;
+  width: 100px;
   position: absolute;
   top: 10px;
   left: 10px;

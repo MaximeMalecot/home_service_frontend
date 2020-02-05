@@ -7,11 +7,13 @@
 	<meta charset="utf-8">
 </head>
 <body>
-			<?php
-				include('header.php');
-			?>
+	<?php
+		include('header.php');
+	?>
 	<main>
-    MAIN
+		<div>
+			Main
+		</div>
 	</main>
 	<?php
 		include('footer.php');
