@@ -2,7 +2,13 @@ header{
   position: sticky;
   top: 0%;
   background-color: #F2E3CD;
-  padding: 50px;
+  padding: 20px;
+}
+#title{
+  color: #F7AF42;
+}
+#Copyright{
+  color: #F7AF42;
 }
 main{
 	background-color: #FAFAFA;
@@ -10,7 +16,6 @@ main{
   height: 800px;
 }
 footer{
-  /*position: absolute;*/
   bottom: 0%;
   width: 100%;
   padding: 10px 0;
@@ -20,12 +25,6 @@ footer{
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-h1{
-  color: #F7AF42;
-}
-h2{
-  
 }
 footer > div > nav > ul > li{
 	text-align: center;
@@ -39,16 +38,11 @@ footer > div > nav > ul > li > a{
 footer > div > nav > ul > li > a:hover{
     color: #F7AF42;
 }
-footer > div > nav > ul > #contact{
+#contact{
   color: #DEB67C;
 }
-footer > div > nav > ul > #sponsors {
+#sponsors {
   color: #DEB67C;
-}
-#head_title > h1{
-  position: absolute;
-  top: 5%;
-  left: 44%;
 }
 #logo{
   width: 100px;
@@ -56,3 +50,31 @@ footer > div > nav > ul > #sponsors {
   top: 10px;
   left: 10px;
 }
+#container{
+  background-color: #FAFAFA;
+  padding: 40px;
+  border: solid;
+  border-color: #F7AF42;
+}
+#tabs{
+  align: center;
+  display: inline-block;
+}
+#tabs > li{
+  width: 200px;
+}
+#hometab{
+  background-color: #FAFAFA;
+  color: #CC9137;
+}
+#menu1{
+  background-color: #F7AF42;
+  color: #FAFAFA;
+}
+#menu2{
+  background-color: #F7AF42;
+  color: #FAFAFA;
+}
+/*.nav-tabs > .active > a, .nav-pills > .active > a:hover {
+    background-color: red;
+}*/
