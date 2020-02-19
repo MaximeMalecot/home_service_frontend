@@ -139,7 +139,7 @@
 		 </form>
 			</div>
 		</section>
-
+		<script type="text/javascript" src="js/script.js"></script>
   </main>
   <?php
     include('footer.php');

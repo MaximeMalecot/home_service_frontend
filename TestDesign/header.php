@@ -14,8 +14,9 @@
       }else{
         include('moncompte.php');
       }
+
       if(isset($_GET['error'])){
-      echo "<p id=\"Error\">User or password incorrect</p>";
+      echo "<p id=\"Error\">Something was incorrect</p>";
       }
     ?>
     <section id="info">
