@@ -6,6 +6,4 @@
     header('Location: Index.php');
   }
 
-$req = $cx->prepare('SELECT nom, prenom, mail FROM user WHERE mail')
-
 ?>

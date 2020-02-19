@@ -10,25 +10,22 @@ function home(){
   var nouveau = "Home";
   document.getElementById('home').innerHTML = nouveau;
 }
+function connection(){
+  var zone =
+  document.getElementById('connect').innerHTML = zone;
+  const request = new XMLHttpRequest();
 
-function register(){
-    const request = new XMLHttpRequest();
+  request.open('GET', 'getconnect.php');
 
-    request.open('GET', 'inscription.php');
+  request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 
-    request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-
-    request.onreadystatechange = function(register) {
-      if(request.readyState === 4 && request.status == 200){
-        document.getElementById('info').innerHTML = request.responseText ;
-      }else {
-        document.getElementById('info').innerHTML = '<span style="color:red">Erreur!</span>';
-        ;
-      }
+  request.onreadystatechange = function(affichage) {
+    if(request.readyState === 4 && request.status == 200){
+      document.getElementById('connect').innerHTML = request.responseText ;
+    }else {
+      document.getElementById('connect').innerHTML = '<span style="color:red">Erreur!</span>';
+      ;
     }
-    request.send();
-}
-
-function sendaccount(){
-
+  }
+  request.send();
 }

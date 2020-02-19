@@ -72,6 +72,7 @@ footer > div > nav > ul > li > a:hover{
   background-color: #F7AF42;
   color: #FAFAFA;
 }
+/*////////////////////////CONNECT_ZONE.PHP//////////////////////*/
 #connect{
   position: absolute;
   top: 25%;
@@ -83,6 +84,9 @@ footer > div > nav > ul > li > a:hover{
   color: #CC9137;
   border: 2px solid #F7AF42;
 }
+#goaccount> h3{
+  color: #CC9137;
+}
 #connect > p{
   color: #CC9137;
 }
@@ -92,4 +96,44 @@ footer > div > nav > ul > li > a:hover{
 #creation > a:hover{
   text-decoration: none;
   color: #F7AF42;
+}
+/*////////////////////////MONCOMPTE.PHP//////////////////////*/
+#secondconnect{
+  position: absolute;
+  top: 10%;
+  left: 90%;
+}
+#goaccount > a{
+  color: #CC9137;
+}
+#goaccount > a:hover{
+  text-decoration: none;
+  color: #F7AF42;
+}
+#deconnect > a{
+  color: #CC9137;
+}
+#deconnect > a:hover{
+  text-decoration: none;
+  color: #F7AF42;
+}
+
+
+/*////////////////////////////////////////////*/
+label{
+  color: #F7AF42;
+}
+#Error{
+  color: #CC9137;
+}
+
+/*/////////////////////////////*/
+#form_connect{
+  position: relative;
+  left:5px;
+  bottom: 25px;
+}
+#formconnexion{
+  background-color: #F7AF42;
+  color: #FAFAFA;
 }

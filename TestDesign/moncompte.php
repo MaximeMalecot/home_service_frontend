@@ -1,11 +1,10 @@
-<section class="inscription_connexion">
-
+<section id ="secondconnect" class="inscription_connexion">
   <?php
     include('config.php');
-    $req = $cx->prepare('SELECT pdp,pseudo from compte where email = ? ');
+    $req = $cx->prepare('SELECT Nom from User where email = ? ');
     $req->execute(array($_SESSION['email']));
     $user = $req->fetch();
-    echo "<button onclick=\"settings()\">" . $user['pseudo'] . "</button>";
+    echo "<h3 id=\"goaccount\"><a href='settings.php'>" . $user['Nom'] . "</a></h3>";
   ?>
-  <a href="deconnexion.php">Se déconnecter</a>
+  <p id="deconnect"><a href="deconnexion.php">Se déconnecter</a></p>
 </section>
