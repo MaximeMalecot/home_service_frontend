@@ -37,6 +37,7 @@ footer > div > nav > ul > li > a{
 }
 footer > div > nav > ul > li > a:hover{
     color: #F7AF42;
+    text-decoration: none;
 }
 #contact{
   color: #DEB67C;
@@ -61,7 +62,7 @@ footer > div > nav > ul > li > a:hover{
   display: inline-block;
 }
 #tabs > li{
-  width: 200px;
+  width: 300px;
 }
 #tabs > .active > a{
   background-color: #FAFAFA;
@@ -71,6 +72,24 @@ footer > div > nav > ul > li > a:hover{
   background-color: #F7AF42;
   color: #FAFAFA;
 }
-/*.nav-tabs > .active > a, .nav-pills > .active > a:hover {
-    background-color: red;
-}*/
+#connect{
+  position: absolute;
+  top: 25%;
+  left: 87.5%;
+}
+#getco{
+  width: 200px;
+  background-color: #FAFAFA;
+  color: #CC9137;
+  border: 2px solid #F7AF42;
+}
+#connect > p{
+  color: #CC9137;
+}
+#creation > a{
+  color: #CC9137;
+}
+#creation > a:hover{
+  text-decoration: none;
+  color: #F7AF42;
+}
