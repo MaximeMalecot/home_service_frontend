@@ -24,26 +24,26 @@ else{
   die();
 }
 
-if (isset($_POST['email']) && !empty($_POST['email'])){
-  $email = htmlspecialchars($_POST['email']);
+if (isset($_POST['mail']) && !empty($_POST['mail'])){
+  $mail = htmlspecialchars($_POST['mail']);
 }
 else{
   header('Location: register.php?error=3');
   die();
 }
 
-$req = $cx->prepare('SELECT Prenom FROM compte WHERE email = :email');
-$req->execute(array('email' => $email));
+$req = $cx->prepare('SELECT Prenom FROM client WHERE mail = :mail');
+$req->execute(array('mail' => $mail));
 
 $answers= [];
 while($user = $req->fetch()){
   $answers [] = $user;
 }
 if (count($answers) != 0){
-  header('Location: register.php?error=email_taken');
+  header('Location: register.php?error=mail_taken');
   exit();
 }
-$req2 = $cx->prepare('SELECT email FROM compte WHERE Prenom = :Prenom');
+$req2 = $cx->prepare('SELECT mail FROM client WHERE Prenom = :Prenom');
 $req2->execute(array('Prenom' => $Prenom));
 
 $answers= [];
@@ -57,8 +57,8 @@ if (count($answers) != 0){
 
 
 
-if (isset($_POST['email2']) && !empty($_POST['email2'])){
-  $email2 = htmlspecialchars($_POST['email2']);
+if (isset($_POST['mail2']) && !empty($_POST['mail2'])){
+  $mail2 = htmlspecialchars($_POST['mail2']);
 }
 else{
   header('Location: register.php?error=3');
@@ -81,8 +81,8 @@ else{
   die();
 }
 
-if($email != $email2){
-  echo "Vos adresses email ne sont pas similaires";
+if($mail != $mail2){
+  echo "Vos adresses mail ne sont pas similaires";
   header('Location: register.php?error=1');
   die();
 }
@@ -93,11 +93,11 @@ if($mdp != $mdp2){
   die();
 }
 /*$sender = 'boopursr@services.com';
-$recipient = $email;
-$subject = "Verification de votre compte BoopUrSR";
+$recipient = $mail;
+$subject = "Verification de votre client BoopUrSR";
 $key = md5(microtime(TRUE)*100000);
 $link = "http://51.77.159.247/activation.php?log=".urlencode($Prenom) . "&key=" . urlencode($key) ;
-$message = "Merci d'avoir créé un compte sur BoopUrSR !
+$message = "Merci d'avoir créé un client sur BoopUrSR !
 
 Profitez dès maintenant de notre site en validant votre e-mail. Cliquez simplement sur ce lien : " . $link . "
 
@@ -106,15 +106,15 @@ Ceci est un e-mail automatique, merci de ne pas y répondre.";
 $headers = 'From:' . $sender;
 mail($recipient, $subject, $message, $headers);*/
 
-$take = $cx -> prepare("INSERT INTO User(Nom,Prenom,mdp,email)VALUES(:Nom,:Prenom,:mdp,:email)");
+$take = $cx -> prepare("INSERT INTO client(Nom,Prenom,mdp,mail)VALUES(:Nom,:Prenom,:mdp,:mail)");
 $take -> execute(array(
   'Nom'=>$Nom,
   'Prenom'=>$Prenom,
   'mdp'=>$mdp,
-  'email'=>$email
+  'mail'=>$mail
 
 ));
-$_SESSION['email'] = $_POST['email'];
+$_SESSION['mail'] = $_POST['mail'];
 $_SESSION['Nom'] = $_POST['Nom'];
 header('Location: index.php?verif=ok');
 exit;

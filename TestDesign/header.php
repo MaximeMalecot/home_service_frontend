@@ -1,7 +1,7 @@
 <header>
   <?php
     session_start();
-     $connected = isset($_SESSION["email"]) ? true : false;
+     $connected = isset($_SESSION["mail"]) ? true : false;
     ?>
   <section>
     <section id="head_title">

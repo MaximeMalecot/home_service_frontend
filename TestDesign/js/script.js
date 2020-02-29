@@ -1,25 +1,63 @@
 function menu1(){
-  var nouveau = "Menu1";
-  document.getElementById('menu1').innerHTML = nouveau;
+  const request = new XMLHttpRequest();
+
+  request.open('GET', 'menu1.php');
+
+  request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+  request.onreadystatechange = function(menu1) {
+    if(request.readyState === 4 && request.status == 200){
+      document.getElementById('menu1').innerHTML = request.responseText ;
+    }else {
+      document.getElementById('menu1').innerHTML = '<span style="color:red">Erreur!</span>';
+      ;
+    }
+  }
+  request.send();
 }
-function menu2(){
-  var nouveau = "Menu2";
-  document.getElementById('menu2').innerHTML = nouveau;
+function abonnement(){
+  const request = new XMLHttpRequest();
+
+  request.open('GET', 'abonnement.php');
+
+  request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+  request.onreadystatechange = function(abonnement) {
+    if(request.readyState === 4 && request.status == 200){
+      document.getElementById('abonnement').innerHTML = request.responseText ;
+    }else {
+      document.getElementById('abonnement').innerHTML = '<span style="color:red">Erreur!</span>';
+      ;
+    }
+  }
+  request.send();
 }
-function home(){
-  var nouveau = "Home";
-  document.getElementById('home').innerHTML = nouveau;
-}
+/*function home(){
+  const request = new XMLHttpRequest();
+
+  request.open('GET', 'home.php');
+
+  request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+  request.onreadystatechange = function(home) {
+    if(request.readyState === 4 && request.status == 200){
+      document.getElementById('home').innerHTML = request.responseText ;
+    }else {
+      document.getElementById('home').innerHTML = '<span style="color:red">Erreur!</span>';
+      ;
+    }
+  }
+  request.send();
+}*/
 function connection(){
-  var zone =
-  document.getElementById('connect').innerHTML = zone;
+  var zone = document.getElementById('connect').innerHTML;
   const request = new XMLHttpRequest();
 
   request.open('GET', 'getconnect.php');
 
   request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 
-  request.onreadystatechange = function(affichage) {
+  request.onreadystatechange = function(connection) {
     if(request.readyState === 4 && request.status == 200){
       document.getElementById('connect').innerHTML = request.responseText ;
     }else {

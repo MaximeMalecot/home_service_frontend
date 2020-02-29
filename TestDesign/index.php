@@ -19,17 +19,17 @@
 				<ul class="nav nav-tabs" id="tabs">
 					<li class="active" ><a id="hometab"data-toggle="tab" href="#home" onclick="home()">Home</a></li>
 					<li><a id="menu1tab" data-toggle="tab" href="#menu1" onclick="menu1()">Menu 1</a></li>
-					<li><a id="menu2tab" data-toggle="tab" href="#menu2" onclick="menu2()">Menu 2</a></li>
+					<li><a id="abonnementtab" data-toggle="tab" href="#abonnement" onclick="abonnement()">Abonnements</a></li>
 				</ul>
 
 				<div class="tab-content">
 					<div id="home" class="tab-pane fade in active">
-						Home
+						<h2>Home</h2>
 					</div>
 					<div id="menu1" class="tab-pane fade">
 
 					</div>
-					<div id="menu2" class="tab-pane fade">
+					<div id="abonnement" class="tab-pane fade">
 
 					</div>
 			</div>

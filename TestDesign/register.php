@@ -63,7 +63,7 @@
 	            <label for="email">Email : </label>
 	          </td>
 	          <td>
-	            <input type="email" placeholder="Votre mail" id="email" class="form-control" name="email" oninput ="cliquable()"/>
+	            <input type="email" placeholder="Votre mail" id="mail" class="form-control" name="mail" oninput ="cliquable()"/>
 	          </td>
 	          <td id ="email_icon">
 
@@ -74,7 +74,7 @@
 	            <label for="email2">Confirmation d'email : </label>
 	          </td>
 	          <td>
-	            <input type="email" placeholder="Confirmez votre email" id="email2" class="form-control" name="email2" oninput ="cliquable()"/>
+	            <input type="email" placeholder="Confirmez votre mail" id="mail2" class="form-control" name="mail2" oninput ="cliquable()"/>
 	          </td>
 	          <td id="email2_icon">
 
