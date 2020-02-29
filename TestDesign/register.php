@@ -41,7 +41,7 @@
 	            <label for="pseudo">Nom : </label>
 	          </td>
 	          <td>
-	            <input type="text" placeholder="Votre nom" id="Nom" class="form-control" name="Nom" oninput ="cliquable()" />
+	            <input type="text" placeholder="Votre nom" id="Nom" class="form-control" name="Nom" />
 	          </td>
 	          <td id = "Nom_icon">
 
@@ -52,7 +52,7 @@
 	            <label for="Prenom">Prenom : </label>
 	          </td>
 	          <td>
-	            <input type="text" placeholder="Votre prenom" id="Prenom" class="form-control" name="Prenom" oninput ="cliquable()"/>
+	            <input type="text" placeholder="Votre prenom" id="Prenom" class="form-control" name="Prenom"/>
 	          </td>
 	          <td id ="Prenom_icon">
 
@@ -63,7 +63,7 @@
 	            <label for="email">Email : </label>
 	          </td>
 	          <td>
-	            <input type="email" placeholder="Votre mail" id="mail" class="form-control" name="mail" oninput ="cliquable()"/>
+	            <input type="email" placeholder="Votre mail" id="mail" class="form-control" name="mail"/>
 	          </td>
 	          <td id ="email_icon">
 
@@ -74,7 +74,7 @@
 	            <label for="email2">Confirmation d'email : </label>
 	          </td>
 	          <td>
-	            <input type="email" placeholder="Confirmez votre mail" id="mail2" class="form-control" name="mail2" oninput ="cliquable()"/>
+	            <input type="email" placeholder="Confirmez votre mail" id="mail2" class="form-control" name="mail2"/>
 	          </td>
 	          <td id="email2_icon">
 
@@ -85,7 +85,7 @@
 	            <label for="mdp">Mot de passe : </label>
 	          </td>
 	          <td>
-	            <input type="password" placeholder="Votre mot de passe" id="mdp" class="form-control" name="mdp" oninput ="cliquable()"/>
+	            <input type="password" placeholder="Votre mot de passe" id="mdp" class="form-control" name="mdp"/>
 	          </td>
 	          <td id="mdp_icon">
 
@@ -96,7 +96,7 @@
 	            <label for="mdp2">Confirmez votre mot de passe : </label>
 	          </td>
 	          <td>
-	            <input type="password" placeholder="Confirmez votre mot de passe" id="mdp2" class="form-control" name="mdp2" oninput ="cliquable()"/>
+	            <input type="password" placeholder="Confirmez votre mot de passe" id="mdp2" class="form-control" name="mdp2"/>
 	          </td>
 	          <td id="mdp2_icon">
 

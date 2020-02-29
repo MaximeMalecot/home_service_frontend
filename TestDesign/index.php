@@ -18,7 +18,7 @@
 			<div class="container" id="container">
 				<ul class="nav nav-tabs" id="tabs">
 					<li class="active" ><a id="hometab"data-toggle="tab" href="#home" onclick="home()">Home</a></li>
-					<li><a id="menu1tab" data-toggle="tab" href="#menu1" onclick="menu1()">Menu 1</a></li>
+					<li><a id="prestationtab" data-toggle="tab" href="#prestation" onclick="prestation()">Prestations</a></li>
 					<li><a id="abonnementtab" data-toggle="tab" href="#abonnement" onclick="abonnement()">Abonnements</a></li>
 				</ul>
 
@@ -26,7 +26,7 @@
 					<div id="home" class="tab-pane fade in active">
 						<h2>Home</h2>
 					</div>
-					<div id="menu1" class="tab-pane fade">
+					<div id="prestation" class="tab-pane fade">
 
 					</div>
 					<div id="abonnement" class="tab-pane fade">

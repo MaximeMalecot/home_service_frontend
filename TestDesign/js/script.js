@@ -1,15 +1,15 @@
-function menu1(){
+function prestation(){
   const request = new XMLHttpRequest();
 
-  request.open('GET', 'menu1.php');
+  request.open('GET', 'prestation.php');
 
   request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 
-  request.onreadystatechange = function(menu1) {
+  request.onreadystatechange = function(prestation) {
     if(request.readyState === 4 && request.status == 200){
-      document.getElementById('menu1').innerHTML = request.responseText ;
+      document.getElementById('prestation').innerHTML = request.responseText ;
     }else {
-      document.getElementById('menu1').innerHTML = '<span style="color:red">Erreur!</span>';
+      document.getElementById('prestation').innerHTML = '<span style="color:red">Erreur!</span>';
       ;
     }
   }
@@ -32,7 +32,7 @@ function abonnement(){
   }
   request.send();
 }
-/*function home(){
+function home(){
   const request = new XMLHttpRequest();
 
   request.open('GET', 'home.php');
@@ -48,7 +48,14 @@ function abonnement(){
     }
   }
   request.send();
-}*/
+}
+
+function prestationcontent(name)
+{
+  var truename = name;
+  console.log(name);
+}
+
 function connection(){
   var zone = document.getElementById('connect').innerHTML;
   const request = new XMLHttpRequest();
