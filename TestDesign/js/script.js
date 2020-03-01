@@ -52,8 +52,21 @@ function home(){
 
 function prestationcontent(name)
 {
-  var truename = name;
-  console.log(name);
+  const request = new XMLHttpRequest();
+
+  request.open('GET', 'prestationcontent.php?nom=' + name);
+
+  request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+  request.onreadystatechange = function(prestationcontent) {
+    if(request.readyState === 4 && request.status == 200){
+      document.getElementById('prestationcontent').innerHTML = request.responseText ;
+    }else {
+      document.getElementById('prestationcontent').innerHTML = '<span style="color:red">Erreur!</span>';
+      ;
+    }
+  }
+  request.send();
 }
 
 function connection(){

@@ -17,7 +17,7 @@
 		<section id="fullcontainer">
 			<div class="container" id="container">
 				<ul class="nav nav-tabs" id="tabs">
-					<li class="active" ><a id="hometab"data-toggle="tab" href="#home" onclick="home()">Home</a></li>
+					<li class="active" ><a id="hometab"data-toggle="tab" href="#home">Home</a></li>
 					<li><a id="prestationtab" data-toggle="tab" href="#prestation" onclick="prestation()">Prestations</a></li>
 					<li><a id="abonnementtab" data-toggle="tab" href="#abonnement" onclick="abonnement()">Abonnements</a></li>
 				</ul>
