@@ -32,7 +32,7 @@ else{
   die();
 }
 
-$req = $cx->prepare('SELECT Prenom FROM client WHERE mail = :mail');
+$req = $cx->prepare('SELECT Prenom FROM user WHERE mail = :mail');
 $req->execute(array('mail' => $mail));
 
 $answers= [];
@@ -43,7 +43,7 @@ if (count($answers) != 0){
   header('Location: register.php?error=mail_taken');
   exit();
 }
-$req2 = $cx->prepare('SELECT mail FROM client WHERE Prenom = :Prenom');
+$req2 = $cx->prepare('SELECT mail FROM user WHERE Prenom = :Prenom');
 $req2->execute(array('Prenom' => $Prenom));
 
 $answers= [];
@@ -94,10 +94,10 @@ if($mdp != $mdp2){
 }
 /*$sender = 'boopursr@services.com';
 $recipient = $mail;
-$subject = "Verification de votre client BoopUrSR";
+$subject = "Verification de votre user BoopUrSR";
 $key = md5(microtime(TRUE)*100000);
 $link = "http://51.77.159.247/activation.php?log=".urlencode($Prenom) . "&key=" . urlencode($key) ;
-$message = "Merci d'avoir créé un client sur BoopUrSR !
+$message = "Merci d'avoir créé un user sur BoopUrSR !
 
 Profitez dès maintenant de notre site en validant votre e-mail. Cliquez simplement sur ce lien : " . $link . "
 
@@ -105,8 +105,7 @@ Ceci est un e-mail automatique, merci de ne pas y répondre.";
 
 $headers = 'From:' . $sender;
 mail($recipient, $subject, $message, $headers);*/
-
-$take = $cx -> prepare("INSERT INTO client(Nom,Prenom,mdp,mail)VALUES(:Nom,:Prenom,:mdp,:mail)");
+$take = $cx -> prepare("INSERT INTO user(Nom,Prenom,mdp,mail,date_inscription)VALUES(:Nom,:Prenom,:mdp,:mail,NOW())");
 $take -> execute(array(
   'Nom'=>$Nom,
   'Prenom'=>$Prenom,

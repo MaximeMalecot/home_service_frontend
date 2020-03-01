@@ -17,7 +17,7 @@
    $jour == 0 ? $jour = 7 : $jour = $jour;
 
    if(isset($_SESSION['mail'])){
-     $req1 = $cx->prepare('SELECT * FROM souscription WHERE client_id_client = (SELECT id_client FROM client WHERE mail = ?)');
+     $req1 = $cx->prepare('SELECT * FROM souscription WHERE id_user = (SELECT id_user FROM user WHERE mail = ?)');
      $req1->execute(array($_SESSION['mail']));
      $souscription = $req1->fetch();
      $req2 = $cx->prepare('SELECT temps FROM abonnement WHERE id_abonnement = ?');
@@ -38,6 +38,7 @@
      echo "<div class=\"container\">
             <h1>".$prestation[1]."</h1>".
             "<div>".$prestation[2]."</div>".
+            "<input class=\"btn btn-primary\" onclick=\"reserve('".$prestation[0]."','".$nom."')\" value=\"Réserver la prestation\"/>".
             "</div>";
    }
 

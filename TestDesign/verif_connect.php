@@ -13,7 +13,7 @@
 		exit();
 	}
 
-	$req = $cx->prepare('SELECT Nom from client where mail = ? and mdp = ?');
+	$req = $cx->prepare('SELECT Nom from user where mail = ? and mdp = ?');
 	$req->execute(array($_POST['mail'], hash('sha512', $_POST['mdp'])));
 
 

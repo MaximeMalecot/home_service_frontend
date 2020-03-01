@@ -87,3 +87,23 @@ function connection(){
   }
   request.send();
 }
+
+function reserve(id,categorie){
+  const request = new XMLHttpRequest();
+  console.log(categorie);
+  console.log(id);
+
+  request.open('POST', 'reserve.php', true);
+
+  request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+  request.onreadystatechange = function(reserve) {
+    if(request.readyState === 4 && request.status == 200){
+      document.getElementById('prestationcontent').innerHTML = request.responseText ;
+    }else {
+      document.getElementById('prestationcontent').innerHTML = '<span style="color:red">Erreur!</span>';
+      ;
+    }
+  }
+  request.send("id=" + id + "&nom=" + categorie);
+}
