@@ -137,3 +137,18 @@ label{
   background-color: #F7AF42;
   color: #FAFAFA;
 }
+
+
+.abos{
+  background-color: #FAFAFA;
+  border: 2px solid #F7AF42;
+  margin: 5px;
+  padding: 5px;
+}
+#abonnements > a{
+  color: #CC9137;
+}
+#abonnements > a:hover{
+  text-decoration: none;
+  color: #F7AF42;
+}

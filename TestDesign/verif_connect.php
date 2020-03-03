@@ -1,5 +1,5 @@
 <?php
-	include('config.php');
+	require_once "config.php";
 	if(!isset($_POST['mail'])){
 		header('Location: index.php?error=mail_missing');
 		exit();

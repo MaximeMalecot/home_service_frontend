@@ -1,6 +1,6 @@
 <section id ="secondconnect" class="inscription_connexion">
   <?php
-    include('config.php');
+    require_once "config.php";
     $req = $cx->prepare('SELECT prenom from user where mail = ? ');
     $req->execute(array($_SESSION['mail']));
     $user = $req->fetch();

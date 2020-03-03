@@ -1,5 +1,5 @@
 <?php
-  include('config.php');
+  require_once "config.php";
   session_start();
   echo "ici pour réserver<br/>";
   $req = $cx->prepare('SELECT * FROM prestataire WHERE categorie_nom = ?');

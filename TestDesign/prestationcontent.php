@@ -1,5 +1,5 @@
 <?php
-  include('config.php');
+  require_once "config.php";
   session_start();
   if(isset($_GET['nom']) AND !empty($_GET['nom'])) {
       $nom = $_GET['nom'];

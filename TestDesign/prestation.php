@@ -6,7 +6,7 @@
 
 
 <?php
-  include('config.php');
+  require_once "config.php";
   $req = $cx->prepare('SELECT * FROM categorie');
   $req->execute();
   $categories = $req->fetchAll();

@@ -107,3 +107,21 @@ function reserve(id,categorie){
   }
   request.send("id=" + id + "&nom=" + categorie);
 }
+
+function getabo(id){
+  const request = new XMLHttpRequest();
+
+  request.open('GET', 'abonnement_information.php?id=' + id);
+
+  request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+  request.onreadystatechange = function(getabo) {
+    if(request.readyState === 4 && request.status == 200){
+      document.getElementById('abonnements').innerHTML = request.responseText ;
+    }else {
+      document.getElementById('abonnements').innerHTML = '<span style="color:red">Erreur!</span>';
+      ;
+    }
+  }
+  request.send();
+}
