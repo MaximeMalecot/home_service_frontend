@@ -1,3 +1,18 @@
+function gotoCheckout(id){
+  var stripe = Stripe('pk_test_Z3ctWJuVAUFJ4b3C5VJxnN5u002lvbMdIJ');
+  console.log(stripe);
+  stripe.redirectToCheckout({
+    // Make the id field from the Checkout Session creation API response
+    // available to this file, so you can provide it as parameter here
+    // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
+    sessionId: id
+  }).then(function (result) {
+    // If `redirectToCheckout` fails due to a browser or network
+    // error, display the localized error message to your customer
+    // using `result.error.message`.
+  });
+}
+
 function prestation(){
   const request = new XMLHttpRequest();
 
