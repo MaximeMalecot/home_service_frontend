@@ -1,5 +1,12 @@
+html,body{
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+}
+
 header{
-  position: sticky;
+  position: relative;
   top: 0%;
   background-color: #F2E3CD;
   padding: 20px;
@@ -20,6 +27,10 @@ footer{
   width: 100%;
   padding: 10px 0;
   background-color: #F2E3CD;
+}
+footer > #footer_wrapper{
+  bottom: 0%;
+  width: 100%;
 }
 #wrapper{
   display: flex;
@@ -51,9 +62,15 @@ footer > div > nav > ul > li > a:hover{
   top: 10px;
   left: 10px;
 }
-#container{
+#fullcontainer{
+  position: relative;
+  height: 80%;
+}
+#fullcontainer > #container{
+  position: relative;
   background-color: #FAFAFA;
   padding: 40px;
+  width: 60%;
   border: solid;
   border-color: #F7AF42;
 }
@@ -84,6 +101,19 @@ footer > div > nav > ul > li > a:hover{
   color: #CC9137;
   border: 2px solid #F7AF42;
 }
+#errorco{
+  position: relative;
+  bottom: 25px;
+}
+#errorco > p{
+  color: #CC9137;
+}
+#retry{
+  width: 150px;
+  background-color: #FAFAFA;
+  color: #CC9137;
+  border: 2px solid #F7AF42;
+}
 #goaccount> h3{
   color: #CC9137;
 }
@@ -98,10 +128,9 @@ footer > div > nav > ul > li > a:hover{
   color: #F7AF42;
 }
 /*////////////////////////MONCOMPTE.PHP//////////////////////*/
-#secondconnect{
-  position: absolute;
-  top: 10%;
-  left: 90%;
+#connect > #secondconnect{
+  position: relative;
+  bottom: 15px ;
 }
 #goaccount > a{
   color: #CC9137;
@@ -130,14 +159,20 @@ label{
 /*/////////////////////////////*/
 #form_connect{
   position: relative;
-  left:5px;
   bottom: 25px;
 }
 #formconnexion{
+  width: 150px; 
   background-color: #F7AF42;
   color: #FAFAFA;
 }
-
+#cancelco{
+  background-color: #F7AF42;
+  color: #FAFAFA;
+}
+#abonnements{
+  width: 75%;
+}
 
 .abos{
   background-color: #FAFAFA;
@@ -151,4 +186,9 @@ label{
 #abonnements > a:hover{
   text-decoration: none;
   color: #F7AF42;
+}
+
+#abonnement{
+  overflow-y: scroll;
+  height: 575px;
 }

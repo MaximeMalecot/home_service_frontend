@@ -9,6 +9,7 @@
       <a href="index.php"><img src="img/logo.png" id="logo"></a>
     </section>
     <?php
+    echo "<section id=\"connect\" class=\"inscription_connexion\">";
       if ($connected == false){
         include('connect_zone.php');
       }else{
@@ -18,8 +19,7 @@
       if(isset($_GET['error'])){
       echo "<p id=\"Error\">Something was incorrect</p>";
       }
+      echo "</section>";
     ?>
-    <section id="info">
-    </section>
   </section>
 </header>

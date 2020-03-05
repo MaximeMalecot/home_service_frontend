@@ -12,7 +12,6 @@ function gotoCheckout(id){
     // using `result.error.message`.
   });
 }
-
 function prestation(){
   const request = new XMLHttpRequest();
 
@@ -85,7 +84,6 @@ function prestationcontent(name)
 }
 
 function connection(){
-  var zone = document.getElementById('connect').innerHTML;
   const request = new XMLHttpRequest();
 
   request.open('GET', 'getconnect.php');
@@ -103,10 +101,48 @@ function connection(){
   request.send();
 }
 
+function verifconnect(){
+
+    const request = new XMLHttpRequest();
+    let mail =  document.getElementById('mail').value;
+    let mdp = document.getElementById('mdp').value;
+
+    console.log(mail);
+    console.log(mdp);
+    request.open('POST', 'verif_connect.php', true);
+
+    request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+    request.onreadystatechange = function(reserve) {
+      if(request.readyState === 4 && request.status == 200){
+        document.getElementById('connect').innerHTML = request.responseText ;
+      }else {
+        document.getElementById('connect').innerHTML = '<span style="color:red">Il y a eu une erreur dans la connection veuillez réessayer ultérieurement!</span>';
+        ;
+      }
+    }
+    request.send("mail=" + mail + "&mdp=" + mdp);
+}
+
+function cancelco(){
+  const request = new XMLHttpRequest();
+
+  request.open('GET', 'connect_zone.php');
+  request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+  request.onreadystatechange = function(connection) {
+    if(request.readyState === 4 && request.status == 200){
+      document.getElementById('connect').innerHTML = request.responseText ;
+    }else {
+      document.getElementById('connect').innerHTML = '<span style="color:red">Erreur!</span>';
+      ;
+    }
+  }
+  request.send();
+}
+
 function reserve(id,categorie){
   const request = new XMLHttpRequest();
-  console.log(categorie);
-  console.log(id);
 
   request.open('POST', 'reserve.php', true);
 
