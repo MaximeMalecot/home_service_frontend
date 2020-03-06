@@ -1,7 +1,8 @@
 <?php
+require_once "config.php";
+ini_set('display_errors', '1');
 session_start();
 
-require_once "config.php";
 if(strtoupper($_POST['captcha'])!=strtoupper($_SESSION['captcha'])){
   header('Location: register.php?error=Captcha');
   session_destroy();
@@ -12,7 +13,8 @@ if (isset($_POST['Nom']) && !empty($_POST['Nom'])){
   $nom = htmlspecialchars($_POST['Nom']);
 }
 else{
-  header('Location: register.php?error=3');
+  header('Location: register.php?error=Nom');
+  session_destroy();
   die();
 }
 
@@ -20,7 +22,41 @@ if (isset($_POST['Prenom']) && !empty($_POST['Prenom'])){
   $prenom = htmlspecialchars($_POST['Prenom']);
 }
 else{
-  header('Location: register.php?error=3');
+  header('Location: register.php?error=Prenom');
+  session_destroy();
+  die();
+}
+
+if (isset($_POST['phone']) && ctype_digit($_POST['phone'])){
+  $length = strlen($_POST['phone']);
+  if( $length>=10){
+    $phone = $_POST['phone'];
+  }
+}
+else{
+  header('Location: register.php?error=phone');
+  session_destroy();
+  die();
+}
+
+if (isset($_POST['addresse'])){
+  $addresse = $_POST['addresse'];
+}
+else{
+  header('Location: register.php?error=addresse');
+  session_destroy();
+  die();
+}
+
+if (isset($_POST['cp']) && ctype_digit($_POST['cp'])){
+  $length2 = strlen($_POST['cp']);
+  if($length2 == 5){
+    $cp = $_POST['cp'];
+  }
+}
+else{
+  header('Location: register.php?error=cp');
+  session_destroy();
   die();
 }
 
@@ -28,7 +64,8 @@ if (isset($_POST['mail']) && !empty($_POST['mail'])){
   $mail = htmlspecialchars($_POST['mail']);
 }
 else{
-  header('Location: register.php?error=email_incorrect');
+  header('Location: register.php?error=mail');
+  session_destroy();
   die();
 }
 
@@ -41,14 +78,16 @@ while($user = $req->fetch()){
 }
 if (count($answers) != 0){
   header('Location: register.php?error=mail_taken');
-  exit();
+  session_destroy();
+  die();
 }
 
 if (isset($_POST['mail2']) && !empty($_POST['mail2'])){
   $mail2 = htmlspecialchars($_POST['mail2']);
 }
 else{
-  header('Location: register.php?error=email_incorrect');
+  header('Location: register.php?error=mail2');
+  session_destroy();
   die();
 }
 
@@ -56,7 +95,8 @@ if (isset($_POST['mdp']) && !empty($_POST['mdp'])){
   $mdp = hash('sha512',$_POST['mdp']);
 }
 else{
-  header('Location: register.php?error=password_incorrect');
+  header('Location: register.php?error=mdp');
+  session_destroy();
   die();
 }
 
@@ -64,19 +104,20 @@ if (isset($_POST['mdp2']) && !empty($_POST['mdp2'])){
   $mdp2 = hash('sha512',$_POST['mdp2']);
 }
 else{
-  header('Location: register.php?error=password_incorrect');
+  header('Location: register.php?error=mdp2');
+  session_destroy();
   die();
 }
 
 if($mail != $mail2){
-  echo "Vos adresses mail ne sont pas similaires";
-  header('Location: register.php?error=email_not_similar');
+  header('Location: register.php?error=mail');
+  session_destroy();
   die();
 }
 
 if($mdp != $mdp2){
-  echo "Vos mots de passe ne sont pas similaires recommencez";
-  header('Location: register.php?error=password_not_similar');
+  header('Location: register.php?error=mdp');
+  session_destroy();
   die();
 }
 /*$sender = 'boopursr@services.com';
@@ -88,22 +129,25 @@ $message = "Merci d'avoir créé un user sur BoopUrSR !
 
 Profitez dès maintenant de notre site en validant votre e-mail. Cliquez simplement sur ce lien : " . $link . "
 
-Ceci est un e-mail automatique, merci de ne pas y répondre.";
+Ceci est un e-mail automatique, merci de ne pas y répondre.";*/
 
 $headers = 'From:' . $sender;
-mail($recipient, $subject, $message, $headers);*/
-$take = $cx -> prepare("INSERT INTO user(ville_reference,nom,prenom,mdp,mail,date_inscription)VALUES(?,?,?,?,?,NOW())");
+mail($recipient, $subject, $message, $headers);
+$take = $cx -> prepare("INSERT INTO user(ville_reference,nom,prenom,mdp,mail,date_inscription,phone,adresse,cp)VALUES(?,?,?,?,?,NOW(),?,?,?)");
 $take -> execute(array(
   VILLE,
   $nom,
   $prenom,
   $mdp,
-  $mail
+  $mail,
+  $phone,
+  $addresse,
+  $cp
 ));
 
 $_SESSION['mail'] = $_POST['mail'];
 $_SESSION['Nom'] = $_POST['Nom'];
-header('Location: index.php?verif=ok');
+header('Location: index.php');
 exit;
 
 ?>

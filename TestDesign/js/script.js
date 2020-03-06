@@ -176,3 +176,56 @@ function getabo(id){
   }
   request.send();
 }
+
+function select_type(){
+  if (document.getElementById('type').value == 1){
+    document.getElementById('input_date_fin').style.visibility="hidden";
+  }
+  else{
+    document.getElementById('input_date_fin').style.visibility="visible";
+  }
+
+}
+
+function addsuppl(){
+  if(document.getElementById('supplement').checked == true){
+    document.getElementById('input_spec').style.visibility="visible";
+  }
+  else{
+    document.getElementById('input_spec').style.visibility="hidden";
+  }
+}
+
+function getcost(id,categorie){
+  const request = new XMLHttpRequest();
+
+  let type = document.getElementById('type').value;
+  let heure =  document.getElementById('heure').value;
+  let date_debut = document.getElementById('date_debut').value;
+  let date_fin = document.getElementById('date_fin').value;
+
+  if(document.getElementById('supplement').checked == true){
+    var supplement = 1;
+  }
+  else{
+    var supplement = 0;
+  }
+
+  request.open('POST', 'verifcostpresta.php', true);
+
+  request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+  request.onreadystatechange = function(getcost) {
+    if(request.readyState === 4 && request.status == 200){
+      document.getElementById('finalpresta').innerHTML = request.responseText ;
+    }else {
+      document.getElementById('finalpresta').innerHTML = '<span style="color:red">Erreur!</span>';
+      ;
+    }
+  }
+  request.send("type=" + type + "&heure=" + heure + "&date_debut=" + date_debut + "&date_fin=" + date_fin + "&supplement=" + supplement + "&nom=" + categorie + "&id=" + id);
+}
+
+function takepresta(idprestation,idprestataire,cout,ville){
+  console.log("oui");
+}

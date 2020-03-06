@@ -1,6 +1,5 @@
 <?php
   require_once __DIR__ . "/bdd/database.env.php";
-  ini_set('display_errors', 1);
 
   $options = [
     'host=' . DB_HOST,

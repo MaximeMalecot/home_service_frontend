@@ -50,6 +50,9 @@ footer > div > nav > ul > li > a:hover{
     color: #F7AF42;
     text-decoration: none;
 }
+h1{
+  color: #F7AF42;
+}
 #contact{
   color: #DEB67C;
 }
@@ -106,7 +109,7 @@ footer > div > nav > ul > li > a:hover{
   bottom: 25px;
 }
 #errorco > p{
-  color: #CC9137;
+  color: red;
 }
 #retry{
   width: 150px;
@@ -156,13 +159,13 @@ label{
   color: #CC9137;
 }
 
-/*/////////////////////////////*/
+/*///////////////////////GETCO//////////////*/
 #form_connect{
   position: relative;
   bottom: 25px;
 }
 #formconnexion{
-  width: 150px; 
+  width: 150px;
   background-color: #F7AF42;
   color: #FAFAFA;
 }
@@ -170,10 +173,16 @@ label{
   background-color: #F7AF42;
   color: #FAFAFA;
 }
+
+/*///////////////////////ABONNEMENT//////////////*/
+
 #abonnements{
   width: 75%;
 }
-
+#abonnements > #title{
+  color: #F7AF42;
+  margin-bottom: 20px;
+}
 .abos{
   background-color: #FAFAFA;
   border: 2px solid #F7AF42;
@@ -191,4 +200,42 @@ label{
 #abonnement{
   overflow-y: scroll;
   height: 575px;
+}
+
+/*/////////////////////////////PRESTATION///////////////*/
+#prestation > #prestationcontent{
+  width: 75%;
+}
+#BtnCatTogle{
+  margin: 20px;
+}
+#BtnTitle{
+  color: #F7AF42;
+}
+#BtnCatTogle > ul > li > a{
+  color: #F7AF42;
+}
+.presta{
+  background-color: #FAFAFA;
+  border: 2px solid #F7AF42;
+  margin: 5px;
+  padding: 5px;
+}
+.presta > div{
+  margin: 5px;
+  padding: 5px;
+}
+.presta > input{
+  background-color: #F7AF42;
+  color: #FAFAFA;
+  margin: 5px;
+}
+.presta > input:hover{
+  background-color: #FAFAFA;
+  color: #F7AF42;
+}
+
+#getprestation > h4{
+  color: #F7AF42;
+  padding: 3px;
 }

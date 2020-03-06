@@ -1,7 +1,7 @@
 
 
-  <div class="btn-group">
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Catégories </button>
+  <div id="BtnCatTogle" class="btn-group" >
+    <button id="BtnTitle" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Catégories </button>
     <ul class="dropdown-menu">
 
 
@@ -18,6 +18,7 @@
 ?>
     </ul>
     </div>
+    <br />
   <div class="container" id="prestationcontent">
 
   </div>

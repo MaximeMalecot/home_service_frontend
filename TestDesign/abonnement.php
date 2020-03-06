@@ -1,5 +1,5 @@
 <div class="container" id="abonnements">
-  <h1>Les abonnements :</h1>
+  <h1 id="title">Les abonnements :</h1>
 <?php
   require_once "config.php";
   session_start();

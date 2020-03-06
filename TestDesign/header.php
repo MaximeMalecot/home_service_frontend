@@ -15,10 +15,6 @@
       }else{
         include('moncompte.php');
       }
-
-      if(isset($_GET['error'])){
-      echo "<p id=\"Error\">Something was incorrect</p>";
-      }
       echo "</section>";
     ?>
   </section>

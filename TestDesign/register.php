@@ -19,19 +19,13 @@
 				<h2> Inscription </h2>
 				<br/>
 				<?php
+				echo "<style>
+					#connect{ visibility: hidden;}
+				</style>";
 				if (isset($_GET['error'])) {
-					if ($_GET['error'] == '1'){
-						echo "<h3>Les adresses mails ne correspondent pas</h3>";
-					}
-					if ($_GET['error'] == '2'){
-						echo "<h3>Les mots de passe ne correspondent pas</h3>";
-					}
-					if ($_GET['error'] == '3'){
-						echo "<h3>Veuillez remplir tous les champs</h3>";
-					}
-					if ($_GET['error'] == '4'){
-						echo "<h3>L'adresse E-mail est déjà utilisée</h3>";
-					}
+					echo "<style>
+						#".$_GET['error']."{ border: 1px solid red; }
+					</style>";
 				}
 				?>
 				<form id="form_register" method="POST" action="verif_register.php">
@@ -58,6 +52,39 @@
 
 	          </td>
 	        </tr>
+					<tr>
+						<td align="right">
+							<label for="phone">Numéro de téléphone : </label>
+						</td>
+						<td>
+							<input type="text" placeholder="Votre numéro de téléphone" id="phone" class="form-control" name="phone"/>
+						</td>
+						<td id ="phone_icon">
+
+						</td>
+					</tr>
+					<tr>
+						<td align="right">
+							<label for="addresse">Adresse : </label>
+						</td>
+						<td>
+							<input type="text" placeholder="Votre addresse" id="addresse" class="form-control" name="addresse"/>
+						</td>
+						<td id ="addresse_icon">
+
+						</td>
+					</tr>
+					<tr>
+						<td align="right">
+							<label for="code postal">Code postal : </label>
+						</td>
+						<td>
+							<input type="text" placeholder="Votre code postal" id="cp" class="form-control" name="cp"/>
+						</td>
+						<td id ="addresse_icon">
+
+						</td>
+					</tr>
 	        <tr>
 	          <td align="right">
 	            <label for="email">Email : </label>
@@ -133,7 +160,7 @@
 		   ?>
 		   <img src="img/myCaptcha.png">
 		   <br>
-		   <input type="text" name="captcha">
+		   <input type="text" id="Captcha" name="captcha">
 		 </br></br>
 		   <input class="btn btn-primary" type="submit" id = 'forminscription'  value="Inscription" />
 		 </form>

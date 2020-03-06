@@ -43,7 +43,7 @@
             $req3->execute(array($user['id_user']));
             $verif = $req3->fetch();
             if($verif != NULL){
-              $req4 = $cx->prepare('UPDATE souscription SET abonnement_id_abonnement = ? WHERE user_id_user = ?');
+              $req4 = $cx->prepare('UPDATE souscription SET abonnement_id_abonnement = ?, date = NOW() WHERE user_id_user = ?');
               $req4->execute(array($abo['id_abonnement'], $user['id_user']));
 
               echo "<div class=\"container\">
