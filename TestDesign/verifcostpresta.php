@@ -54,6 +54,8 @@
       }
     }
   }
+  $cout *= 1.3;
+  
   if(isset($date_fin) && !empty($date_fin)){
     $nbJoursTime = strtotime($date_fin) - strtotime($date_debut);
     $nbJours = $nbJoursTime/86400 + 1;
