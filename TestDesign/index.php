@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html id="full">
 <head>
 	<title>Home Service</title>
 	<link rel="stylesheet" type="text/css" href="Style/bootstrap.css">
@@ -14,17 +14,28 @@
 		include('header.php');
 	?>
 	<main>
+		<?php
+			if(isset($_SESSION['langue'])){
+		    $choice = $_SESSION['langue'];
+				$fichier = "xml/".$choice.".xml";
+				$xml = simplexml_load_file($fichier);
+			}
+			else{
+				$choice = "fr";
+				$fichier = "xml/".$choice.".xml";
+				$xml = simplexml_load_file($fichier);
+			}
+		 ?>
 		<section id="fullcontainer">
 			<div class="container" id="container">
 				<ul class="nav nav-tabs" id="tabs">
-					<li class="active" ><a id="hometab"data-toggle="tab" href="#home">Home</a></li>
-					<li><a id="prestationtab" data-toggle="tab" href="#prestation" onclick="prestation()">Prestations</a></li>
-					<li><a id="abonnementtab" data-toggle="tab" href="#abonnement" onclick="abonnement()">Abonnements</a></li>
+					<li class="active" ><a id="hometab"data-toggle="tab" href="#home"><?php echo $xml->main->onglet1; ?></a></li>
+					<li><a id="prestationtab" data-toggle="tab" href="#prestation" onclick="prestation()"><?php echo $xml->main->onglet2; ?></a></li>
+					<li><a id="abonnementtab" data-toggle="tab" href="#abonnement" onclick="abonnement()"><?php echo $xml->main->onglet3; ?></a></li>
 				</ul>
 
 				<div class="tab-content">
 					<div id="home" class="tab-pane fade in active">
-						<h2>Home</h2>
 					</div>
 					<div id="prestation" class="tab-pane fade">
 
