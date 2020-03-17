@@ -1,9 +1,21 @@
 <?php
 	require_once "config.php";
+	
+	if(isset($_SESSION['langue'])){
+		$choice = $_SESSION['langue'];
+		$fichier = "xml/".$choice.".xml";
+		$xml = simplexml_load_file($fichier);
+	}
+	else{
+		$choice = "fr";
+		$fichier = "xml/".$choice.".xml";
+		$xml = simplexml_load_file($fichier);
+	}
+
 
 	if( (!isset($_POST['mail'])) || (!filter_var($_POST['mail'], FILTER_VALIDATE_EMAIL)) || (!isset($_POST['mdp'])) ){
-		echo "<div id=\"errorco\"><p>Tous les champs n'étaient pas remplis, veuillez réessayer</p>";
-		echo "<button id=\"retry\" onclick=\"connection()\"><h4>Réessayer</h4></button></div>";
+		echo "<div id=\"errorco\"><p>".$xml->header->myaccount->missing."</p>";
+		echo "<button id=\"retry\" onclick=\"connection()\"><h4>".$xml->header->myaccount->errorbutton."</h4></button></div>";
 	}
 
 	else{
@@ -12,17 +24,16 @@
 		$user = $req->fetch();
 
 		if($user != NULL){
-			session_start();
 			$_SESSION['mail'] = $_POST['mail'];
 			$_SESSION['nom'] = $user['nom'];
 			echo "<section id =\"secondconnect\" class=\"inscription_connexion\">";
-			echo "<h3 id=\"goaccount\"><a href='settings.php'> Bonjour " . $user['prenom'] . "</a></h3>";
-			echo "<p id=\"deconnect\"><a href=\"deconnexion.php\">Se déconnecter</a></p>
+			echo "<h3 id=\"goaccount\"><a href='settings.php'>".$xml->header->myaccount->hello.$user['prenom']. "</a></h3>";
+			echo "<p id=\"deconnect\"><a href=\"deconnexion.php\">".$xml->header->myaccount->deco."</a></p>
 			</section>";
 		}
 		else{
-			echo "<div id=\"errorco\"><p>Votre email ou mot de passe ne correspond pas, veuillez réessayer</p>";
-			echo "<button id=\"retry\" onclick=\"connection()\"><h4>Réessayer</h4></button></div>";
+			echo "<div id=\"errorco\"><p>".$xml->header->myaccount->error."</p>";
+			echo "<button id=\"retry\" onclick=\"connection()\"><h4>".$xml->header->myaccount->errorbutton."</h4></button></div>";
 		}
 	}
 

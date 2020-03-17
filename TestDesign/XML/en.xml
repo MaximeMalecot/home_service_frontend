@@ -11,17 +11,58 @@
       <connect>Connect</connect>
       <cancel>Cancel</cancel>
     </formconnect>
+    <myaccount>
+      <hello>Hello </hello>
+      <deco>Log out</deco>
+      <missing>Every field weren't filled, try again please</missing>
+      <error>Your email or your password don't fit, try again please</error>
+      <errorbutton>Try again</errorbutton>
+    </myaccount>
   </header>
   <main>
     <onglet1>Home</onglet1>
     <onglet2>Services</onglet2>
     <onglet3>Subscriptions</onglet3>
     <presta>
+      <titlebtn>Categories </titlebtn>
 
     </presta>
     <abo>
       <title>All subscriptions :</title>
     </abo>
+
+    <register>
+      <title>Registration</title>
+
+      <nom>Name : </nom>
+      <Unom>Your name</Unom>
+
+      <prenom>First name : </prenom>
+      <Uprenom>Your first name</Uprenom>
+
+      <num>Phone number : </num>
+      <Unum>Your phone number</Unum>
+
+      <adr>Address :</adr>
+      <Uadr>Your address</Uadr>
+
+      <cp>Postal code :</cp>
+      <Ucp>Your postal code</Ucp>
+
+      <mail>Email address : </mail>
+      <Umail>Your email address</Umail>
+
+      <mail2>Confirmation of email address :</mail2>
+      <Umail2>Confirm your email address</Umail2>
+
+      <pwd>Password : </pwd>
+      <Upwd>Your password</Upwd>
+
+      <pwd2>Confirmation of the password : </pwd2>
+      <Upwd2>Confirm your password</Upwd2>
+
+      <finalbtn>Register</finalbtn>
+    </register>
   </main>
   <footer>
     <sponsors>Our sponsors</sponsors>

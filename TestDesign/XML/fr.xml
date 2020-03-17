@@ -11,17 +11,57 @@
       <connect>Se connecter</connect>
       <cancel>Annuler</cancel>
     </formconnect>
+    <myaccount>
+      <hello>Bonjour </hello>
+      <deco>Se déconnecter</deco>
+      <missing>Tous les champs n'étaient pas remplis, veuillez réessayer</missing>
+      <error>Votre email ou mot de passe ne correspond pas, veuillez réessayer</error>
+      <errorbutton>Réessayer</errorbutton>
+    </myaccount>
   </header>
   <main>
     <onglet1>Acceuil</onglet1>
     <onglet2>Prestations</onglet2>
     <onglet3>Abonnements</onglet3>
     <presta>
+      <titlebtn>Catégories </titlebtn>
 
     </presta>
     <abo>
       <title>Les abonnements :</title>
     </abo>
+    <register>
+      <title>Inscription</title>
+
+      <nom>Nom : </nom>
+      <Unom>Votre nom</Unom>
+
+      <prenom>Prenom : </prenom>
+      <Uprenom>Votre prenom</Uprenom>
+
+      <num>Numéro de téléphone : </num>
+      <Unum>Votre numéro de téléphone</Unum>
+
+      <adr>Adresse : </adr>
+      <Uadr>Votre addresse</Uadr>
+
+      <cp>Code postal : </cp>
+      <Ucp>Votre code postal</Ucp>
+
+      <mail>Email : </mail>
+      <Umail>Votre mail</Umail>
+
+      <mail2>Confirmation d'email : </mail2>
+      <Umail2>Confirmez votre mail</Umail2>
+
+      <pwd>Mot de passe : </pwd>
+      <Upwd>Votre mot de passe</Upwd>
+
+      <pwd2>Confirmez votre mot de passe : </pwd2>
+      <Upwd2>Confirmez votre mot de passe</Upwd2>
+
+      <finalbtn>Inscription</finalbtn>
+    </register>
   </main>
   <footer>
     <sponsors>Nos sponsors</sponsors>

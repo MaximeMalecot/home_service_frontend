@@ -16,7 +16,20 @@
 	<main>
 		<section id="fullcontainer">
 			<div class="container" id="container">
-				<h2> Inscription </h2>
+				<?php
+				require_once "config.php";
+				if(isset($_SESSION['langue'])){
+					$choice = $_SESSION['langue'];
+					$fichier = "xml/".$choice.".xml";
+					$xml = simplexml_load_file($fichier);
+				}
+				else{
+					$choice = "fr";
+					$fichier = "xml/".$choice.".xml";
+					$xml = simplexml_load_file($fichier);
+				} ?>
+
+				<h2><?php echo $xml->main->register->title; ?> </h2>
 				<br/>
 				<?php
 				echo "<style>
@@ -32,10 +45,10 @@
 					<table>
 	         <tr>
 	          <td align="right">
-	            <label for="pseudo">Nom : </label>
+	            <label for="pseudo"><?php echo $xml->main->register->nom; ?> </label>
 	          </td>
 	          <td>
-	            <input type="text" placeholder="Votre nom" id="Nom" class="form-control" name="Nom" />
+	            <input type="text" placeholder="<?php echo $xml->main->register->Unom; ?>" id="Nom" class="form-control" name="Nom" />
 	          </td>
 	          <td id = "Nom_icon">
 
@@ -43,10 +56,10 @@
 	        </tr>
 	        <tr>
 	          <td align="right">
-	            <label for="Prenom">Prenom : </label>
+	            <label for="Prenom"><?php echo $xml->main->register->prenom; ?></label>
 	          </td>
 	          <td>
-	            <input type="text" placeholder="Votre prenom" id="Prenom" class="form-control" name="Prenom"/>
+	            <input type="text" placeholder="<?php echo $xml->main->register->Uprenom; ?>" id="Prenom" class="form-control" name="Prenom"/>
 	          </td>
 	          <td id ="Prenom_icon">
 
@@ -54,10 +67,10 @@
 	        </tr>
 					<tr>
 						<td align="right">
-							<label for="phone">Numéro de téléphone : </label>
+							<label for="phone"><?php echo $xml->main->register->num; ?></label>
 						</td>
 						<td>
-							<input type="text" placeholder="Votre numéro de téléphone" id="phone" class="form-control" name="phone"/>
+							<input type="text" placeholder="<?php echo $xml->main->register->Unum; ?>" id="phone" class="form-control" name="phone"/>
 						</td>
 						<td id ="phone_icon">
 
@@ -65,10 +78,10 @@
 					</tr>
 					<tr>
 						<td align="right">
-							<label for="addresse">Adresse : </label>
+							<label for="addresse"><?php echo $xml->main->register->adr; ?></label>
 						</td>
 						<td>
-							<input type="text" placeholder="Votre addresse" id="addresse" class="form-control" name="addresse"/>
+							<input type="text" placeholder="<?php echo $xml->main->register->Uadr; ?>" id="addresse" class="form-control" name="addresse"/>
 						</td>
 						<td id ="addresse_icon">
 
@@ -76,10 +89,10 @@
 					</tr>
 					<tr>
 						<td align="right">
-							<label for="code postal">Code postal : </label>
+							<label for="code postal"><?php echo $xml->main->register->cp; ?></label>
 						</td>
 						<td>
-							<input type="text" placeholder="Votre code postal" id="cp" class="form-control" name="cp"/>
+							<input type="text" placeholder="<?php echo $xml->main->register->Ucp; ?>" id="cp" class="form-control" name="cp"/>
 						</td>
 						<td id ="addresse_icon">
 
@@ -87,10 +100,10 @@
 					</tr>
 	        <tr>
 	          <td align="right">
-	            <label for="email">Email : </label>
+	            <label for="email"><?php echo $xml->main->register->mail; ?></label>
 	          </td>
 	          <td>
-	            <input type="email" placeholder="Votre mail" id="mail" class="form-control" name="mail"/>
+	            <input type="email" placeholder="<?php echo $xml->main->register->Umail; ?>" id="mail" class="form-control" name="mail"/>
 	          </td>
 	          <td id ="email_icon">
 
@@ -98,10 +111,10 @@
 	        </tr>
 	        <tr>
 	          <td align="right">
-	            <label for="email2">Confirmation d'email : </label>
+	            <label for="email2"><?php echo $xml->main->register->mail2; ?></label>
 	          </td>
 	          <td>
-	            <input type="email" placeholder="Confirmez votre mail" id="mail2" class="form-control" name="mail2"/>
+	            <input type="email" placeholder="<?php echo $xml->main->register->Umail2; ?>" id="mail2" class="form-control" name="mail2"/>
 	          </td>
 	          <td id="email2_icon">
 
@@ -109,10 +122,10 @@
 	        </tr>
 	        <tr>
 	          <td align="right">
-	            <label for="mdp">Mot de passe : </label>
+	            <label for="mdp"><?php echo $xml->main->register->pwd; ?></label>
 	          </td>
 	          <td>
-	            <input type="password" placeholder="Votre mot de passe" id="mdp" class="form-control" name="mdp"/>
+	            <input type="password" placeholder="<?php echo $xml->main->register->Upwd; ?>" id="mdp" class="form-control" name="mdp"/>
 	          </td>
 	          <td id="mdp_icon">
 
@@ -120,10 +133,10 @@
 	        </tr>
 	        <tr>
 	          <td align="right">
-	            <label for="mdp2">Confirmez votre mot de passe : </label>
+	            <label for="mdp2"><?php echo $xml->main->register->pwd2; ?></label>
 	          </td>
 	          <td>
-	            <input type="password" placeholder="Confirmez votre mot de passe" id="mdp2" class="form-control" name="mdp2"/>
+	            <input type="password" placeholder="<?php echo $xml->main->register->Upwd2; ?>" id="mdp2" class="form-control" name="mdp2"/>
 	          </td>
 	          <td id="mdp2_icon">
 
@@ -162,7 +175,7 @@
 		   <br>
 		   <input type="text" id="Captcha" name="captcha">
 		 </br></br>
-		   <input class="btn btn-primary" type="submit" id = 'forminscription'  value="Inscription" />
+		   <input class="btn btn-primary" type="submit" id = 'forminscription'  value="<?php echo $xml->main->register->finalbtn; ?>" />
 		 </form>
 			</div>
 		</section>
