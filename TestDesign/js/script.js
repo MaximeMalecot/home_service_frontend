@@ -32,7 +32,7 @@ function prestation(){
 function abonnement(){
   const request = new XMLHttpRequest();
 
-  request.open('GET', 'abonnement.php');
+  request.open('GET', 'abonnement.php?');
 
   request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 
@@ -184,6 +184,25 @@ function select_type(){
   else{
     document.getElementById('input_date_fin').style.visibility="visible";
   }
+}
+
+function select_langue(){
+  const request = new XMLHttpRequest();
+  var langue = document.getElementById('langue').value;
+
+  request.open('GET', 'index.php?langue=' + langue);
+
+  request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+  request.onreadystatechange = function(getabo) {
+    if(request.readyState === 4 && request.status == 200){
+      document.getElementsByTagName('html').innerHTML = request.responseText ;
+    }else {
+      document.getElementsByTagName('html').innerHTML = '<span style="color:red">Erreur!</span>';
+      ;
+    }
+  }
+  request.send();
 
 }
 

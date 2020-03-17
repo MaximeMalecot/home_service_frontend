@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<file>
+  <header>
+    <langue>Français</langue>
+    <title>Welcome to our website !</title>
+    <getco>Connect</getco>
+    <creation>Still no account ? Register here !</creation>
+    <formconnect>
+      <mail>Your email</mail>
+      <password>Your password</password>
+      <connect>Connect</connect>
+      <cancel>Cancel</cancel>
+    </formconnect>
+  </header>
+  <main>
+    <onglet1>Home</onglet1>
+    <onglet2>Services</onglet2>
+    <onglet3>Subscriptions</onglet3>
+    <presta>
+
+    </presta>
+    <abo>
+      <title>All subscriptions :</title>
+    </abo>
+  </main>
+  <footer>
+    <sponsors>Our sponsors</sponsors>
+    <contact>Contact us</contact>
+    <cpr>Copyright by "the Collègues"</cpr>
+  </footer>
+</file>

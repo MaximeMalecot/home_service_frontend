@@ -14,4 +14,9 @@
   catch(Exception $e){
     die('Erreur : '.$e->getMessage());
   }
+
+  session_start();
+  if(!isset($_SESSION['langue']) && empty($_SESSION['langue'])){
+    $_SESSION['langue'] = "fr";
+  }
 ?>

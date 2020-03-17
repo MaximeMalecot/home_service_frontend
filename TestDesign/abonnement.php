@@ -1,8 +1,20 @@
-<div class="container" id="abonnements">
-  <h1 id="title">Les abonnements :</h1>
 <?php
   require_once "config.php";
-  session_start();
+  if(isset($_SESSION['langue'])){
+    $choice = $_SESSION['langue'];
+    $fichier = "xml/".$choice.".xml";
+    $xml = simplexml_load_file($fichier);
+  }
+  else{
+    $choice = "fr";
+    $fichier = "xml/".$choice.".xml";
+    $xml = simplexml_load_file($fichier);
+  }
+?>
+
+<div class="container" id="abonnements">
+  <h1 id="title"><?php echo $xml->main->abo->title; ?></h1>
+<?php
   $req = $cx->prepare('SELECT * FROM abonnement ORDER BY id_abonnement ASC ');
   $req->execute();
   $abonnements = $req->fetchAll();
