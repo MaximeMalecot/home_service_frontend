@@ -39,7 +39,6 @@
 									<h3>Vous aurez ".$abo['nb_heure']."h de services/mois gratuites</h3>
 									<h5>Coût : ".$abo['cout']."€ TTC / an</h5>";
 	        \Stripe\Stripe::setApiKey('sk_test_qMXWSSMoE6DTqXNR7kMQ0k6V00sh4hnDbe');
-	        \Stripe\Stripe::getApiKey();
 
 						if($abo['stripe_id'] == NULL){
 							$newprod = \Stripe\Product::create([
@@ -61,7 +60,7 @@
 								$plan = \Stripe\Plan::create([
 								    'currency' => 'eur',
 								    'interval' => 'month',
-								    'product' => $abo['stripe_id'],
+								    'product' => $newprod->id,
 								    'nickname' => $abo['nom'],
 								    'amount' => ($abo['cout'] * 100)/12,
 								]);
@@ -84,14 +83,9 @@
 								    'nickname' => $abo['nom'],
 								    'amount' => ($abo['cout'] * 100)/12,
 								]);
-							}
+								}
 						}
-						$subscription = \Stripe\Subscription::create([
-					    'customer_email'=> $_SESSION['mail'],
-					    'items' => [['plan' => $idplan,]],
-					    'billing_cycle_anchor' => 1586357986,
-						]);
-						/*$session = \Stripe\Checkout\Session::create([
+						$session = \Stripe\Checkout\Session::create([
 							'customer_email'=> $_SESSION['mail'],
 						  'payment_method_types' => ['card'],
 						  'subscription_data' => [
@@ -103,7 +97,7 @@
 						  'cancel_url' => URL."/abonnement_information.php?session_id=cancel",
 						]);
 						echo "<button class=\"btn btn-primary\" onclick=\"gotoCheckout('".$session->id."')\">Procéder au payement</button>
-									</div></div>";*/
+									</div></div>";
 					}
 				}
       ?>
