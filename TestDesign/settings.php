@@ -18,16 +18,19 @@
       require_once "config.php";
       require_once "requireStripe.php";
 
-      if(isset($_SESSION['mail']) && isset($_GET['session_id']) && isset($_GET['abonnement'])){
+      if(isset($_SESSION['mail'])){
         $req = $cx->prepare('SELECT * FROM user WHERE mail = ?');
         $req->execute(array($_SESSION['mail']));
         $user = $req->fetch();
-        $req2 = $cx->prepare('SELECT * FROM abonnement WHERE id_abonnement = ?');
-        $req2->execute(array($_GET['abonnement']));
-        $abo = $req2->fetch();
+        $req2 = $cx->prepare('SELECT * FROM souscription WHERE user_id_user = ?');
+        $req2->execute(array($user['id_user']));
+        $sous = $req2->fetch();
 
         \Stripe\Stripe::setApiKey('sk_test_qMXWSSMoE6DTqXNR7kMQ0k6V00sh4hnDbe');
-
+        $session = \Stripe\Checkout\Session::all();
+        //$session = \Stripe\Checkout\Session::retrieve($sous['stripe_id']);
+        print_r($session);
+        /*
         $events = \Stripe\Event::all([
           'type' => 'checkout.session.completed',
           'created' => [
@@ -60,7 +63,7 @@
                     </div>";
             }
           }
-        }
+        }*/
       }
     ?>
   </main>
