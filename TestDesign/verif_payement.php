@@ -42,15 +42,21 @@
 								</div>";
 				}
 				else{
-					print_r($verif);
 					$latestsub = \Stripe\Subscription::retrieve($verif['stripe_id']);
-					print_r($latestsub);
-					$latestsub->delete();
-					$req4 = $cx->prepare('UPDATE souscription SET abonnement_id_abonnement = ?, date = NOW(), stripe_id = ? WHERE user_id_user = ?');
-					$req4->execute(array($abo['id_abonnement'], $CurrentSession['subscription'], $user['id_user']));
-					echo "<div class=\"container\">
-									<h1 id=\"congratz\">Félicitations pour avoir changer d'abonnement, profitez de vos nouveaux avantages dès maintenant!</h1>
-								</div>";
+					$currentsub = \Stripe\Subscription::retrieve($CurrentSession['subscription']);
+					if($currentsub['id'] != $latestsub['id']){
+						$latestsub->delete();
+						$req4 = $cx->prepare('UPDATE souscription SET abonnement_id_abonnement = ?, date = NOW(), stripe_id = ? WHERE user_id_user = ?');
+						$req4->execute(array($abo['id_abonnement'], $CurrentSession['subscription'], $user['id_user']));
+						echo "<div class=\"container\">
+										<h1 id=\"congratz\">Félicitations pour avoir changer d'abonnement, profitez de vos nouveaux avantages dès maintenant!</h1>
+									</div>";
+					}
+					else{
+						echo "<div class=\"container\">
+										<h1 id=\"congratz\">Une erreur est servenue, mais ne vous inquietez pas votre abonnement est tout de même pris en compte !</h1>
+									</div>";
+					}
 				}
       }
     ?>
