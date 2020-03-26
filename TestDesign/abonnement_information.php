@@ -18,6 +18,7 @@
       require_once "config.php";
       require_once "requireStripe.php";
 			ini_set('display_errors', '1');
+			\Stripe\Stripe::setApiKey('sk_test_qMXWSSMoE6DTqXNR7kMQ0k6V00sh4hnDbe');
 
 			if(isset($_GET['session_id']) && $_GET['session_id'] == 'cancel'){
 				echo "Votre payement n'a pas pu aboutir, veuillez réessayer ultérieurement";
@@ -31,6 +32,9 @@
 	        $req = $cx->prepare('SELECT * FROM abonnement WHERE id_abonnement = ?');
 	        $req->execute(array($_GET['id']));
 	        $abo = $req->fetch();
+					$req2 = $cx->prepare('SELECT * FROM user WHERE id_user = ?');
+	        $req2->execute(array($_SESSION["mail"]));
+	        $user = $req2->fetch();
 					echo "<div class = 'container'>
 								<br /><h2>Nous sommes heureux de voir que vous voulez souscrire à un abonnement ! Mais d'abord vérifier bien ses informations :</h2><br />";
 					echo "	<div class=\"abos\">
@@ -38,7 +42,6 @@
 									<h3>Vous aurez un accès illimité ".$abo['temps']."j/7 et de ".$abo['heure_debut']."h à ".$abo['heure_fin']."h !</h3>
 									<h3>Vous aurez ".$abo['nb_heure']."h de services/mois gratuites</h3>
 									<h5>Coût : ".$abo['cout']."€ TTC / an</h5>";
-	        \Stripe\Stripe::setApiKey('sk_test_qMXWSSMoE6DTqXNR7kMQ0k6V00sh4hnDbe');
 
 						if($abo['stripe_id'] == NULL){
 							$newprod = \Stripe\Product::create([
@@ -86,6 +89,7 @@
 								}
 						}
 						$session = \Stripe\Checkout\Session::create([
+							'customer'=> $user['stripe_id'],
 							'customer_email'=> $_SESSION['mail'],
 						  'payment_method_types' => ['card'],
 						  'subscription_data' => [

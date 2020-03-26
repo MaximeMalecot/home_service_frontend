@@ -17,16 +17,15 @@
       ini_set('display_errors', 1);
       require_once "config.php";
       require_once "requireStripe.php";
+      \Stripe\Stripe::setApiKey('sk_test_qMXWSSMoE6DTqXNR7kMQ0k6V00sh4hnDbe');
 
-      if(isset($_SESSION['mail']) && isset($_GET['session_id']) && isset($_GET['abonnement'])){
+			if(isset($_SESSION['mail']) && isset($_GET['session_id']) && isset($_GET['abonnement'])){
         $req = $cx->prepare('SELECT * FROM user WHERE mail = ?');
         $req->execute(array($_SESSION['mail']));
         $user = $req->fetch();
         $req2 = $cx->prepare('SELECT * FROM abonnement WHERE id_abonnement = ?');
         $req2->execute(array($_GET['abonnement']));
         $abo = $req2->fetch();
-
-        \Stripe\Stripe::setApiKey('sk_test_qMXWSSMoE6DTqXNR7kMQ0k6V00sh4hnDbe');
 
 				$CurrentSession = \Stripe\Checkout\Session::retrieve($_GET['session_id']);
 
