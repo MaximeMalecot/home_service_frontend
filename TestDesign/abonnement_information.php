@@ -5,6 +5,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script src="https://js.stripe.com/v3/"></script>
 	<link rel="stylesheet" type="text/css" href="Style/style.css">
 	<meta charset="utf-8">
 </head>
@@ -32,8 +33,8 @@
 	        $req = $cx->prepare('SELECT * FROM abonnement WHERE id_abonnement = ?');
 	        $req->execute(array($_GET['id']));
 	        $abo = $req->fetch();
-					$req2 = $cx->prepare('SELECT * FROM user WHERE id_user = ?');
-	        $req2->execute(array($_SESSION["mail"]));
+					$req2 = $cx->prepare('SELECT * FROM user WHERE mail = ?');
+	        $req2->execute(array($_SESSION['mail']));
 	        $user = $req2->fetch();
 					echo "<div class = 'container'>
 								<br /><h2>Nous sommes heureux de voir que vous voulez souscrire à un abonnement ! Mais d'abord vérifier bien ses informations :</h2><br />";
@@ -90,7 +91,6 @@
 						}
 						$session = \Stripe\Checkout\Session::create([
 							'customer'=> $user['stripe_id'],
-							'customer_email'=> $_SESSION['mail'],
 						  'payment_method_types' => ['card'],
 						  'subscription_data' => [
 						    'items' => [[
@@ -110,7 +110,6 @@
   <?php
     include('footer.php');
   ?>
-	<script src="https://js.stripe.com/v3/"></script>
 	<script type="text/javascript" src="js/script.js"></script>
 </body>
 </html>

@@ -17,7 +17,7 @@
       echo "
             <table>
              <tr>
-              <td align=\"right\">
+              <td align=\"center\">
                 <label>Type de service : </label>
               </td>
               <td>
@@ -27,33 +27,37 @@
                 </select>
               </td>
              </tr>
+             <br/>
              <tr>
-              <td align=\"right\">
+              <td align=\"center\">
                 <label>Nombre d'heures voulues (en cas de service récurrent, par jour) : </label>
               </td>
               <td>
                 <input type=\"number\" id=\"heure\" class=\"form-control\" name=\"heure\"/>
               </td>
              </tr>
+             <br/>
              <tr>
-               <td align=\"right\">
+               <td align=\"center\">
                  <label>Date : </label>
                </td>
                <td>
                 <input type=\"date\" id=\"date_debut\" class=\"form-control\" name=\"date_debut\" min=\"".$date."\"  />
                </td>
              </tr>
+             <br/>
              <tr style=\"visibility: hidden\" id=\"input_date_fin\">
-              <td align=\"right\">
+              <td align=\"center\">
                 <label>Date de fin : </label>
               </td>
               <td>
                 <input type=\"date\" id=\"date_fin\" class=\"form-control\" name=\"date_fin\" min=\"".$tomorrow."\" />
               </td>
              </tr>
+             <br/>
              <br /><br />
              <tr>
-              <td align=\"right\">
+              <td align=\"center\">
                 <label>En cas de supplément ou de spécificités cochez cette case et faites nous les savoir</label>
               </td>
               <td>
@@ -61,7 +65,7 @@
               </td>
              </tr>
              <tr style=\"visibility: hidden\" id=\"input_spec\">
-              <td align=\"right\">
+              <td align=\"center\">
                 <label>Renseigner vos spécificités </label>
               </td>
               <td>
@@ -69,35 +73,17 @@
               </td>
              </tr>
              <tr>
-               <td align=\"right\">
+               <td align=\"center\">
                 <button class=\"btn btn-primary\" onclick=\"getcost('".$_POST['id']."','".$_POST['nom']."')\" id='getcost'>Connaitre le cout de la prestation</button>
                </td>
              </tr>
-
+             </table>
             </div>
-            <div id=\"finalpresta\">
-
-            </div>";
-      /*
-      $cout = 0;
-      $id = 0;
-      $ville;
-      foreach($prestataires as $prestataire){
-        if(($prestataire['prix_heure'] + $prestataire['supplement']) > $cout){
-          $cout = ($prestataire['prix_heure'] + $prestataire['supplement']);
-          $id = $prestataire['id_prestataire'];
-          $ville = $prestataire['categorie_ville'];
-        }
-      }
-      echo $id."<br />".$cout;
-      if( $cout != NULL && $id != NULL && $ville!=NULL){
-        echo "<div>
-                <h1>Nous sommes heureux de vous voir ici !</h1>
-                <h2>Nous avons pu vous trouver un prestaire, il vous sera facturé </h2>
-              </div>";
-      }
-    }*/
+            <br/>";
   }
   }
 
 ?>
+<div id="finalpresta">
+
+</div>

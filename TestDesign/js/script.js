@@ -1,6 +1,5 @@
 function gotoCheckout(id){
   var stripe = Stripe('pk_test_Z3ctWJuVAUFJ4b3C5VJxnN5u002lvbMdIJ');
-  console.log(stripe);
   stripe.redirectToCheckout({
     // Make the id field from the Checkout Session creation API response
     // available to this file, so you can provide it as parameter here
@@ -224,12 +223,12 @@ function getcost(id,categorie){
   let date_fin = document.getElementById('date_fin').value;
 
   if(document.getElementById('supplement').checked == true){
-    var supplement = 1;
+    var supplement = document.getElementById('spec').value;
   }
   else{
-    var supplement = 0;
+    var supplement = "aucun";
   }
-
+  console.log(supplement);
   request.open('POST', 'verifcostpresta.php', true);
 
   request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');

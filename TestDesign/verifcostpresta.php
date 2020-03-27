@@ -1,5 +1,8 @@
 <?php
   require_once "config.php";
+  require_once "requireStripe.php";
+  \Stripe\Stripe::setApiKey('sk_test_qMXWSSMoE6DTqXNR7kMQ0k6V00sh4hnDbe');
+
   session_start();
   $req = $cx->prepare('SELECT * FROM prestataire WHERE categorie_nom = ?');
   $req->execute(array($_POST['nom']));
@@ -55,7 +58,7 @@
     }
   }
   $cout *= 1.3;
-  
+
   if(isset($date_fin) && !empty($date_fin)){
     $nbJoursTime = strtotime($date_fin) - strtotime($date_debut);
     $nbJours = $nbJoursTime/86400 + 1;
@@ -63,10 +66,33 @@
   }
 
   if(isset($_SESSION['mail'])){
+    $req2 = $cx->prepare('SELECT * FROM user WHERE mail = ?');
+    $req2->execute(array($_SESSION['mail']));
+    $user = $req2->fetch();
+    $req3 = $cx->prepare('SELECT * FROM prestation WHERE id_prestation = ?');
+    $req3->execute(array($_POST['id']));
+    $prestation = $req3->fetch();
+
+    if($_POST['type'] != 2){
+      $date_fin = $date_debut;
+    }
+
+    $session = \Stripe\Checkout\Session::create([
+      'customer'=> $user['stripe_id'],
+      'payment_method_types' => ['card'],
+      'line_items' => [[
+        'name' => $prestation['nom'],
+        'description' => $prestation['description'],
+        'amount' => $cout*100,
+        'currency' => 'eur',
+        'quantity' => 1,
+      ]],
+      'success_url' => URL."/finalpresta.php?session_id={CHECKOUT_SESSION_ID}&date_debut=".$date_debut."&date_fin=".$date_fin."&supplement=".$supplement."&user=".$user['id_user']."&user_ville=".$user['ville_reference']."&prestation=".$prestation['id_prestation']."&prestation_ville=".$prestation['categorie_ville']."&cout=".$cout,
+      'cancel_url' => URL."/verifcostpresta.php?session_id=cancel",
+    ]);
     echo "<div>
-            Cette prestation vous couterai ".$cout."€, si vous voulez la réserver cliquez sur le bouton en dessous !
-            <input class=\"btn btn-primary\" onclick()=\"takepresta('".$_POST['id']."','".$id."','".$cout."','".$ville."')\" value=\"Réserver\" />
-            <script type=\"text/javascript\" src=\"js/script.js\"></script>
+            <h3>Cette prestation vous couterai ".$cout."€, si vous voulez la réserver cliquez sur le bouton en dessous !</h3>
+            <button class=\"btn btn-primary\" onclick=\"gotoCheckout('".$session->id."')\">Procéder au payement</button>
           </div>
           ";
   }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 17, 2020 at 02:30 PM
+-- Generation Time: Mar 27, 2020 at 02:00 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -35,17 +35,18 @@ CREATE TABLE `abonnement` (
   `nb_heure` float DEFAULT NULL,
   `temps` int(11) DEFAULT NULL,
   `heure_debut` int(11) DEFAULT NULL,
-  `heure_fin` int(11) DEFAULT NULL
+  `heure_fin` int(11) DEFAULT NULL,
+  `stripe_id` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `abonnement`
 --
 
-INSERT INTO `abonnement` (`id_abonnement`, `nom`, `cout`, `nb_heure`, `temps`, `heure_debut`, `heure_fin`) VALUES
-(1, 'Abonnement de base', 2400, 12, 5, 9, 20),
-(2, 'Abonnement familial', 3600, 25, 6, 9, 20),
-(3, 'Abonnement premium', 6000, 50, 7, 0, 24);
+INSERT INTO `abonnement` (`id_abonnement`, `nom`, `cout`, `nb_heure`, `temps`, `heure_debut`, `heure_fin`, `stripe_id`) VALUES
+(1, 'Abonnement de base', 2400, 12, 5, 9, 20, 'prod_GyqiP8eyYTvQfV'),
+(2, 'Abonnement familial', 3600, 25, 6, 9, 20, 'prod_GyqjGaMprHKyaz'),
+(3, 'Abonnement premium', 6000, 50, 7, 0, 24, 'prod_Gyqnowfz91E14R');
 
 -- --------------------------------------------------------
 
@@ -86,6 +87,25 @@ CREATE TABLE `contrat` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `date`
+--
+
+CREATE TABLE `date` (
+  `id` int(11) NOT NULL,
+  `date_debut` datetime NOT NULL,
+  `date_fin` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `date`
+--
+
+INSERT INTO `date` (`id`, `date_debut`, `date_fin`) VALUES
+(1, '2020-03-27 00:00:00', '2020-03-27 00:00:00');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `demande`
 --
 
@@ -111,9 +131,16 @@ CREATE TABLE `facturation` (
   `id_user` int(11) NOT NULL,
   `devis` int(11) DEFAULT NULL,
   `reservation_id_reservation` int(11) NOT NULL,
-  `prestataire_id_prestataire` int(11) NOT NULL,
-  `prestataire_ville` varchar(45) NOT NULL
+  `prestataire_id_prestataire` int(11) DEFAULT NULL,
+  `prestataire_ville` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `facturation`
+--
+
+INSERT INTO `facturation` (`id_facturation`, `date`, `cout`, `id_user`, `devis`, `reservation_id_reservation`, `prestataire_id_prestataire`, `prestataire_ville`) VALUES
+(2, '2020-03-27 14:59:26', 18.2, 10, NULL, 2, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -186,6 +213,20 @@ CREATE TABLE `reservation` (
   `prestation_ville` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `reservation`
+--
+
+INSERT INTO `reservation` (`id_reservation`, `date_debut`, `date_fin`, `supplement`, `user_id_user`, `user_ville_reference`, `prestation_id_prestation`, `prestation_ville`) VALUES
+(2, '2020-03-27 00:00:00', '2020-03-27 00:00:00', 'aucun', 10, 'Paris', 1, 'Paris'),
+(3, '2020-03-27 00:00:00', '2020-03-27 00:00:00', 'aucun', 10, 'Paris', 1, 'Paris'),
+(4, '2020-03-27 00:00:00', '2020-03-27 00:00:00', 'aucun', 10, 'Paris', 1, 'Paris'),
+(5, '2020-03-27 00:00:00', '2020-03-27 00:00:00', 'aucun', 10, 'Paris', 1, 'Paris'),
+(6, '2020-03-27 00:00:00', '2020-03-27 00:00:00', 'aucun', 10, 'Paris', 1, 'Paris'),
+(7, '2020-03-27 00:00:00', '2020-03-27 00:00:00', 'aucun', 10, 'Paris', 1, 'Paris'),
+(8, '2020-03-27 00:00:00', '2020-03-27 00:00:00', 'aucun', 10, 'Paris', 1, 'Paris'),
+(9, '2020-03-27 00:00:00', '2020-03-27 00:00:00', 'aucun', 10, 'Paris', 1, 'Paris');
+
 -- --------------------------------------------------------
 
 --
@@ -197,15 +238,16 @@ CREATE TABLE `souscription` (
   `date` datetime DEFAULT NULL,
   `heure_restante` float DEFAULT NULL,
   `user_id_user` int(11) NOT NULL,
-  `user_ville_reference` varchar(45) NOT NULL
+  `user_ville_reference` varchar(45) NOT NULL,
+  `stripe_id` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `souscription`
 --
 
-INSERT INTO `souscription` (`abonnement_id_abonnement`, `date`, `heure_restante`, `user_id_user`, `user_ville_reference`) VALUES
-(1, '2020-03-17 13:35:17', 12, 8, 'Paris');
+INSERT INTO `souscription` (`abonnement_id_abonnement`, `date`, `heure_restante`, `user_id_user`, `user_ville_reference`, `stripe_id`) VALUES
+(3, '2020-03-26 21:44:41', 12, 10, 'Paris', 'sub_Gz0aHi11ohL6bN');
 
 -- --------------------------------------------------------
 
@@ -224,16 +266,17 @@ CREATE TABLE `user` (
   `phone` varchar(45) DEFAULT NULL,
   `adresse` varchar(45) DEFAULT NULL,
   `cp` int(11) DEFAULT NULL,
-  `statut` varchar(45) DEFAULT NULL
+  `statut` varchar(45) DEFAULT NULL,
+  `stripe_id` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id_user`, `ville_reference`, `nom`, `prenom`, `mdp`, `mail`, `date_inscription`, `phone`, `adresse`, `cp`, `statut`) VALUES
-(8, 'Paris', 'Malecot', 'Maxime', '2247aa5d779d2d2384cadf9773dc47b4f73a08270d5365ef72a043df90e41051e19a6c080a690f5b44eabaa28a919853c9d0ed26fa7e4338e281a5a138f57a89', '92maximemalecot@gmail.com', '2020-03-17 12:47:30', '0659591280', '7 rue trezel', 92300, NULL),
-(9, 'Paris', 'Malecot', 'Maxime', '2247aa5d779d2d2384cadf9773dc47b4f73a08270d5365ef72a043df90e41051e19a6c080a690f5b44eabaa28a919853c9d0ed26fa7e4338e281a5a138f57a89', 'maxime92.trap@gmail.com', '2020-03-17 15:27:34', '0659591280', '7 rue trezel', 92300, NULL);
+INSERT INTO `user` (`id_user`, `ville_reference`, `nom`, `prenom`, `mdp`, `mail`, `date_inscription`, `phone`, `adresse`, `cp`, `statut`, `stripe_id`) VALUES
+(9, 'Paris', 'Malecot', 'Maxime', '2247aa5d779d2d2384cadf9773dc47b4f73a08270d5365ef72a043df90e41051e19a6c080a690f5b44eabaa28a919853c9d0ed26fa7e4338e281a5a138f57a89', 'maxime92.trap@gmail.com', '2020-03-17 15:27:34', '0659591280', '7 rue trezel', 92300, NULL, NULL),
+(10, 'Paris', 'Malecot', 'Maxime', '2247aa5d779d2d2384cadf9773dc47b4f73a08270d5365ef72a043df90e41051e19a6c080a690f5b44eabaa28a919853c9d0ed26fa7e4338e281a5a138f57a89', '92maximemalecot@gmail.com', '2020-03-26 21:06:26', '0659591280', '7 rue trezel', 92300, NULL, 'cus_GyzycjfDFB0zon');
 
 --
 -- Indexes for dumped tables
@@ -259,6 +302,12 @@ ALTER TABLE `contrat`
   ADD KEY `fk_contrat_prestataire1_idx` (`prestataire_id_prestataire`,`prestataire_ville`);
 
 --
+-- Indexes for table `date`
+--
+ALTER TABLE `date`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `demande`
 --
 ALTER TABLE `demande`
@@ -269,7 +318,7 @@ ALTER TABLE `demande`
 -- Indexes for table `facturation`
 --
 ALTER TABLE `facturation`
-  ADD PRIMARY KEY (`id_facturation`,`prestataire_id_prestataire`,`prestataire_ville`),
+  ADD PRIMARY KEY (`id_facturation`),
   ADD KEY `fk_facturation_client1_idx` (`id_user`),
   ADD KEY `fk_facturation_reservation1_idx` (`reservation_id_reservation`),
   ADD KEY `fk_facturation_prestataire1_idx` (`prestataire_id_prestataire`,`prestataire_ville`);
@@ -327,6 +376,12 @@ ALTER TABLE `contrat`
   MODIFY `id_contrat` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `date`
+--
+ALTER TABLE `date`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `demande`
 --
 ALTER TABLE `demande`
@@ -336,7 +391,7 @@ ALTER TABLE `demande`
 -- AUTO_INCREMENT for table `facturation`
 --
 ALTER TABLE `facturation`
-  MODIFY `id_facturation` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_facturation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `prestataire`
@@ -354,13 +409,13 @@ ALTER TABLE `prestation`
 -- AUTO_INCREMENT for table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `id_reservation` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_reservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
