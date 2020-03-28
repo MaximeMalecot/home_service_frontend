@@ -84,24 +84,6 @@ CREATE TABLE `contrat` (
   `prestataire_ville` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `date`
---
-
-CREATE TABLE `date` (
-  `id` int(11) NOT NULL,
-  `date_debut` datetime NOT NULL,
-  `date_fin` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `date`
---
-
-INSERT INTO `date` (`id`, `date_debut`, `date_fin`) VALUES
-(1, '2020-03-27 00:00:00', '2020-03-27 00:00:00');
 
 -- --------------------------------------------------------
 
