@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 27, 2020 at 02:00 PM
+-- Generation Time: Mar 28, 2020 at 03:25 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -83,7 +83,6 @@ CREATE TABLE `contrat` (
   `prestataire_id_prestataire` int(11) NOT NULL,
   `prestataire_ville` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 -- --------------------------------------------------------
 
@@ -284,12 +283,6 @@ ALTER TABLE `contrat`
   ADD KEY `fk_contrat_prestataire1_idx` (`prestataire_id_prestataire`,`prestataire_ville`);
 
 --
--- Indexes for table `date`
---
-ALTER TABLE `date`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `demande`
 --
 ALTER TABLE `demande`
@@ -356,12 +349,6 @@ ALTER TABLE `abonnement`
 --
 ALTER TABLE `contrat`
   MODIFY `id_contrat` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `date`
---
-ALTER TABLE `date`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `demande`
