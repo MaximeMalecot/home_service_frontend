@@ -41,7 +41,9 @@
 					}
 				}
 				echo "</section>";
-
+				$_SESSION['panier'] = array();
+				array_push($_SESSION['panier'], 0, 1, 2);
+				print_r($_SESSION['panier']);
 			}
     ?>
   </main>

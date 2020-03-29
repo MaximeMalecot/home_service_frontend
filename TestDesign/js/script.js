@@ -247,3 +247,22 @@ function getcost(id,categorie){
 function takepresta(idprestation,idprestataire,cout,ville){
   console.log("oui");
 }
+
+function gototest(json){
+  console.log(json);
+  const request = new XMLHttpRequest();
+
+  request.open('GET', 'test.php?object=' + json);
+
+  request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+  request.onreadystatechange = function(getabo) {
+    if(request.readyState === 4 && request.status == 200){
+      document.getElementById('added').innerHTML = request.responseText ;
+    }else {
+      document.getElementById('added').innerHTML = '<span style="color:red">Erreur!</span>';
+      ;
+    }
+  }
+  request.send();
+}

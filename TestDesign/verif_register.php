@@ -156,7 +156,8 @@
   ));
 
   $_SESSION['mail'] = $_POST['mail'];
-  $_SESSION['Nom'] = $_POST['Nom'];
+  $_SESSION['nom'] = $_POST['nom'];
+  $_SESSION['reservations'] = array();
   header('Location: index.php');
   exit;
 

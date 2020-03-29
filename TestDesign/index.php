@@ -7,6 +7,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	<script src="https://js.stripe.com/v3/"></script>
+	<script type="text/javascript" src="js/script.js"></script>
 	<link rel="stylesheet" type="text/css" href="Style/style.css">
 	<meta charset="utf-8">
 </head>
@@ -46,7 +47,6 @@
 					</div>
 			</div>
 		</section>
-		<script type="text/javascript" src="js/script.js"></script>
 	</main>
 	<?php
 		include('footer.php');
