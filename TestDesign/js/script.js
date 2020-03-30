@@ -311,7 +311,6 @@ function gototest(json){
     }
   }
   request.send();
-
 }
 
 function deterdate(){
@@ -330,4 +329,23 @@ function deterdate(){
   console.log(final);
   console.log(typeof final);
   document.getElementById('date_fin').setAttribute("min", final);
+}
+
+function deleteHours(int,h){
+  console.log(int);
+  const request = new XMLHttpRequest();
+
+  request.open('GET', 'freepanel.php?index=' + int + '&heure=' + h);
+
+  request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+  request.onreadystatechange = function(deleteHours) {
+    if(request.readyState === 4 && request.status == 200){
+      document.getElementById('totalPrestaPannel').innerHTML = request.responseText ;
+    }else {
+      document.getElementById('totalPrestaPannel').innerHTML = '<span style="color:red">Erreur!</span>';
+      ;
+    }
+  }
+  request.send();
 }

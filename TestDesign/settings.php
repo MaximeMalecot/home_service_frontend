@@ -29,6 +29,11 @@
 				$req3 = $cx->prepare('SELECT * FROM abonnement WHERE id_abonnement = ?');
 				$req3->execute(array($souscription['abonnement_id_abonnement']));
 				$abonnement = $req3->fetch();
+
+				if( strcmp($user['statut'], "admin") == 0){
+					echo "tu es admin";
+				}
+
 				echo "<section id=\"subscription_invoice\">Vos payements suite à votre abonnement sur : ".$abonnement['nom']."<br/>";
 
 

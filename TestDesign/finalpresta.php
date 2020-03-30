@@ -19,21 +19,40 @@
       require_once "requireStripe.php";
       \Stripe\Stripe::setApiKey('sk_test_qMXWSSMoE6DTqXNR7kMQ0k6V00sh4hnDbe');
 			if(isset($_SESSION['mail']) && isset($_SESSION['reservations'])){
-				foreach ($_SESSION['reservations'] as $res){
-					$rez = unserialize($res);
-					//print_r($rez);
+				try{
+					$CurrentSession = \Stripe\Checkout\Session::retrieve($_GET['session_id']);
+					$req=$cx->prepare('INSERT INTO reservation(date_debut,date_fin,nb_heure,supplement,user_id_user,user_ville_reference,prestation_id_prestation,prestation_ville) VALUES (DATE(?),DATE(?),?,?,?,?,?,?)');
+					$req1=$cx->prepare('SELECT * FROM prestation WHERE id_prestation = ?');
+					$req2=$cx->prepare('INSERT INTO facturation(date,cout,id_user,reservation_id_reservation) VALUES(NOW(),?,?,?)');
+
+					foreach ($_SESSION['reservations'] as $res) {
+	          $rez = unserialize($res);
+						$req1->execute(array($rez->getPID()));
+						$PVR = $req1->fetch();
+						$req->execute(array(
+							$rez->getDateDebut(),
+							$rez->getDateFin(),
+							$rez->getNbHeure(),
+							$rez->getSupplement(),
+							$rez->getUID(),
+							$rez->getUVR(),
+							$rez->getPID(),
+							$PVR['categorie_ville']
+						));
+						$lastId = $cx->lastInsertId();
+						echo $lastId;
+						$req2->execute(array(
+							$rez->getCout(),
+							$rez->getUID(),
+							$lastId
+						));
+	        }
+					$_SESSION['reservations'] = array();
 				}
-			}
-			/*if($CurrentSession = \Stripe\Checkout\Session::retrieve($_GET['session_id'])){
-				print_r($CurrentSession);
-			}*/
-			try{
-				$CurrentSession = \Stripe\Checkout\Session::retrieve($_GET['session_id']);
-				print_r($CurrentSession);
-			}
-			catch(Exception $e){
-				echo "une erreur est survenue!";
-			}
+				catch(Exception $e){
+					echo "une erreur est survenue!";
+				}
+		}
 			/*if(isset($_GET['session_id']) && isset($_GET['date_debut']) && isset($_GET['date_fin']) && isset($_GET['supplement']) && isset($_GET['user']) && isset($_GET['user_ville']) && isset($_GET['prestation'])){
         $req=$cx->prepare('INSERT INTO reservation(date_debut,date_fin,supplement,user_id_user,user_ville_reference,prestation_id_prestation,prestation_ville) VALUES (DATE(?),DATE(?),?,?,?,?,?)');
         $req->execute(array($_GET['date_debut'],$_GET['date_fin'],$_GET['supplement'],$_GET['user'],$_GET['user_ville'],$_GET['prestation'],$_GET['prestation_ville']));

@@ -64,7 +64,7 @@
     </select>
   </form>
     <div id="panier">
-      <a href="panier.php"><img src="img/panier.png"></a>
+      <a href="panier.php"><img id="headpan" src="img/panier.png"></a>
     </div>
   </section>
 </header>
