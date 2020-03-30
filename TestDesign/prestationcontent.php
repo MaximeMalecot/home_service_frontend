@@ -18,29 +18,41 @@
    $jour == 0 ? $jour = 7 : $jour = $jour;
 
    if(isset($_SESSION['mail'])){
-     $req1 = $cx->prepare('SELECT * FROM souscription WHERE id_user = (SELECT id_user FROM user WHERE mail = ?)');
+
+     $req1 = $cx->prepare('SELECT * FROM souscription WHERE user_id_user = (SELECT id_user FROM user WHERE mail = ?)');
      $req1->execute(array($_SESSION['mail']));
      $souscription = $req1->fetch();
      $req2 = $cx->prepare('SELECT temps FROM abonnement WHERE id_abonnement = ?');
      $req2->execute(array($souscription['abonnement_id_abonnement']));
      $temps = $req2->fetch();
-     if($souscription != false && $temps[0] >= $jour){
-       echo "Créez votre propre prestation !";
-     }
-   }
-   if ($prestations == false){
-     echo "<div id=\"Unfortunate\">
-            Malheureusement aucune prestation n'est disponible en ce moment...<br />
-            Si vous voulez pouvoir créer une prestation en fonction de vos besoins, abonnez vous et nous répondrons dans les plus brefs délais !
-            </div>";
-    }
+     if ($prestations == false){
+       echo "<div id=\"Unfortunate\">
+              <h2>Malheureusement aucune prestation n'est disponible en ce moment...<br />";
+              if($souscription != false && $temps[0] >= $jour){
+                      echo "Vous pouvez tout de même faire la demande d'une prestation à HomeService, vous aurez une réponse sous peu !</h2>
+                            <input class=\"btn btn-primary\" onclick=\"newPresta()\" value=\"Faire une demande\"/>".
+                          "</div>";
+                    }
+              else{
+                echo "Si vous voulez pouvoir créer une prestation en fonction de vos besoins, abonnez vous et nous répondrons dans les plus brefs délais !</h2></div>";
+              }
+      }
+      else{
+        if($souscription != false && $temps[0] >= $jour){
+          echo "<div id=\"Fortunate\">
+                   <h2>Aucune prestation ne vous convient ? Faites la demande d'une prestation !</h2>
+                   <input class=\"btn btn-primary\" onclick=\"newPresta()\" value=\"Faire une demande\"/>".
+               "</div>";
+        }
+      }
+  }
 
    foreach ($prestations as $prestation) {
      echo "<div class=\"presta\">
             <h1>".$prestation[1]." : </h1>".
             "<div>".$prestation[2]."</div>".
             "<input class=\"btn btn-primary\" onclick=\"reserve('".$prestation[0]."','".$nom."')\" value=\"Réserver la prestation\"/>".
-            "</div>";
+          "</div>";
    }
 
 ?>

@@ -36,6 +36,7 @@
 					$req2 = $cx->prepare('SELECT * FROM user WHERE mail = ?');
 	        $req2->execute(array($_SESSION['mail']));
 	        $user = $req2->fetch();
+					if($abo != NULL){
 					echo "<div class = 'container'>
 								<br /><h2>Nous sommes heureux de voir que vous voulez souscrire à un abonnement ! Mais d'abord vérifier bien ses informations :</h2><br />";
 					echo "	<div class=\"abos\">
@@ -51,7 +52,7 @@
 							]);
 							$req1= $cx->prepare('UPDATE abonnement SET stripe_id = ? WHERE id_abonnement = ?');
 							$req1->execute(array($newprod->id, $abo['id_abonnement']));
-							$req->execute(array($_GET['id']));
+
 
 							$idplan = "0";
 							$allPLan = \Stripe\Plan::all();
@@ -103,7 +104,13 @@
 						echo "<button class=\"btn btn-primary\" onclick=\"gotoCheckout('".$session->id."')\">Procéder au payement</button>
 									</div></div>";
 					}
+					else{
+						echo "<div class=\"container\">
+										<h1 id=\"congratz\">Une erreur est servenue au niveau de l'abonnement !</h1>
+									</div>";
+					}
 				}
+			}
       ?>
 
   </main>

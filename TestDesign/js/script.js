@@ -45,6 +45,7 @@ function abonnement(){
   }
   request.send();
 }
+
 function home(){
   const request = new XMLHttpRequest();
 
@@ -156,6 +157,56 @@ function reserve(id,categorie){
   request.send("id=" + id + "&nom=" + categorie);
 }
 
+function newPresta(){
+  const request = new XMLHttpRequest();
+  request.open('GET', 'ask.php');
+
+  request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+  request.onreadystatechange = function(newPresta) {
+    if(request.readyState === 4 && request.status == 200){
+      document.getElementById('prestationcontent').innerHTML = request.responseText ;
+    }else {
+      document.getElementById('prestationcontent').innerHTML = '<span style="color:red">Erreur!</span>';
+      ;
+    }
+  }
+  request.send();
+}
+
+function verifytext(){
+  var text = document.getElementById('descript').value;
+  var btn = document.getElementById('btnCreate');
+  if(text.length >= 20){
+    btn.style.visibility = "visible";
+  }
+  else{
+    btn.style.visibility = "hidden";
+  }
+}
+
+function createAsk(id,ville){
+  const request = new XMLHttpRequest();
+  var btn = document.getElementById('btnCreate');
+  btn.disabled = true;
+  var text = document.getElementById('descript').value
+
+
+  request.open('POST', 'demande.php', true);
+
+  request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+  request.onreadystatechange = function(createAsk) {
+    if(request.readyState === 4 && request.status == 200){
+      document.getElementById('resultask').innerHTML = request.responseText ;
+    }else {
+      document.getElementById('resultask').innerHTML = '<span style="color:red">Erreur!</span>';
+      ;
+    }
+  }
+  request.send("user=" + id + "&ville=" + ville + "&descript=" + text);
+}
+
 function getabo(id){
   const request = new XMLHttpRequest();
 
@@ -247,7 +298,7 @@ function gototest(json){
   var btn = document.getElementById('btnPanl');
   btn.style.visibility = "hidden";
 
-  request.open('GET', 'test.php?object=' + json);
+  request.open('GET', 'addshop.php?object=' + json);
 
   request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 

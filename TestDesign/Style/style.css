@@ -56,6 +56,9 @@ footer > div > nav > ul > li > a:hover{
 h1{
   color: #F7AF42;
 }
+h2{
+  color: #F7AF42;
+}
 #contact{
   color: #DEB67C;
 }
@@ -238,37 +241,47 @@ label{
   color: #F7AF42;
 }
 
+#Unfortunate > input{
+  background-color: #F7AF42;
+  color: #FAFAFA;
+  margin: 5px;
+}
+#Unfortunate > input:hover{
+  background-color: #FAFAFA;
+  color: #F7AF42;
+}
+#Fortunate > input{
+  background-color: #F7AF42;
+  color: #FAFAFA;
+  margin: 5px;
+}
+#Fortunate > input:hover{
+  background-color: #FAFAFA;
+  color: #F7AF42;
+}
+
+#btnCreate{
+  background-color: #F7AF42;
+  color: #FAFAFA;
+  margin: 5px;
+}
+#btnCreate:hover{
+  background-color: #FAFAFA;
+  color: #F7AF42;
+}
+
+
 #getprestation > h4{
   color: #F7AF42;
   padding: 3px;
 }
 
-/*/////////////////////////////////////////////*/
-/**
-* Shows how you can use CSS to style your Element's container.
-*/
-.MyCardElement {
-  height: 40px;
-  padding: 10px 12px;
-  width: 100%;
-  color: #32325d;
-  background-color: white;
-  border: 1px solid transparent;
-  border-radius: 4px;
-
-  box-shadow: 0 1px 3px 0 #e6ebf1;
-  -webkit-transition: box-shadow 150ms ease;
-  transition: box-shadow 150ms ease;
-}
-
-.MyCardElement--focus {
-  box-shadow: 0 1px 3px 0 #cfd7df;
-}
-
-.MyCardElement--invalid {
-  border-color: #fa755a;
-}
-
-.MyCardElement--webkit-autofill {
-  background-color: #fefde5 !important;
+textarea {
+    width: 400px;
+    color: black;
+    padding: 10px;
+    line-height: 1.5;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 1px #999;
 }
