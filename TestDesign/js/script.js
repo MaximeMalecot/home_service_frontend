@@ -106,8 +106,6 @@ function verifconnect(){
     let mail =  document.getElementById('mail').value;
     let mdp = document.getElementById('mdp').value;
 
-    console.log(mail);
-    console.log(mdp);
     request.open('POST', 'verif_connect.php', true);
 
     request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
@@ -228,7 +226,6 @@ function getcost(id,categorie){
   else{
     var supplement = "aucun";
   }
-  console.log(supplement);
   request.open('POST', 'verifcostpresta.php', true);
 
   request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
@@ -244,13 +241,11 @@ function getcost(id,categorie){
   request.send("type=" + type + "&heure=" + heure + "&date_debut=" + date_debut + "&date_fin=" + date_fin + "&supplement=" + supplement + "&nom=" + categorie + "&id=" + id);
 }
 
-function takepresta(idprestation,idprestataire,cout,ville){
-  console.log("oui");
-}
 
 function gototest(json){
-  console.log(json);
   const request = new XMLHttpRequest();
+  var btn = document.getElementById('btnPanl');
+  btn.style.visibility = "hidden";
 
   request.open('GET', 'test.php?object=' + json);
 
@@ -265,4 +260,23 @@ function gototest(json){
     }
   }
   request.send();
+
+}
+
+function deterdate(){
+  var date = new Date(document.getElementById('date_debut').value);
+  date.setDate(date.getDate()+1);
+  var day = date.getUTCDate();
+  if(day < 10){
+    day = "0" + day;
+  }
+  var month = date.getUTCMonth() + 1; //months from 1-12
+  if(month < 10){
+    month = "0" + month;
+  }
+  var year = date.getUTCFullYear();
+  var final = year + "-" + month + "-" + day;
+  console.log(final);
+  console.log(typeof final);
+  document.getElementById('date_fin').setAttribute("min", final);
 }

@@ -1,7 +1,7 @@
 <div id="prestations">
 <?php
   require_once "config.php";
-  session_start();
+  require_once "Class/Reservation.php";
   if(isset($_GET['nom']) AND !empty($_GET['nom'])) {
       $nom = $_GET['nom'];
    }else{

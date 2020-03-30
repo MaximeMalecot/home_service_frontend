@@ -1,5 +1,6 @@
 <?php
   require_once __DIR__ . "/bdd/database.env.php";
+  require_once "Class/Reservation.php";
 
   $options = [
     'host=' . DB_HOST,
@@ -14,8 +15,9 @@
   catch(Exception $e){
     die('Erreur : '.$e->getMessage());
   }
-
-  session_start();
+  if(!isset($_SESSION)){
+    session_start();
+  }
   if(!isset($_SESSION['langue']) && empty($_SESSION['langue'])){
     $_SESSION['langue'] = "fr";
   }

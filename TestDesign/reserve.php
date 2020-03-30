@@ -1,6 +1,6 @@
 <?php
   require_once "config.php";
-  session_start();
+  require_once "Class/Reservation.php";
   ini_set('display_errors', '1');
   if(isset($_POST['nom']) && isset($_POST['id'])){
     $req = $cx->prepare('SELECT * FROM prestataire WHERE categorie_nom = ?');
@@ -14,6 +14,7 @@
             <h4>Nous sommes heureux de vous voir ici, renseignez les informations ci-dessous pour réserver une prestation personnalisée!</h4>";
       $date = date("Y-m-d");
       $tomorrow = date('Y-m-d', strtotime($date . ' +1 day'));
+      echo $tomorrow;
       echo "
             <table>
              <tr>
@@ -42,7 +43,7 @@
                  <label>Date : </label>
                </td>
                <td>
-                <input type=\"date\" id=\"date_debut\" class=\"form-control\" name=\"date_debut\" min=\"".$date."\"  />
+                <input type=\"date\" id=\"date_debut\" class=\"form-control\" name=\"date_debut\" min=\"".$date."\"  onchange=\"deterdate()\"/>
                </td>
              </tr>
              <br/>

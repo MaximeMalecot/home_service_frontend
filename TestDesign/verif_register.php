@@ -5,6 +5,7 @@
 
   ini_set('display_errors', '1');
   if(isset($_SESSION['mail'])){
+    require_once "Class/Reservation.php";
     session_start();
   }
   if(strtoupper($_POST['captcha'])!=strtoupper($_SESSION['captcha'])){
@@ -155,6 +156,7 @@
     $user->id
   ));
 
+  unset($_SESSION['captcha']);
   $_SESSION['mail'] = $_POST['mail'];
   $_SESSION['nom'] = $_POST['nom'];
   $_SESSION['reservations'] = array();

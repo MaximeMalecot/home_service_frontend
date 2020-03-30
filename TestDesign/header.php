@@ -1,6 +1,6 @@
 <header>
   <?php
-    session_start();
+    require_once "Class/Reservation.php";
      $connected = isset($_SESSION["mail"]) ? true : false;
     ?>
   <section>
@@ -63,5 +63,8 @@
       ?>
     </select>
   </form>
+    <div id="panier">
+      <a href="panier.php"><img src="img/panier.png"></a>
+    </div>
   </section>
 </header>

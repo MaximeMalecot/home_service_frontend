@@ -1,4 +1,5 @@
 <?php
+	require_once "Class/Reservation.php";
 	session_start();
 	if(isset($_SESSION['langue']) && !empty($_SESSION['langue'])){
 		$langue = $_SESSION['langue'];

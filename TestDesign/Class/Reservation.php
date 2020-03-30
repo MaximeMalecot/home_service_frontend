@@ -1,7 +1,7 @@
 <?php
 
   include( __DIR__ . "/../config.php");
-
+  ini_set('display_errors', 1);
 
   class Reservation implements JsonSerializable {
     private $nb_heure;
@@ -62,15 +62,47 @@
       }
     }
 
+//////////////////////SETTERS/////////////////////////
+    public function setNbHeure(int $h):void{
+      $this->nb_heure = $h;
+    }
+    public function setDateDebut(string $dd):void{
+      $this->date_debut = $dd;
+    }
+    public function setDateFin(string $df):void{
+      $this->date_fin = $df;
+    }
+    public function setSupplement(string $sup):void{
+      $this->supplement = $sup;
+    }
+    public function setUID(int $id):void{
+      $this->user_id_user = $id;
+    }
+    public function setUVR(string $vr):void{
+      $this->user_ville_reference = $vr;
+    }
+    public function setPID(int $id):void{
+      $this->prestation_id_prestation = $id;
+    }
+    public function setUSD(int $id):void{
+      $this->user_stripe_id = $id;
+    }
     public function SimpleCout(float $c):void{
       $this->cout = $c;
     }
 
-    public function getUSD():string{
-      return $this->user_stripe_id;
+////////////////GETTERS/////////////////////
+    public function getNbHeure():int{
+      return $this->nb_heure;
     }
-    public function getCout():float{
-      return $this->cout;
+    public function getDateDebut():string{
+      return $this->date_debut;
+    }
+    public function getDateFin():string{
+      return $this->date_fin;
+    }
+    public function getSupplement():string{
+      return $this->supplement;
     }
     public function getUID():int{
       return $this->user_id_user;
@@ -78,6 +110,17 @@
     public function getUVR():string{
       return $this->user_ville_reference;
     }
+    public function getPID():int{
+      return $this->prestation_id_prestation;
+    }
+    public function getCout():float{
+      return $this->cout;
+    }
+    public function getUSD():string{
+      return $this->user_stripe_id;
+    }
+
+
 
     public function jsonSerialize()
       {

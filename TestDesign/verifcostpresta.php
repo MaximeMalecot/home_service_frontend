@@ -1,6 +1,7 @@
 <?php
-  require_once "config.php";
   require_once "Class/Reservation.php";
+  require_once "config.php";
+
   require_once "requireStripe.php";
   \Stripe\Stripe::setApiKey('sk_test_qMXWSSMoE6DTqXNR7kMQ0k6V00sh4hnDbe');
 
@@ -70,7 +71,7 @@
     ]);*/
 
     echo    "<div>
-            <button class=\"btn btn-primary\" onclick=\"gototest('".htmlspecialchars(json_encode($reserv))."')\">Ajouter au panier</button>
+            <button id=\"btnPanl\" class=\"btn btn-primary\" onclick=\"gototest('".htmlspecialchars(json_encode($reserv))."')\" style=\"visibility: visible\">Ajouter au panier</button>
           </div>
           ";
   }
