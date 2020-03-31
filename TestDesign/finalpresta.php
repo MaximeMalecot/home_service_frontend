@@ -40,7 +40,6 @@
 							$PVR['categorie_ville']
 						));
 						$lastId = $cx->lastInsertId();
-						echo $lastId;
 						$req2->execute(array(
 							$rez->getCout(),
 							$rez->getUID(),
@@ -48,25 +47,12 @@
 						));
 	        }
 					$_SESSION['reservations'] = array();
+					echo "<h1>Vos réservations ont bien été prises en compte, merci de votre confiance !</h1>";
 				}
 				catch(Exception $e){
 					echo "une erreur est survenue!";
 				}
 		}
-			/*if(isset($_GET['session_id']) && isset($_GET['date_debut']) && isset($_GET['date_fin']) && isset($_GET['supplement']) && isset($_GET['user']) && isset($_GET['user_ville']) && isset($_GET['prestation'])){
-        $req=$cx->prepare('INSERT INTO reservation(date_debut,date_fin,supplement,user_id_user,user_ville_reference,prestation_id_prestation,prestation_ville) VALUES (DATE(?),DATE(?),?,?,?,?,?)');
-        $req->execute(array($_GET['date_debut'],$_GET['date_fin'],$_GET['supplement'],$_GET['user'],$_GET['user_ville'],$_GET['prestation'],$_GET['prestation_ville']));
-
-        $recup=$cx->prepare('SELECT * FROM reservation WHERE user_id_user = ? AND prestation_id_prestation = ?');
-        $recup->execute(array($_GET['user'], $_GET['prestation']));
-        $reserv = $recup->fetch();
-        print_r($reserv);
-
-        $req2=$cx->prepare('INSERT INTO facturation(date,cout,id_user,reservation_id_reservation) VALUES(NOW(),?,?,?)');
-        $req2->execute(array($_GET['cout'],$_GET['user'],$reserv['id_reservation']));
-        echo "ah oui";
-
-      }*/
     ?>
   </main>
   <?php

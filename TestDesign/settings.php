@@ -31,7 +31,7 @@
 				$abonnement = $req3->fetch();
 
 				if( strcmp($user['statut'], "admin") == 0){
-					echo "tu es admin";
+					echo "<h1>Tu es admin</h1>";
 				}
 
 				echo "<section id=\"subscription_invoice\">Vos payements suite à votre abonnement sur : ".$abonnement['nom']."<br/>";
@@ -40,15 +40,43 @@
 				$invoices  = \Stripe\Invoice::all();
 				foreach($invoices as $invoice){
 					if($invoice->subscription == $souscription['stripe_id']){
-						echo ($invoice->amount_paid/100)."€ le : ";
+						echo "<div>".($invoice->amount_paid/100)."€ le : ";
 						$timestamp = $invoice->created;
-						echo gmdate("d-m-Y à H:i:s", $timestamp);
+						echo gmdate("d-m-Y à H:i:s", $timestamp)."</div>";
+
 					}
 				}
+				echo "</section><br/>";
+
+				$req4 = $cx->prepare('SELECT * FROM reservation WHERE user_id_user = ?	ORDER BY id_reservation DESC');
+				$req4->execute(array($user['id_user']));
+				$reservations = $req4->fetchAll();
+				$req5 = $cx->prepare('SELECT * FROM prestation WHERE id_prestation = ?');
+				$req6 = $cx->prepare('SELECT * FROM facturation WHERE reservation_id_reservation = ?');
+				echo "<section id=\"Allreserv\">
+								Vos prestations prises : ";
+				foreach($reservations as $r){
+					$req5->execute(array($r['prestation_id_prestation']));
+					$presta = $req5->fetch();
+					$req6->execute(array($r['id_reservation']));
+					$factu = $req6->fetch();
+					echo "<div class=\"histoPresta\">
+									Reservation de la prestation :".$presta['nom']."<br/>
+									Nombre d'heures :".$r['nb_heure']."<br/>";
+									if(strcmp($r['date_debut'], $r['date_fin']) != 0){
+										echo "Date de début de la prestation : ".$r['date_debut']."<br/>".
+													"Date de fin de la prestation : ".$r['date_fin']."<br/>";
+									}
+									else{
+										echo "Date pour la prestation : ".$r['date_debut']."<br/>";
+									}
+					echo 		"Cout : ".$factu['cout'];
+							if($factu['cout'] > 0){
+								echo "<br/><a href=\"facture.php?id=".$factu['id_facturation']."\" class=\"button\">Votre facture</a>";
+								}
+					echo			"</div>";
+				}
 				echo "</section>";
-				$_SESSION['panier'] = array();
-				array_push($_SESSION['panier'], 0, 1, 2);
-				print_r($_SESSION['panier']);
 			}
     ?>
   </main>

@@ -297,3 +297,37 @@ textarea {
     border: 1px solid #ccc;
     box-shadow: 1px 1px 1px #999;
 }
+#subscription_invoice{
+  position: relative;
+  left: 25%;
+  width: 50%;
+  background-color: #FAFAFA;
+  border: 2px solid #F7AF42;
+  margin: 5px;
+  padding: 5px;
+  height: 325px;
+  overflow-y: scroll;
+}
+#subscription_invoice > div{
+  background-color: #FAFAFA;
+  border: 2px solid #F7AF42;
+  margin: 5px;
+  padding: 5px;
+}
+#Allreserv{
+  position: relative;
+  left: 25%;
+  width: 50%;
+  background-color: #FAFAFA;
+  border: 2px solid #F7AF42;
+  margin: 5px;
+  padding: 5px;
+  height: 325px;
+  overflow-y: scroll;
+}
+.histoPresta{
+  background-color: #FAFAFA;
+  border: 2px solid #F7AF42;
+  margin: 5px;
+  padding: 5px;
+}
