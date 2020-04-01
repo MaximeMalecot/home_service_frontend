@@ -61,13 +61,14 @@
 									$idplan = $plan->id;
 								}
 							}
+							$cout = intval( ($abo['cout'] * 100)/12 );
 							if($idplan == "0"){
 								$plan = \Stripe\Plan::create([
 								    'currency' => 'eur',
 								    'interval' => 'month',
 								    'product' => $newprod->id,
 								    'nickname' => $abo['nom'],
-								    'amount' => ($abo['cout'] * 100)/12,
+								    'amount' => $cout,
 								]);
 								$idplan = $plan->id;
 							}
@@ -80,13 +81,14 @@
 									$idplan = $plan->id;
 								}
 							}
+							$cout = intval( ($abo['cout'] * 100)/12 );
 							if($idplan == "0"){
 								$plan = \Stripe\Plan::create([
 								    'currency' => 'eur',
 								    'interval' => 'month',
 								    'product' => $abo['stripe_id'],
 								    'nickname' => $abo['nom'],
-								    'amount' => ($abo['cout'] * 100)/12,
+								    'amount' => $cout,
 								]);
 								}
 						}

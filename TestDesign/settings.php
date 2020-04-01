@@ -31,7 +31,10 @@
 				$abonnement = $req3->fetch();
 
 				if( strcmp($user['statut'], "admin") == 0){
-					echo "<h1>Tu es admin</h1>";
+					echo "<h1>Tu es admin, tu peux donc accéder au BACK-OFFICE ICI : </h1>";
+					echo "<form action=\"backoffice.php\">
+								    <button class=\"btn btn-primary\">Back Office</button>
+								</form>";
 				}
 
 				echo "<section id=\"subscription_invoice\">Vos payements suite à votre abonnement sur : ".$abonnement['nom']."<br/>";

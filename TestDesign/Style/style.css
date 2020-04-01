@@ -331,3 +331,23 @@ textarea {
   margin: 5px;
   padding: 5px;
 }
+.BackOfficeSection{
+  position: relative;
+  left: 15%;
+  width: 70%;
+  background-color: #FAFAFA;
+  border: 2px solid #F7AF42;
+  margin: 5px;
+  padding: 5px;
+  height: 400px;
+  overflow-y: scroll;
+}
+.askus{
+  background-color: #FAFAFA;
+  border: 2px solid #F7AF42;
+  margin: 5px;
+  padding: 5px;
+}
+table{
+  color: black;
+}

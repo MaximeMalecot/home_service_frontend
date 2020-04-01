@@ -25,7 +25,7 @@
     // set document information
     $pdf->SetCreator(PDF_CREATOR);
     $pdf->SetAuthor('HomeService');
-    $pdf->SetTitle("Factures de la reservation : ".$facture['reservation_id_reservation']);
+    $pdf->SetTitle("Facture");
     $pdf->SetSubject('TCPDF Tutorial');
     $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
 

@@ -332,7 +332,6 @@ function deterdate(){
 }
 
 function deleteHours(int,h){
-  console.log(int);
   const request = new XMLHttpRequest();
 
   request.open('GET', 'freepanel.php?index=' + int + '&heure=' + h);
@@ -344,6 +343,24 @@ function deleteHours(int,h){
       document.getElementById('totalPrestaPannel').innerHTML = request.responseText ;
     }else {
       document.getElementById('totalPrestaPannel').innerHTML = '<span style="color:red">Erreur!</span>';
+      ;
+    }
+  }
+  request.send();
+}
+
+function AskFinish(id){
+  const request = new XMLHttpRequest();
+
+  request.open('GET', 'changeAsk.php?id=' + id );
+
+  request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+  request.onreadystatechange = function(deleteHours) {
+    if(request.readyState === 4 && request.status == 200){
+      document.getElementById('AllAskUs').innerHTML = request.responseText ;
+    }else {
+      document.getElementById('AllAskUs').innerHTML = '<span style="color:red">Erreur!</span>';
       ;
     }
   }
