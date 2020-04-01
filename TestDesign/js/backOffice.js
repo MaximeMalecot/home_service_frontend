@@ -32,10 +32,7 @@ function modifyAbo(id){
   request.send("id=" + id + "&nom=" + nom + "&cout=" + cout + "&nb_heure=" + nb_heure + "&temps=" + temps + "&heure_debut=" + heure_debut +"&heure_fin=" + heure_fin);
 }
 
-function modifySous(id){
-  var abonnement = document.getElementById('inputAbo'+id).value;
-  var date = document.getElementById('inputDate'+id).value;
-  var heure = document.getElementById('inputHeure'+id).value;
+function deleteSous(id){
 
   const request = new XMLHttpRequest();
   request.open('POST','backOffice/changeSous.php');
@@ -51,5 +48,5 @@ function modifySous(id){
     }
   }
 
-  request.send("id=" + id + "&abo=" + abonnement + "&date=" + date + "&heure=" + heure);
+  request.send("id=" + id);
 }

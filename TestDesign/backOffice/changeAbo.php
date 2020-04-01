@@ -14,7 +14,7 @@
           $abonnement['stripe_id'],
           ['name' => $_POST['nom']]
         );
-        $product = Stripe\Product::retrieve($abonnement['stripe_id']);
+        $product = \Stripe\Product::retrieve($abonnement['stripe_id']);
         $cout = intval(($_POST['cout'] * 100)/12);
         $newplan = \Stripe\Plan::create([
             'currency' => 'eur',
@@ -23,6 +23,29 @@
             'nickname' => $_POST['nom'],
             'amount' => $cout
         ]);
+
+        $reqUpdSous = $cx->prepare('SELECT * FROM souscription WHERE abonnement_id_abonnement = ?');
+        $reqUpdSous->execute(array($_POST['id']));
+        $souscriptions = $reqUpdSous->fetchAll();
+
+        if(!empty($souscriptions)){
+          foreach($souscriptions as $stripe){
+
+            $sub = \Stripe\Subscription::retrieve($stripe['stripe_id']);
+            \Stripe\Subscription::update($stripe['stripe_id'], [
+              'cancel_at_period_end' => false,
+              'items' =>  [
+                [
+                'id' => $sub->items->data[0]->id,
+                'plan' => $newplan->id,
+                ],
+              ],
+            ]);
+            $sub = \Stripe\Subscription::retrieve($stripe['stripe_id']);
+
+          }
+        }
+
         $req = $cx->prepare('UPDATE abonnement SET nom = ?, cout = ?, nb_heure = ?, temps = ?, heure_debut = ?, heure_fin = ?, stripe_id = ? WHERE id_abonnement = ?');
         $req->execute(array(
           $_POST['nom'],
@@ -111,8 +134,6 @@
                 </tr>
                 <tbody>
               </table>";
-        echo "</section>";
-
       }
       catch(Exception $e){
         echo "erreur";

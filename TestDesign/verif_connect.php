@@ -31,23 +31,25 @@
 			$req1=$cx->prepare('SELECT * FROM facturation WHERE id_user = ?');
 		  $req1->execute(array($user['id_user']));
 		  $factu= $req1->fetchAll();
-		  $last = new DateTime($factu[0]['date']);
-		  foreach ($factu as $f) {
-		    if( new DateTime($f['date']) > $last){
-		      $last = new DateTime($f['date']);
-		    }
-		  }
-		  $now = new DateTime();
-		  if($last->format('m') < $now->format('m') || $last->format('Y') < $now->format('Y')){
-		    $req2 = $cx->prepare('SELECT * FROM souscription WHERE user_id_user = ?');
-		    $req2->execute(array($user['id_user']));
-		    $sous = $req2->fetch();
-		    $req3 = $cx->prepare('SELECT * FROM abonnement WHERE id_abonnement = ?');
-		    $req3->execute(array($sous['abonnement_id_abonnement']));
-		    $abo = $req3->fetch();
-		    $req4 = $cx->prepare('UPDATE souscription SET heure_restante = ? WHERE user_id_user = ?');
-		    $req4->execute(array($abo['nb_heure'],$user['id_user']));
-		  }
+			if( !empty($factu)){
+				$last = new DateTime($factu[0]['date']);
+			  foreach ($factu as $f) {
+			    if( new DateTime($f['date']) > $last){
+			      $last = new DateTime($f['date']);
+			    }
+			  }
+			  $now = new DateTime();
+			  if($last->format('m') < $now->format('m') || $last->format('Y') < $now->format('Y')){
+			    $req2 = $cx->prepare('SELECT * FROM souscription WHERE user_id_user = ?');
+			    $req2->execute(array($user['id_user']));
+			    $sous = $req2->fetch();
+			    $req3 = $cx->prepare('SELECT * FROM abonnement WHERE id_abonnement = ?');
+			    $req3->execute(array($sous['abonnement_id_abonnement']));
+			    $abo = $req3->fetch();
+			    $req4 = $cx->prepare('UPDATE souscription SET heure_restante = ? WHERE user_id_user = ?');
+			    $req4->execute(array($abo['nb_heure'],$user['id_user']));
+			  }
+		}
 
 			echo "<section id =\"secondconnect\" class=\"inscription_connexion\">";
 			echo "<h3 id=\"goaccount\"><a href='settings.php'>".$xml->header->myaccount->hello.$user['prenom']. "</a></h3>";

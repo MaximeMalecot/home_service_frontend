@@ -56,6 +56,7 @@
 
 							$idplan = "0";
 							$allPLan = \Stripe\Plan::all();
+							print_r($allPLan);/*
 							foreach ($allPLan as $plan) {
 								if($plan->product == $newprod->id){
 									$idplan = $plan->id;
@@ -71,14 +72,16 @@
 								    'amount' => $cout,
 								]);
 								$idplan = $plan->id;
-							}
+							}*/
 						}
 						else{
 							$idplan = "0";
 							$allPLan = \Stripe\Plan::all();
+
 							foreach ($allPLan as $plan) {
 								if($plan->product == $abo['stripe_id']){
 									$idplan = $plan->id;
+									break;
 								}
 							}
 							$cout = intval( ($abo['cout'] * 100)/12 );
@@ -90,7 +93,7 @@
 								    'nickname' => $abo['nom'],
 								    'amount' => $cout,
 								]);
-								}
+							}
 						}
 						$session = \Stripe\Checkout\Session::create([
 							'customer'=> $user['stripe_id'],

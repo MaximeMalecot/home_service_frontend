@@ -168,21 +168,10 @@
 												<td id=\"user".$s['stripe_id']."\">".$s['user_id_user']."</td>
 												<td id=\"ville".$s['stripe_id']."\">".$s['user_ville_reference']."</td>
 												<td id=\"stripe".$s['stripe_id']."\">".$s['stripe_id']."</td>
-												<td><button type=\"button\" class=\"btn btn-sm\" onclick=\"displayInput('SousF".$s['stripe_id']."')\">modifier</button></td>
-												<td><button type=\"button\" class=\"btn btn-sm\" onclick=\"\">supprimer</button></td>
+												<td><button type=\"button\" class=\"btn btn-sm\" onclick=\"deleteSous('".$s['stripe_id']."')\">supprimer</button></td>
 											</tr>";
-							echo "<tr style=\"display:none;\" id=\"SousF".$s['stripe_id']."\">
-											<td><input type=\"text\" id=\"inputAbo".$s['stripe_id']."\" value=\"".$s['abonnement_id_abonnement']."\"></input></td>
-											<td><input type=\"date\" id=\"inputDate".$s['stripe_id']."\" value=\"".$s['date']."\"></input></td>
-											<td><input type=\"number\" id=\"inputHeure".$s['stripe_id']."\" value=\"".$s['heure_restante']."\"></input></td>
-											<td><input type=\"number\" id=\"inputUser".$s['stripe_id']."\" value=\"".$s['user_id_user']."\" disabled></input></td>
-											<td><input type=\"text\" id=\"inputVille".$s['stripe_id']."\" value=\"".$s['user_ville_reference']."\" disabled></input></td>
-											<td><input type=\"text\" id=\"inputStripe".$s['stripe_id']."\" value=\"".$s['stripe_id']."\" disabled></input></td>
-											<td><button type=\"button\" class=\"btn btn-sm\" onclick=\"modifySous('".$s['stripe_id']."')\">Confirmer</button></td>
-											<td><button type=\"button\" class=\"btn btn-sm\" onclick=\"hideInput('SousF".$s['stripe_id']."')\">Annuler</button></td>
-										</tr>";
 						}
-						echo "<br/><tr>
+						echo "<br/><tr style=\"visibility: hidden;\">
 	                    <td>
 	                      <input type=\"text\" id=\"nom\" placeholder=\"ID abonnement\"  />
 	                    </td>
