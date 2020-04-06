@@ -111,7 +111,7 @@ function verifconnect(){
 
     request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 
-    request.onreadystatechange = function(reserve) {
+    request.onreadystatechange = function(verifconnect) {
       if(request.readyState === 4 && request.status == 200){
         document.getElementById('connect').innerHTML = request.responseText ;
       }else {
@@ -302,7 +302,7 @@ function gototest(json){
 
   request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 
-  request.onreadystatechange = function(getabo) {
+  request.onreadystatechange = function(gototest) {
     if(request.readyState === 4 && request.status == 200){
       document.getElementById('added').innerHTML = request.responseText ;
     }else {

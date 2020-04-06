@@ -156,11 +156,20 @@
     $user->id
   ));
 
-  unset($_SESSION['captcha']);
-  $_SESSION['mail'] = $_POST['mail'];
+  echo "VILLE : ".VILLE."<br />";
+  echo "NOM : ".$nom."<br />";
+  echo "PRENOM : ".$prenom."<br />";
+  echo "MDP : ".$mdp."<br />";
+  echo "MAIL : ".$mail."<br />";
+  echo "PHONE: ".$phone."<br />";
+  echo "ADRESSE : ".$addresse."<br />";
+  echo "CP : ".$cp."<br />";
+  echo "SID : ".$user->id."<br />";
+  //unset($_SESSION['captcha']);
+  /*$_SESSION['mail'] = $_POST['mail'];
   $_SESSION['nom'] = $_POST['nom'];
   $_SESSION['reservations'] = array();
   header('Location: index.php');
-  exit;
+  exit;*/
 
 ?>

@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`prestataire` (
   `categorie_ville` VARCHAR(45) NOT NULL,
   `categorie_nom` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_prestataire`, `categorie_ville`, `categorie_nom`),
-  INDEX `fk_prestataire_categorie1_idx` (`categorie_ville` ASC, `categorie_nom` ASC) VISIBLE,
+  INDEX `fk_prestataire_categorie1_idx` (`categorie_ville` ASC, `categorie_nom` ASC) ,
   CONSTRAINT `fk_prestataire_categorie1`
     FOREIGN KEY (`categorie_ville` , `categorie_nom`)
     REFERENCES `mydb`.`categorie` (`ville` , `nom`)
@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`contrat` (
   `prestataire_id_prestataire` INT(11) NOT NULL,
   `prestataire_ville` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_contrat`, `prestataire_id_prestataire`, `prestataire_ville`),
-  INDEX `fk_contrat_prestataire1_idx` (`prestataire_id_prestataire` ASC, `prestataire_ville` ASC) VISIBLE,
+  INDEX `fk_contrat_prestataire1_idx` (`prestataire_id_prestataire` ASC, `prestataire_ville` ASC) ,
   CONSTRAINT `fk_contrat_prestataire1`
     FOREIGN KEY (`prestataire_id_prestataire`)
     REFERENCES `mydb`.`prestataire` (`id_prestataire`)
@@ -130,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`demande` (
   `user_id_user` INT(11) NOT NULL,
   `user_ville_reference` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_demande`, `user_id_user`, `user_ville_reference`),
-  INDEX `fk_demande_user1_idx` (`user_id_user` ASC, `user_ville_reference` ASC) VISIBLE,
+  INDEX `fk_demande_user1_idx` (`user_id_user` ASC, `user_ville_reference` ASC) ,
   CONSTRAINT `fk_demande_user1`
     FOREIGN KEY (`user_id_user` , `user_ville_reference`)
     REFERENCES `mydb`.`user` (`id_user` , `ville_reference`)
@@ -150,7 +150,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`prestation` (
   `categorie_ville` VARCHAR(45) NOT NULL,
   `categorie_nom` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_prestation`, `categorie_ville`, `categorie_nom`),
-  INDEX `fk_prestation_categorie1_idx` (`categorie_ville` ASC, `categorie_nom` ASC) VISIBLE,
+  INDEX `fk_prestation_categorie1_idx` (`categorie_ville` ASC, `categorie_nom` ASC) ,
   CONSTRAINT `fk_prestation_categorie1`
     FOREIGN KEY (`categorie_ville` , `categorie_nom`)
     REFERENCES `mydb`.`categorie` (`ville` , `nom`)
@@ -175,8 +175,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`reservation` (
   `prestation_ville` VARCHAR(45) NOT NULL,
   `nb_unit_suplement` FLOAT NULL,
   PRIMARY KEY (`id_reservation`, `user_id_user`, `user_ville_reference`, `prestation_id_prestation`, `prestation_ville`),
-  INDEX `fk_reservation_user1_idx` (`user_id_user` ASC, `user_ville_reference` ASC) VISIBLE,
-  INDEX `fk_reservation_prestation1_idx` (`prestation_id_prestation` ASC, `prestation_ville` ASC) VISIBLE,
+  INDEX `fk_reservation_user1_idx` (`user_id_user` ASC, `user_ville_reference` ASC) ,
+  INDEX `fk_reservation_prestation1_idx` (`prestation_id_prestation` ASC, `prestation_ville` ASC) ,
   CONSTRAINT `fk_reservation_prestation1`
     FOREIGN KEY (`prestation_id_prestation`)
     REFERENCES `mydb`.`prestation` (`id_prestation`)
@@ -204,9 +204,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`facturation` (
   `prestataire_id_prestataire` INT(11) NULL DEFAULT NULL,
   `prestataire_ville` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`id_facturation`),
-  INDEX `fk_facturation_client1_idx` (`id_user` ASC) VISIBLE,
-  INDEX `fk_facturation_reservation1_idx` (`reservation_id_reservation` ASC) VISIBLE,
-  INDEX `fk_facturation_prestataire1_idx` (`prestataire_id_prestataire` ASC, `prestataire_ville` ASC) VISIBLE,
+  INDEX `fk_facturation_client1_idx` (`id_user` ASC) ,
+  INDEX `fk_facturation_reservation1_idx` (`reservation_id_reservation` ASC) ,
+  INDEX `fk_facturation_prestataire1_idx` (`prestataire_id_prestataire` ASC, `prestataire_ville` ASC) ,
   CONSTRAINT `fk_facturation_client1`
     FOREIGN KEY (`id_user`)
     REFERENCES `mydb`.`user` (`id_user`)
@@ -237,8 +237,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`souscription` (
   `user_ville_reference` VARCHAR(45) NOT NULL,
   `stripe_id` VARCHAR(255) NULL DEFAULT NULL,
   PRIMARY KEY (`abonnement_id_abonnement`, `user_id_user`, `user_ville_reference`),
-  INDEX `fk_client_has_abonnement_abonnement1_idx` (`abonnement_id_abonnement` ASC) VISIBLE,
-  INDEX `fk_souscription_user1_idx` (`user_id_user` ASC, `user_ville_reference` ASC) VISIBLE,
+  INDEX `fk_client_has_abonnement_abonnement1_idx` (`abonnement_id_abonnement` ASC) ,
+  INDEX `fk_souscription_user1_idx` (`user_id_user` ASC, `user_ville_reference` ASC) ,
   CONSTRAINT `fk_client_has_abonnement_abonnement1`
     FOREIGN KEY (`abonnement_id_abonnement`)
     REFERENCES `mydb`.`abonnement` (`id_abonnement`)
@@ -269,8 +269,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`bareme` (
   `prestation_categorie_ville` VARCHAR(45) NOT NULL,
   `prestation_categorie_nom` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_bareme`, `prestataire_id_prestataire`, `prestataire_categorie_ville`, `prestataire_categorie_nom`, `prestation_id_prestation`, `prestation_categorie_ville`, `prestation_categorie_nom`),
-  INDEX `fk_bareme_prestataire1_idx` (`prestataire_id_prestataire` ASC, `prestataire_categorie_ville` ASC, `prestataire_categorie_nom` ASC) VISIBLE,
-  INDEX `fk_bareme_prestation1_idx` (`prestation_id_prestation` ASC, `prestation_categorie_ville` ASC, `prestation_categorie_nom` ASC) VISIBLE,
+  INDEX `fk_bareme_prestataire1_idx` (`prestataire_id_prestataire` ASC, `prestataire_categorie_ville` ASC, `prestataire_categorie_nom` ASC) ,
+  INDEX `fk_bareme_prestation1_idx` (`prestation_id_prestation` ASC, `prestation_categorie_ville` ASC, `prestation_categorie_nom` ASC) ,
   CONSTRAINT `fk_bareme_prestataire1`
     FOREIGN KEY (`prestataire_id_prestataire` , `prestataire_categorie_ville` , `prestataire_categorie_nom`)
     REFERENCES `mydb`.`prestataire` (`id_prestataire` , `categorie_ville` , `categorie_nom`)
@@ -294,7 +294,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`supplement` (
   `unite` VARCHAR(45) NULL,
   `prix_unite` FLOAT NULL,
   PRIMARY KEY (`id_supplement`, `bareme_id_bareme`),
-  INDEX `fk_supplement_bareme1_idx` (`bareme_id_bareme` ASC) VISIBLE,
+  INDEX `fk_supplement_bareme1_idx` (`bareme_id_bareme` ASC) ,
   CONSTRAINT `fk_supplement_bareme1`
     FOREIGN KEY (`bareme_id_bareme`)
     REFERENCES `mydb`.`bareme` (`id_bareme`)
