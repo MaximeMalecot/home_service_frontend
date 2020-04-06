@@ -43,28 +43,6 @@
 
     $reserv = new Reservation($heure,$date_debut,$date_fin,$supplement,$_SESSION['mail'],$_POST['id']);
     $reserv->setCout($_POST['nom']);
-    /*array_push($_SESSION['reservations'], $reserv);
-    $_SESSION['actuReserve'] = array();
-    array_push($_SESSION['reservations'], $reserv);*/
-    /*$reservobjet = json_encode($reserv);
-    print_r($reservobjet);
-    $finalobj = json_decode($reservobjet);
-    print_r($finalobj);*/
-/*
-    ///////////////////////WORKING/////////////////////////////////
-    $session = \Stripe\Checkout\Session::create([
-      'customer'=> $reserv->getUSD(),
-      'payment_method_types' => ['card'],
-      'line_items' => [[
-        'name' => $prestation['nom'],
-        'description' => $prestation['nom'],
-        'amount' => $reserv->getCout() * 100,
-        'currency' => 'eur',
-        'quantity' => 1,
-      ]],
-      'success_url' => URL."/finalpresta.php?session_id={CHECKOUT_SESSION_ID}&date_debut=".$date_debut."&date_fin=".$date_fin."&supplement=".$supplement."&user=".$reserv->getUID()."&user_ville=".$reserv->getUVR()."&prestation=".$prestation['id_prestation']."&prestation_ville=".$prestation['categorie_ville']."&cout=".$reserv->getCout(),
-      'cancel_url' => URL."/verifcostpresta.php?session_id=cancel",
-    ]);*/
 
     echo "<div>
             <h2>Votre prestation vous couterais : ".$reserv->getCout()." €</h2>

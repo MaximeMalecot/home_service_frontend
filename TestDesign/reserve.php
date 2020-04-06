@@ -14,7 +14,6 @@
             <h4>Nous sommes heureux de vous voir ici, renseignez les informations ci-dessous pour réserver une prestation personnalisée!</h4>";
       $date = date("Y-m-d");
       $tomorrow = date('Y-m-d', strtotime($date . ' +1 day'));
-      echo $tomorrow;
       echo "
             <table>
              <tr>

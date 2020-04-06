@@ -35,8 +35,34 @@
 						$verif = $req3->fetch();
 
 						if($verif == NULL){
+							$prod = Stripe\Product::retrieve($abo['stripe_id']);
+							$subCur = \Stripe\Subscription::retrieve($CurrentSession['subscription']);
+							$idplan = "0";
+						  $allPLan = \Stripe\Plan::all();
+						  foreach ($allPLan as $plan) {
+						    if($plan->product == $abo['stripe_id']){
+						      $idplan = $plan->id;
+						      break;
+						    }
+						  }
+							$now = $subCur->current_period_start;
+						  $end = strtotime("+1 year",$now);
+							\Stripe\Subscription::update($CurrentSession['subscription'],[
+								'cancel_at' => $end,
+								'items' => [
+									[
+										'id' => $subCur->items->data[0]->id,
+										'plan' => $idplan,
+									],
+								],
+							]);
+
+							$sub = \Stripe\Subscription::retrieve($CurrentSession['subscription']);
+							print_r($sub['id']);
+
+
 							$req5 = $cx->prepare('INSERT INTO souscription(abonnement_id_abonnement,date,heure_restante,user_id_user,user_ville_reference,stripe_id) VALUES(?,NOW(), ?, ?, ?,?)');
-							$req5->execute(array($abo['id_abonnement'],$abo['nb_heure'],$user['id_user'],$user['ville_reference'],$CurrentSession['subscription']));
+							$req5->execute(array($abo['id_abonnement'],$abo['nb_heure'],$user['id_user'],$user['ville_reference'],$sub['id']));
 							echo "<div class=\"container\">
 											<h1 id=\"congratz\">Félicitations, vous êtes désormais abonné.e et pouvez donc désormais profitez de vos avantages !</h1>
 										</div>";
@@ -44,22 +70,50 @@
 						else{
 							$latestsub = \Stripe\Subscription::retrieve($verif['stripe_id']);
 							$currentsub = \Stripe\Subscription::retrieve($CurrentSession['subscription']);
-							if($currentsub['id'] != $latestsub['id']){
+
+							$prod = Stripe\Product::retrieve($abo['stripe_id']);
+
+							$idplan = "0";
+						  $allPLan = \Stripe\Plan::all();
+						  foreach ($allPLan as $plan) {
+						    if($plan->product == $abo['stripe_id']){
+						      $idplan = $plan->id;
+						      break;
+						    }
+						  }
+							$now = $currentsub->current_period_start;
+						  $end = strtotime("+1 year",$now);
+
+							\Stripe\Subscription::update($CurrentSession['subscription'],[
+								'cancel_at' => $end,
+								'items' => [
+									[
+										'id' => $currentsub->items->data[0]->id,
+										'plan' => $idplan,
+									],
+								],
+							]);
+
+							$sub = \Stripe\Subscription::retrieve($CurrentSession['subscription']);
+							if($sub['id'] != $latestsub['id']){
 								$latestsub->delete();
-								$req4 = $cx->prepare('UPDATE souscription SET abonnement_id_abonnement = ?, date = NOW(), stripe_id = ? WHERE user_id_user = ?');
-								$req4->execute(array($abo['id_abonnement'], $CurrentSession['subscription'], $user['id_user']));
+								$req4 = $cx->prepare('UPDATE souscription SET abonnement_id_abonnement = ?, date = NOW(), heure_restante = ?, stripe_id = ? WHERE user_id_user = ?');
+								$req4->execute(array($abo['id_abonnement'], $abo['nb_heure'], $sub['id'], $user['id_user']));
 								echo "<div class=\"container\">
 												<h1 id=\"congratz\">Félicitations pour avoir changer d'abonnement, profitez de vos nouveaux avantages dès maintenant!</h1>
 											</div>";
 							}
 							else{
+								$req4 = $cx->prepare('UPDATE souscription SET abonnement_id_abonnement = ?, date = NOW(), heure_restante = ?, stripe_id = ? WHERE user_id_user = ?');
+								$req4->execute(array($abo['id_abonnement'], $abo['nb_heure'], $sub['id'], $user['id_user']));
 								echo "<div class=\"container\">
-												<h1 id=\"congratz\">Une erreur est servenue au niveau de l'abonnement !</h1>
+												<h1 id=\"congratz\">Félicitations pour avoir changer d'abonnement, profitez de vos nouveaux avantages dès maintenant!</h1>
 											</div>";
 							}
 						}
 					}
 					catch(Exception $e){
+						print_r($e);
 						echo "<div class=\"container\">
 										<h1 id=\"congratz\">Une erreur est servenue au niveau du payement !</h1>
 									</div>";

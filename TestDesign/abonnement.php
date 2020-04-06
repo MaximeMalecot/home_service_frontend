@@ -15,7 +15,7 @@
 <div class="container" id="abonnements">
   <h1 id="title"><?php echo $xml->main->abo->title; ?></h1>
 <?php
-  $req = $cx->prepare('SELECT * FROM abonnement ORDER BY id_abonnement ASC ');
+  $req = $cx->prepare('SELECT * FROM abonnement ORDER BY cout ASC ');
   $req->execute();
   $abonnements = $req->fetchAll();
   if(isset($_SESSION['mail'])){

@@ -53,7 +53,7 @@
           ////////////////////////ABONNEMENTS////////////////////////
           echo "<section id=\"Abos\" class=\"BackOfficeSection\">".
                   "<h1>Tous les abonnements : </h1>";
-          $reqAbo = $cx->prepare('SELECT * FROM abonnement');
+          $reqAbo = $cx->prepare('SELECT * FROM abonnement ORDER BY cout ASC');
           $reqAbo->execute();
           $abos = $reqAbo->fetchAll();
 
@@ -91,7 +91,7 @@
                       <td id=\"heure_debut".$abo['id_abonnement']."\">".$abo['heure_debut']."</td>
                       <td id=\"heure_fin".$abo['heure_fin']."\">".$abo['heure_fin']."</td>
                       <td><button type=\"button\" class=\"btn btn-sm\" onclick=\"displayInput('AboF".$abo['id_abonnement']."')\">modifier</button></td>
-                      <td><button type=\"button\" class=\"btn btn-sm\" onclick=\"\">supprimer</button></td>
+                      <td><button type=\"button\" class=\"btn btn-sm\" onclick=\"deleteAbo('".$abo['id_abonnement']."')\">supprimer</button></td>
                     </tr>";
             echo "<tr style=\"display:none;\" id=\"AboF".$abo['id_abonnement']."\">
                     <td><input type=\"text\" id=\"inputNom".$abo['id_abonnement']."\" value=\"".$abo['nom']."\"></input></td>

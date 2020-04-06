@@ -56,10 +56,10 @@
 
 							$idplan = "0";
 							$allPLan = \Stripe\Plan::all();
-							print_r($allPLan);/*
 							foreach ($allPLan as $plan) {
 								if($plan->product == $newprod->id){
 									$idplan = $plan->id;
+									break;
 								}
 							}
 							$cout = intval( ($abo['cout'] * 100)/12 );
@@ -72,7 +72,7 @@
 								    'amount' => $cout,
 								]);
 								$idplan = $plan->id;
-							}*/
+							}
 						}
 						else{
 							$idplan = "0";

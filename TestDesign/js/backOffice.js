@@ -32,6 +32,25 @@ function modifyAbo(id){
   request.send("id=" + id + "&nom=" + nom + "&cout=" + cout + "&nb_heure=" + nb_heure + "&temps=" + temps + "&heure_debut=" + heure_debut +"&heure_fin=" + heure_fin);
 }
 
+function deleteAbo(id){
+
+  const request = new XMLHttpRequest();
+  request.open('POST','backOffice/deleteAbo.php');
+
+  request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+  request.onreadystatechange = function(deleteAbo) {
+    if(request.readyState === 4 && request.status == 200){
+      document.getElementById('Abos').innerHTML = request.responseText ;
+    }else {
+      document.getElementById('Abos').innerHTML = '<span style="color:red">Erreur!</span>';
+      ;
+    }
+  }
+
+  request.send("id=" + id);
+}
+
 function deleteSous(id){
 
   const request = new XMLHttpRequest();

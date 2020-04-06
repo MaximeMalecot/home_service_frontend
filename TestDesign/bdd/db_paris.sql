@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 28, 2020 at 03:25 PM
+-- Generation Time: Apr 06, 2020 at 05:36 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -44,9 +44,10 @@ CREATE TABLE `abonnement` (
 --
 
 INSERT INTO `abonnement` (`id_abonnement`, `nom`, `cout`, `nb_heure`, `temps`, `heure_debut`, `heure_fin`, `stripe_id`) VALUES
-(1, 'Abonnement de base', 2400, 12, 5, 9, 20, 'prod_GyqiP8eyYTvQfV'),
-(2, 'Abonnement familial', 3600, 25, 6, 9, 20, 'prod_GyqjGaMprHKyaz'),
-(3, 'Abonnement premium', 6000, 50, 7, 0, 24, 'prod_Gyqnowfz91E14R');
+(3, 'Abonnement premium', 6000, 50, 7, 0, 24, 'prod_Gyqnowfz91E14R'),
+(4, 'SuperAbo', 5000, 6, 4, 9, 19, 'prod_H1Y2u9vcTDXtQU'),
+(8, 'Abonnement familial', 3600, 25, 6, 9, 20, 'prod_H1YZmR0I7DzvgH'),
+(9, 'Abonnement de test', 1200, 10, 3, 8, 21, 'prod_H1YxPuKWeBCH5q');
 
 -- --------------------------------------------------------
 
@@ -99,6 +100,20 @@ CREATE TABLE `demande` (
   `user_ville_reference` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `demande`
+--
+
+INSERT INTO `demande` (`id_demande`, `description`, `date`, `etat`, `user_id_user`, `user_ville_reference`) VALUES
+(1, 'J\'aimerais avoir un jardinier personnel', '2020-03-30 18:07:46', 1, 10, 'Paris'),
+(2, 'J\'aimerais avoir un déménageur dispo pour le 15', '2020-03-30 18:19:47', 1, 10, 'Paris'),
+(3, 'SuperDemande avec pleins de poutous', '2020-03-31 14:52:49', 1, 11, 'Paris'),
+(4, 'Deuxième super demande test pleins de poutous', '2020-03-31 14:52:59', 1, 11, 'Paris'),
+(5, 'Demande 1 de testaaaa', '2020-03-31 14:53:44', 1, 11, 'Paris'),
+(6, 'Demande 2 de super test', '2020-03-31 14:53:51', 1, 11, 'Paris'),
+(7, 'j\'aimerais test ceci', '2020-04-02 18:20:20', 0, 13, 'Paris'),
+(8, 'J\'aimerais que ta mere me ', '2020-04-02 18:56:29', 1, 11, 'Paris');
+
 -- --------------------------------------------------------
 
 --
@@ -121,7 +136,17 @@ CREATE TABLE `facturation` (
 --
 
 INSERT INTO `facturation` (`id_facturation`, `date`, `cout`, `id_user`, `devis`, `reservation_id_reservation`, `prestataire_id_prestataire`, `prestataire_ville`) VALUES
-(2, '2020-03-27 14:59:26', 18.2, 10, NULL, 2, NULL, NULL);
+(20, '2020-03-31 00:25:46', 916.5, 11, NULL, 26, NULL, NULL),
+(21, '2020-03-31 00:28:02', 0, 11, NULL, 27, NULL, NULL),
+(22, '2020-03-31 00:29:11', 18.2, 11, NULL, 28, NULL, NULL),
+(23, '2020-03-31 00:29:11', 61.1, 11, NULL, 29, NULL, NULL),
+(24, '2020-03-31 00:29:11', 4093.7, 11, NULL, 30, NULL, NULL),
+(25, '2020-03-31 00:29:11', 2688.4, 11, NULL, 31, NULL, NULL),
+(26, '2020-03-31 12:53:09', 18.2, 11, NULL, 32, NULL, NULL),
+(27, '2020-04-02 18:28:03', 0, 13, NULL, 33, NULL, NULL),
+(28, '2020-04-02 18:28:44', 122.2, 13, NULL, 34, NULL, NULL),
+(29, '2020-04-02 18:57:56', 0, 11, NULL, 35, NULL, NULL),
+(30, '2020-04-02 18:57:59', 0, 11, NULL, 36, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -187,6 +212,7 @@ CREATE TABLE `reservation` (
   `id_reservation` int(11) NOT NULL,
   `date_debut` datetime DEFAULT NULL,
   `date_fin` datetime DEFAULT NULL,
+  `nb_heure` int(11) NOT NULL,
   `supplement` text NOT NULL,
   `user_id_user` int(11) NOT NULL,
   `user_ville_reference` varchar(45) NOT NULL,
@@ -198,15 +224,18 @@ CREATE TABLE `reservation` (
 -- Dumping data for table `reservation`
 --
 
-INSERT INTO `reservation` (`id_reservation`, `date_debut`, `date_fin`, `supplement`, `user_id_user`, `user_ville_reference`, `prestation_id_prestation`, `prestation_ville`) VALUES
-(2, '2020-03-27 00:00:00', '2020-03-27 00:00:00', 'aucun', 10, 'Paris', 1, 'Paris'),
-(3, '2020-03-27 00:00:00', '2020-03-27 00:00:00', 'aucun', 10, 'Paris', 1, 'Paris'),
-(4, '2020-03-27 00:00:00', '2020-03-27 00:00:00', 'aucun', 10, 'Paris', 1, 'Paris'),
-(5, '2020-03-27 00:00:00', '2020-03-27 00:00:00', 'aucun', 10, 'Paris', 1, 'Paris'),
-(6, '2020-03-27 00:00:00', '2020-03-27 00:00:00', 'aucun', 10, 'Paris', 1, 'Paris'),
-(7, '2020-03-27 00:00:00', '2020-03-27 00:00:00', 'aucun', 10, 'Paris', 1, 'Paris'),
-(8, '2020-03-27 00:00:00', '2020-03-27 00:00:00', 'aucun', 10, 'Paris', 1, 'Paris'),
-(9, '2020-03-27 00:00:00', '2020-03-27 00:00:00', 'aucun', 10, 'Paris', 1, 'Paris');
+INSERT INTO `reservation` (`id_reservation`, `date_debut`, `date_fin`, `nb_heure`, `supplement`, `user_id_user`, `user_ville_reference`, `prestation_id_prestation`, `prestation_ville`) VALUES
+(26, '2020-04-08 00:00:00', '2020-04-22 00:00:00', 2, 'Oignon grillé', 11, 'Paris', 1, 'Paris'),
+(27, '2020-04-01 00:00:00', '2020-04-16 00:00:00', 1, 'saladetomateoignon', 11, 'Paris', 1, 'Paris'),
+(28, '2020-03-31 00:00:00', '2020-03-31 00:00:00', 1, 'aucun', 11, 'Paris', 1, 'Paris'),
+(29, '2020-04-01 00:00:00', '2020-04-01 00:00:00', 1, 'Tomate', 11, 'Paris', 1, 'Paris'),
+(30, '2020-03-31 00:00:00', '2020-06-05 00:00:00', 20, 'superSalade', 11, 'Paris', 1, 'Paris'),
+(31, '2020-03-31 00:00:00', '2020-05-13 00:00:00', 1, 'tomatesalade', 11, 'Paris', 1, 'Paris'),
+(32, '2020-04-11 00:00:00', '2020-04-11 00:00:00', 9, 'aucun', 11, 'Paris', 1, 'Paris'),
+(33, '2020-04-02 00:00:00', '2020-04-02 00:00:00', 1, 'aucun', 13, 'Paris', 1, 'Paris'),
+(34, '2020-04-03 00:00:00', '2020-04-04 00:00:00', 30, 'enfin ouii', 13, 'Paris', 1, 'Paris'),
+(35, '2020-04-04 00:00:00', '2020-04-04 00:00:00', 7, 'aucun', 11, 'Paris', 1, 'Paris'),
+(36, '2020-04-03 00:00:00', '2020-04-04 00:00:00', 6, 'Supplément oignon', 11, 'Paris', 1, 'Paris');
 
 -- --------------------------------------------------------
 
@@ -228,7 +257,9 @@ CREATE TABLE `souscription` (
 --
 
 INSERT INTO `souscription` (`abonnement_id_abonnement`, `date`, `heure_restante`, `user_id_user`, `user_ville_reference`, `stripe_id`) VALUES
-(3, '2020-03-26 21:44:41', 12, 10, 'Paris', 'sub_Gz0aHi11ohL6bN');
+(3, '2020-04-02 18:57:17', 43, 11, 'Paris', 'sub_H1ZU6dYI1gjqXp'),
+(3, '2020-04-01 16:21:10', 50, 12, 'Paris', 'sub_H19krl5M7b9ggr'),
+(9, '2020-04-02 18:26:33', 11, 13, 'Paris', 'sub_H1Z0XptbFvEGyg');
 
 -- --------------------------------------------------------
 
@@ -257,7 +288,10 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id_user`, `ville_reference`, `nom`, `prenom`, `mdp`, `mail`, `date_inscription`, `phone`, `adresse`, `cp`, `statut`, `stripe_id`) VALUES
 (9, 'Paris', 'Malecot', 'Maxime', '2247aa5d779d2d2384cadf9773dc47b4f73a08270d5365ef72a043df90e41051e19a6c080a690f5b44eabaa28a919853c9d0ed26fa7e4338e281a5a138f57a89', 'maxime92.trap@gmail.com', '2020-03-17 15:27:34', '0659591280', '7 rue trezel', 92300, NULL, NULL),
-(10, 'Paris', 'Malecot', 'Maxime', '2247aa5d779d2d2384cadf9773dc47b4f73a08270d5365ef72a043df90e41051e19a6c080a690f5b44eabaa28a919853c9d0ed26fa7e4338e281a5a138f57a89', '92maximemalecot@gmail.com', '2020-03-26 21:06:26', '0659591280', '7 rue trezel', 92300, NULL, 'cus_GyzycjfDFB0zon');
+(10, 'Paris', 'Malecot', 'Maxime', '2247aa5d779d2d2384cadf9773dc47b4f73a08270d5365ef72a043df90e41051e19a6c080a690f5b44eabaa28a919853c9d0ed26fa7e4338e281a5a138f57a89', '92maximemalecot@gmail.com', '2020-03-26 21:06:26', '0659591280', '7 rue trezel', 92300, NULL, 'cus_GyzycjfDFB0zon'),
+(11, 'Paris', 'Malecot', 'Maxime', '2247aa5d779d2d2384cadf9773dc47b4f73a08270d5365ef72a043df90e41051e19a6c080a690f5b44eabaa28a919853c9d0ed26fa7e4338e281a5a138f57a89', 'super@maxime.com', '2020-03-29 04:07:12', '0659591280', '7 rue trezel', 92300, 'admin', 'cus_GzqF2W3dISprLY'),
+(12, 'Paris', 'Malecot', 'Maxime', '2247aa5d779d2d2384cadf9773dc47b4f73a08270d5365ef72a043df90e41051e19a6c080a690f5b44eabaa28a919853c9d0ed26fa7e4338e281a5a138f57a89', 'super@mail.com', '2020-03-30 19:26:30', '0659591280', '7 rue trezel', 92300, NULL, 'cus_H0SI0EhsUN4aeO'),
+(13, 'Paris', 'Malecot', 'Maxime', '2247aa5d779d2d2384cadf9773dc47b4f73a08270d5365ef72a043df90e41051e19a6c080a690f5b44eabaa28a919853c9d0ed26fa7e4338e281a5a138f57a89', 'maxime@mail.com', '2020-04-01 20:23:40', '0000000000', '7 rue trezel', 92300, NULL, 'cus_H1Df0jMdLLL6xg');
 
 --
 -- Indexes for dumped tables
@@ -342,7 +376,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `abonnement`
 --
 ALTER TABLE `abonnement`
-  MODIFY `id_abonnement` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_abonnement` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `contrat`
@@ -354,13 +388,13 @@ ALTER TABLE `contrat`
 -- AUTO_INCREMENT for table `demande`
 --
 ALTER TABLE `demande`
-  MODIFY `id_demande` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_demande` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `facturation`
 --
 ALTER TABLE `facturation`
-  MODIFY `id_facturation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_facturation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `prestataire`
@@ -378,13 +412,13 @@ ALTER TABLE `prestation`
 -- AUTO_INCREMENT for table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `id_reservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_reservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Constraints for dumped tables
