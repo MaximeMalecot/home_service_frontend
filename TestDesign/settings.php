@@ -39,7 +39,8 @@
 
 				echo "<section id=\"subscription_invoice\">Vos payements suite à votre abonnement sur : ".$abonnement['nom']."<br/>";
 
-
+				$tes = \Stripe\Subscription::retrieve($souscription['stripe_id']);
+				print_r($tes);
 				$invoices  = \Stripe\Invoice::all();
 				foreach($invoices as $invoice){
 					if($invoice->subscription == $souscription['stripe_id']){
@@ -65,7 +66,7 @@
 					$factu = $req6->fetch();
 					echo "<div class=\"histoPresta\">
 									Reservation de la prestation :".$presta['nom']."<br/>
-									Nombre d'heures :".$r['nb_heure']."<br/>";
+									Nombre d'unités :".$r['nb_unite']."<br/>";
 									if(strcmp($r['date_debut'], $r['date_fin']) != 0){
 										echo "Date de début de la prestation : ".$r['date_debut']."<br/>".
 													"Date de fin de la prestation : ".$r['date_fin']."<br/>";
