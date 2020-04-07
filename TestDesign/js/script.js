@@ -263,11 +263,11 @@ function addsuppl(){
   }
 }
 
-function getcost(id,categorie){
+function getcost(id,bareme){
   const request = new XMLHttpRequest();
 
   let type = document.getElementById('type').value;
-  let heure =  document.getElementById('heure').value;
+  let unit =  document.getElementById('heure').value;
   let date_debut = document.getElementById('date_debut').value;
   let date_fin = document.getElementById('date_fin').value;
 
@@ -275,8 +275,11 @@ function getcost(id,categorie){
     var supplement = document.getElementById('spec').value;
   }
   else{
-    var supplement = "aucun";
+    var supplement = "0";
   }
+
+  console.log("id=" + id + ", bareme=" + bareme + ", type=" + type + ", heure=" + heure + ", dd=" + date_debut + ", df=" + date_fin + ", sup=" + supplement);
+
   request.open('POST', 'verifcostpresta.php', true);
 
   request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
@@ -289,7 +292,8 @@ function getcost(id,categorie){
       ;
     }
   }
-  request.send("type=" + type + "&heure=" + heure + "&date_debut=" + date_debut + "&date_fin=" + date_fin + "&supplement=" + supplement + "&nom=" + categorie + "&id=" + id);
+  request.send("id=" + id + "&bareme=" + bareme + "&type=" + type + "&unit=" + unit + "&dd=" + date_debut + "&df=" + date_fin + "&sup=" + supplement);
+
 }
 
 
@@ -326,8 +330,6 @@ function deterdate(){
   }
   var year = date.getUTCFullYear();
   var final = year + "-" + month + "-" + day;
-  console.log(final);
-  console.log(typeof final);
   document.getElementById('date_fin').setAttribute("min", final);
 }
 

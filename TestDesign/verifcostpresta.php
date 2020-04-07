@@ -5,16 +5,16 @@
   require_once "requireStripe.php";
   \Stripe\Stripe::setApiKey('sk_test_qMXWSSMoE6DTqXNR7kMQ0k6V00sh4hnDbe');
 
-  if(isset($_POST['heure']) && !empty($_POST['heure'])){
-    $heure = $_POST['heure'];
+  if(isset($_POST['unit']) && !empty($_POST['unit'])){
+    $unit = $_POST['unit'];
   }
   else{
     echo "Tous les champs n'était pas remplis";
     die();
   }
 
-  if(isset($_POST['date_debut']) && !empty($_POST['date_debut'])){
-    $date_debut = $_POST['date_debut'];
+  if(isset($_POST['dd']) && !empty($_POST['dd'])){
+    $date_debut = $_POST['dd'];
   }
   else{
     echo "Tous les champs n'était pas remplis";
@@ -22,8 +22,8 @@
   }
 
   if($_POST['type'] == 2){
-    if(isset($_POST['date_fin']) && !empty($_POST['date_fin'])){
-      $date_fin = $_POST['date_fin'];
+    if(isset($_POST['df']) && !empty($_POST['df'])){
+      $date_fin = $_POST['df'];
     }
     else{
       echo "Tous les champs n'était pas remplis";
@@ -31,24 +31,42 @@
     }
   }
 
-  $supplement = $_POST['supplement'];
+  if(isset($_POST['sup']) && !empty($_POST['sup'])){
+    $nb_supplement = $_POST['sup'];
+  }
+  else{
+    $nb_supplement = 0;
+  }
+
+  if($_POST['type'] != 2){
+    $date_fin = $date_debut;
+  }
+
+  if(isset($_POST['bareme']) && !empty($_POST['bareme'])){
+    $req = $cx->prepare('SELECT * FROM bareme WHERE id_bareme = ?');
+    $req->execute(array($_POST['bareme']));
+    $bareme = $req->fetch();
+    $req1 = $cx->prepare('SELECT * FROM supplement WHERE bareme_id_bareme = ?');
+    $req1->execute(array($bareme['id_bareme']));
+    $supplement = $req1->fetch();
+  }
+
   if(isset($_SESSION['mail'])){
-    $req3 = $cx->prepare('SELECT * FROM prestation WHERE id_prestation = ?');
-    $req3->execute(array($_POST['id']));
-    $prestation = $req3->fetch();
+    $req2 = $cx->prepare('SELECT * FROM prestation WHERE id_prestation = ?');
+    $req2->execute(array($_POST['id']));
+    $prestation = $req2->fetch();
 
-    if($_POST['type'] != 2){
-      $date_fin = $date_debut;
-    }
-
-    $reserv = new Reservation($heure,$date_debut,$date_fin,$supplement,$_SESSION['mail'],$_POST['id']);
+    $reserv = new Reservation($date_debut,$date_fin,$unit,$supplement['id_supplement'],$nb_supplement,$_SESSION['mail'],$prestation['id_prestation'], $bareme['prestataire_id_prestataire']);
+    print_r($reserv);
+/*
+    $reserv = new Reservation($unit,$date_debut,$date_fin,$supplement,$_SESSION['mail'],$_POST['id']);
     $reserv->setCout($_POST['nom']);
 
-    echo "<div>
+    /*echo "<div>
             <h2>Votre prestation vous couterais : ".$reserv->getCout()." €</h2>
             <button id=\"btnPanl\" class=\"btn btn-primary\" onclick=\"gototest('".htmlspecialchars(json_encode($reserv))."')\" style=\"visibility: visible\">Ajouter au panier</button>
           </div>
-          ";
+          ";*/
   }
   else{
     echo "connectez vous et vous pourrez réserver !";

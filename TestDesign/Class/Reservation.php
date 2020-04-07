@@ -4,24 +4,37 @@
   ini_set('display_errors', 1);
 
   class Reservation implements JsonSerializable {
-    private $nb_heure;
+
+    ////////////////ATTRIBUTS POUR LA TABLE RESERVATION : //////////////
     private $date_debut;
     private $date_fin;
-    private $supplement;
+    private $nb_unit;
+    private $id_supplement;
+    private $nb_supplement;
     private $user_id_user;
     private $user_ville_reference;
-    private $prestation_id_prestation;
-    private $cout;
     private $user_stripe_id;
+    private $prestation_id_prestation;
+    private $prestation_ville;
 
-    public function __construct(float $h, string $dd, string $df, string $sup, string $m, int $pid)
+    //////////////ATTRIBUTS POUR LA TABLE FACTURATION /////////////////
+    private $cout;
+    private $prestataire_id;
+    private $prestataire_ville;
+    //private $cout;
+    //
+
+    public function __construct(string $dd, string $df, float $h, int $idsup, int $sup, string $m, int $pid, int $prestataire)
     {
-      $this->nb_heure = $h;
+      ////////////RESERVE//////////////
       $this->date_debut = $dd;
       $this->date_fin = $df;
-      $this->supplement = $sup;
+      $this->nb_unit = $h;
+      $this->id_supplement = $idsup;
+      $this->nb_supplement = $sup;
       $this->setUser($m);
-      $this->prestation_id_prestation = $pid;
+      $this->setPresta($pid);
+      $this->setPrestataire($prestataire);
     }
 
     public function setUser(string $mail):void{
@@ -35,6 +48,28 @@
       $this->user_stripe_id = $user['stripe_id'];
     }
 
+    public function setPresta(int $idp):void{
+      global $cx;
+      $reqPresta = $cx->prepare('SELECT * FROM prestation WHERE id_prestation = ?');
+      $reqPresta ->execute(array($idp));
+      $presta = $reqPresta ->fetch();
+
+      $this->prestation_id_prestation = $idp;
+      $this->prestation_ville = $presta['categorie_ville'];
+
+    }
+
+    public function setPrestataire(int $id):void{
+      global $cx;
+      $req1 = $cx->prepare('SELECT * FROM prestataire WHERE id_prestataire = ?');
+      $req1->execute(array($id));
+      $prestataire = $req1->fetch();
+
+      $this->prestataire_id = $prestataire['id_prestataire'];
+      $this->prestataire_ville = $prestataire['categorie_ville'];
+    }
+
+/*
     public function setCout(string $cn):void{
       global $cx;
       $req = $cx->prepare('SELECT * FROM prestataire WHERE categorie_nom = ?');
@@ -120,7 +155,7 @@
       return $this->user_stripe_id;
     }
 
-
+*/
 
     public function jsonSerialize()
       {

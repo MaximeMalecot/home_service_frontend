@@ -45,16 +45,17 @@
                    <input class=\"btn btn-primary\" onclick=\"newPresta()\" value=\"Faire une demande\"/>".
                "</div>";
         }
+        foreach ($prestations as $prestation) {
+          echo "<div class=\"presta\">
+                 <h1>".$prestation[1]." : </h1>".
+                 "<div>".$prestation[2]."</div>".
+                 "<input class=\"btn btn-primary\" onclick=\"reserve('".$prestation[0]."','".$nom."')\" value=\"Réserver la prestation\"/>".
+               "</div>";
+        }
       }
   }
 
-   foreach ($prestations as $prestation) {
-     echo "<div class=\"presta\">
-            <h1>".$prestation[1]." : </h1>".
-            "<div>".$prestation[2]."</div>".
-            "<input class=\"btn btn-primary\" onclick=\"reserve('".$prestation[0]."','".$nom."')\" value=\"Réserver la prestation\"/>".
-          "</div>";
-   }
+
 
 ?>
 </div>
