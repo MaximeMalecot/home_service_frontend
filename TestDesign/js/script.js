@@ -297,7 +297,7 @@ function getcost(id,bareme){
 }
 
 
-function gototest(json){
+function addshop(json){
   const request = new XMLHttpRequest();
   var btn = document.getElementById('btnPanl');
   btn.style.visibility = "hidden";
@@ -306,7 +306,7 @@ function gototest(json){
 
   request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 
-  request.onreadystatechange = function(gototest) {
+  request.onreadystatechange = function(addshop) {
     if(request.readyState === 4 && request.status == 200){
       document.getElementById('added').innerHTML = request.responseText ;
     }else {

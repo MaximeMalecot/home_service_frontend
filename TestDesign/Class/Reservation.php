@@ -21,8 +21,6 @@
     private $cout;
     private $prestataire_id;
     private $prestataire_ville;
-    //private $cout;
-    //
 
     public function __construct(string $dd, string $df, float $h, int $idsup, int $sup, string $m, int $pid, int $prestataire)
     {
@@ -69,110 +67,210 @@
       $this->prestataire_ville = $prestataire['categorie_ville'];
     }
 
-/*
-    public function setCout(string $cn):void{
-      global $cx;
-      $req = $cx->prepare('SELECT * FROM prestataire WHERE categorie_nom = ?');
-      $req->execute(array($cn));
-      $prestataires = $req->fetchAll();
 
-      $this->cout= 0;
-      foreach($prestataires as $prestataire){
-        if(strcmp($this->supplement, "aucun") != 0){
-          if( ($prestataire['prix_heure'] + $prestataire['supplement']) > $this->cout){
-            $this->cout = ($prestataire['prix_heure'] + $prestataire['supplement']);
-          }
-        }
-        else{
-          if($prestataire['prix_heure'] > $this->cout){
-            $this->cout = $prestataire['prix_heure'];
-          }
-        }
+    public function setManCout(int $idb):void{
+      global $cx;
+      $reqBar = $cx->prepare('SELECT * FROM bareme WHERE id_bareme = ?');
+      $reqBar->execute(array($idb));
+      $bareme = $reqBar->fetch();
+      $reqSup = $cx->prepare('SELECT * FROM supplement WHERE bareme_id_bareme = ?');
+      $reqSup->execute(array($bareme['id_bareme']));
+      $supplement = $reqSup->fetch();
+
+      if(strcmp($this->date_debut,$this->date_fin) == 0){
+        $this->cout = ($this->nb_unit * $bareme['prix_unite']) + ($this->nb_supplement * $supplement['prix_unite']);
       }
-      $this->cout *= 1.3;
-      if(strcmp($this->date_fin, $this->date_debut ) != 0){
+      else{
         $nbJoursTime = strtotime($this->date_fin) - strtotime($this->date_debut);
         $nbJours = ($nbJoursTime/86400) + 1;
-        $this->cout *= $nbJours;
+        $this->cout = (($this->nb_unit * $bareme['prix_unit_recurrent']) * $nbJours) + ($this->nb_supplement * $supplement['prix_unite']);
       }
     }
 
-//////////////////////SETTERS/////////////////////////
-    public function setNbHeure(int $h):void{
-      $this->nb_heure = $h;
-    }
-    public function setDateDebut(string $dd):void{
-      $this->date_debut = $dd;
-    }
-    public function setDateFin(string $df):void{
-      $this->date_fin = $df;
-    }
-    public function setSupplement(string $sup):void{
-      $this->supplement = $sup;
-    }
-    public function setUID(int $id):void{
-      $this->user_id_user = $id;
-    }
-    public function setUVR(string $vr):void{
-      $this->user_ville_reference = $vr;
-    }
-    public function setPID(int $id):void{
-      $this->prestation_id_prestation = $id;
-    }
-    public function setUSD(int $id):void{
-      $this->user_stripe_id = $id;
-    }
-    public function SimpleCout(float $c):void{
-      $this->cout = $c;
-    }
+//////////////////NORMAL GETTER AND SETTER/////////////////////////
 
-////////////////GETTERS/////////////////////
-    public function getNbHeure():int{
-      return $this->nb_heure;
-    }
-    public function getDateDebut():string{
+      public function getDateDebut()
+      {
       return $this->date_debut;
-    }
-    public function getDateFin():string{
+      }
+
+      public function setDateDebut($date_debut)
+      {
+      $this->date_debut = $date_debut;
+
+      return $this;
+      }
+
+      public function getDateFin()
+      {
       return $this->date_fin;
-    }
-    public function getSupplement():string{
-      return $this->supplement;
-    }
-    public function getUID():int{
+      }
+
+      public function setDateFin($date_fin)
+      {
+      $this->date_fin = $date_fin;
+
+      return $this;
+      }
+
+      public function getNbUnit()
+      {
+      return $this->nb_unit;
+      }
+
+      public function setNbUnit($nb_unit)
+      {
+      $this->nb_unit = $nb_unit;
+
+      return $this;
+      }
+
+      public function getIdSupplement()
+      {
+      return $this->id_supplement;
+      }
+
+      public function setIdSupplement($id_supplement)
+      {
+      $this->id_supplement = $id_supplement;
+
+      return $this;
+      }
+
+      public function getNbSupplement()
+      {
+      return $this->nb_supplement;
+      }
+
+      public function setNbSupplement($nb_supplement)
+      {
+      $this->nb_supplement = $nb_supplement;
+
+      return $this;
+      }
+
+      public function getUserIdUser()
+      {
       return $this->user_id_user;
-    }
-    public function getUVR():string{
+      }
+
+      public function setUserIdUser($user_id_user)
+      {
+      $this->user_id_user = $user_id_user;
+
+      return $this;
+      }
+
+      public function getUserVilleReference()
+      {
       return $this->user_ville_reference;
-    }
-    public function getPID():int{
-      return $this->prestation_id_prestation;
-    }
-    public function getCout():float{
-      return $this->cout;
-    }
-    public function getUSD():string{
+      }
+
+      public function setUserVilleReference($user_ville_reference)
+      {
+      $this->user_ville_reference = $user_ville_reference;
+
+      return $this;
+      }
+
+      public function getUserStripeId()
+      {
       return $this->user_stripe_id;
-    }
+      }
 
-*/
+      public function setUserStripeId($user_stripe_id)
+      {
+      $this->user_stripe_id = $user_stripe_id;
 
+      return $this;
+      }
+
+      public function getPrestationIdPrestation()
+      {
+      return $this->prestation_id_prestation;
+      }
+
+      public function setPrestationIdPrestation($prestation_id_prestation)
+      {
+      $this->prestation_id_prestation = $prestation_id_prestation;
+
+      return $this;
+      }
+
+      public function getPrestationVille()
+      {
+      return $this->prestation_ville;
+      }
+
+      public function setPrestationVille($prestation_ville)
+      {
+      $this->prestation_ville = $prestation_ville;
+
+      return $this;
+      }
+
+      public function getCout()
+      {
+      return $this->cout;
+      }
+
+      public function setCout($cout)
+      {
+      $this->cout = $cout;
+
+      return $this;
+      }
+
+      public function getPrestataireId()
+      {
+      return $this->prestataire_id;
+      }
+
+      public function setPrestataireId($prestataire_id)
+      {
+      $this->prestataire_id = $prestataire_id;
+
+      return $this;
+      }
+
+      public function getPrestataireVille()
+      {
+      return $this->prestataire_ville;
+      }
+
+      public function setPrestataireVille($prestataire_ville)
+      {
+      $this->prestataire_ville = $prestataire_ville;
+
+      return $this;
+      }
+
+
+/////////////////////////////JSON SERIALIAZ////////////////////////
     public function jsonSerialize()
       {
           return
           [
-              'nb_heure'   => $this->nb_heure,
               'date_debut' => $this->date_debut,
               'date_fin' => $this->date_fin,
-              'supplement' => $this->supplement,
+              'nb_unit'   => $this->nb_unit,
+              'id_supplement' => $this->id_supplement,
+              'nb_supplement' => $this->nb_supplement,
               'user_id_user' => $this->user_id_user,
               'user_ville_reference' => $this->user_ville_reference,
+              'user_stripe_id' => $this->user_stripe_id,
               'prestation_id_prestation' => $this->prestation_id_prestation,
+              'prestation_ville' => $this->prestation_ville,
               'cout' => $this->cout,
-              'user_stripe_id' => $this->user_stripe_id
+              'prestataire_id' => $this->prestataire_id,
+              'prestataire_ville' => $this->prestataire_ville,
+
           ];
       }
-}
+
+
+
+      }
 
 
 ?>

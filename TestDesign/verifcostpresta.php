@@ -49,7 +49,14 @@
     $req1 = $cx->prepare('SELECT * FROM supplement WHERE bareme_id_bareme = ?');
     $req1->execute(array($bareme['id_bareme']));
     $supplement = $req1->fetch();
+    if($bareme == NULL){
+      echo "Une erreur est survenue !";
+    }
   }
+  else{
+    echo "Une erreur est survenue !";
+  }
+
 
   if(isset($_SESSION['mail'])){
     $req2 = $cx->prepare('SELECT * FROM prestation WHERE id_prestation = ?');
@@ -57,16 +64,13 @@
     $prestation = $req2->fetch();
 
     $reserv = new Reservation($date_debut,$date_fin,$unit,$supplement['id_supplement'],$nb_supplement,$_SESSION['mail'],$prestation['id_prestation'], $bareme['prestataire_id_prestataire']);
-    print_r($reserv);
-/*
-    $reserv = new Reservation($unit,$date_debut,$date_fin,$supplement,$_SESSION['mail'],$_POST['id']);
-    $reserv->setCout($_POST['nom']);
+    $reserv->setManCout($bareme['id_bareme']);
 
-    /*echo "<div>
+    echo "<div>
             <h2>Votre prestation vous couterais : ".$reserv->getCout()." €</h2>
-            <button id=\"btnPanl\" class=\"btn btn-primary\" onclick=\"gototest('".htmlspecialchars(json_encode($reserv))."')\" style=\"visibility: visible\">Ajouter au panier</button>
+            <button id=\"btnPanl\" class=\"btn btn-primary\" onclick=\"addshop('".htmlspecialchars(json_encode($reserv))."')\" style=\"visibility: visible\">Ajouter au panier</button>
           </div>
-          ";*/
+          ";
   }
   else{
     echo "connectez vous et vous pourrez réserver !";
