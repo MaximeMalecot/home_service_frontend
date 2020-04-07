@@ -18,40 +18,46 @@
       require_once "config.php";
       require_once "requireStripe.php";
       \Stripe\Stripe::setApiKey('sk_test_qMXWSSMoE6DTqXNR7kMQ0k6V00sh4hnDbe');
-			if(isset($_SESSION['mail']) && isset($_SESSION['reservations'])){
+			if(isset($_SESSION['mail']) && isset($_SESSION['reservations']) && !empty($_SESSION['reservations'])){
 				try{
 					$CurrentSession = \Stripe\Checkout\Session::retrieve($_GET['session_id']);
-					$req=$cx->prepare('INSERT INTO reservation(date_debut,date_fin,nb_heure,supplement,user_id_user,user_ville_reference,prestation_id_prestation,prestation_ville) VALUES (DATE(?),DATE(?),?,?,?,?,?,?)');
-					$req1=$cx->prepare('SELECT * FROM prestation WHERE id_prestation = ?');
-					$req2=$cx->prepare('INSERT INTO facturation(date,cout,id_user,reservation_id_reservation) VALUES(NOW(),?,?,?)');
+					$reqReservation=$cx->prepare('INSERT INTO reservation(date_debut,date_fin,nb_unite,id_supplement,nb_unit_suplement,user_id_user,user_ville_reference,prestation_id_prestation,prestation_ville) VALUES(?,?,?,?,?,?,?,?,?)');
+			    $reqFacturation=$cx->prepare('INSERT INTO facturation(date,cout,id_user,reservation_id_reservation,prestataire_id_prestataire,prestataire_ville) VALUES(NOW(),?,?,?,?,?)');
 
 					foreach ($_SESSION['reservations'] as $res) {
 	          $rez = unserialize($res);
-						$req1->execute(array($rez->getPID()));
-						$PVR = $req1->fetch();
-						$req->execute(array(
+
+						$reqReservation->execute(array(
 							$rez->getDateDebut(),
-							$rez->getDateFin(),
-							$rez->getNbHeure(),
-							$rez->getSupplement(),
-							$rez->getUID(),
-							$rez->getUVR(),
-							$rez->getPID(),
-							$PVR['categorie_ville']
+				      $rez->getDateFin(),
+				      $rez->getNbUnit(),
+				      $rez->getIdSupplement(),
+				      $rez->getNbSupplement(),
+				      $rez->getUserIdUser(),
+				      $rez->getUserVilleReference(),
+				      $rez->getPrestationIdPrestation(),
+				      $rez->getPrestationVille()
 						));
 						$lastId = $cx->lastInsertId();
-						$req2->execute(array(
+						$reqFacturation->execute(array(
 							$rez->getCout(),
-							$rez->getUID(),
-							$lastId
+							$rez->getUserIdUser(),
+							$lastId,
+							$rez->getPrestataireId(),
+							$rez->getPrestataireVille()
 						));
 	        }
 					$_SESSION['reservations'] = array();
+					header( "refresh:5;url=index.php" );
 					echo "<h1>Vos réservations ont bien été prises en compte, merci de votre confiance !</h1>";
 				}
 				catch(Exception $e){
 					echo "une erreur est survenue!";
 				}
+		}
+		else{
+			header( "refresh:5;url=index.php" ); 
+			echo "Une erreur est survenue lors du chargement de votre panier";
 		}
     ?>
   </main>

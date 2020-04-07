@@ -358,7 +358,7 @@ function AskFinish(id){
 
   request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 
-  request.onreadystatechange = function(deleteHours) {
+  request.onreadystatechange = function(AskFinish) {
     if(request.readyState === 4 && request.status == 200){
       document.getElementById('AllAskUs').innerHTML = request.responseText ;
     }else {

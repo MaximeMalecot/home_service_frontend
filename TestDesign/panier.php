@@ -36,28 +36,31 @@
         $cout = 0;
         $nb_heure = 0;
         if($sous != NULL){
-            echo "Il vous reste ".$sous['heure_restante']." heure gratuite grâce à votre abonnement !<br />";
+            echo "Il vous reste ".$sous['heure_restante']." unités gratuite grâce à votre abonnement !<br />";
             $req2= $cx->prepare('SELECT * FROM prestation WHERE id_prestation = ?');
+						$req3= $cx->prepare('SELECT * FROM bareme WHERE prestation_id_prestation = ?');
             $i = 0;
             foreach ($_SESSION['reservations'] as $res) {
 
               $rez = unserialize($res);
               $cout += $rez->getCout();
-              $req2->execute(array($rez->getPID()));
+              $req2->execute(array($rez->getPrestationIdPrestation()));
               $pres = $req2->fetch();
+							$req3->execute(array($rez->getPrestationIdPrestation()));
+							$bareme = $req3->fetch();
               echo "<div class=\"prestapannel\">
                       <h2>Prestation : ".$pres['nom']."</h1>
-                      <h4>".$rez->getNbHeure()." heures pour un prix de : ".$rez->getCout()." €</h2>
-                      <h4>Supplement : ".$rez->getSupplement()."</h4>";
+                      <h4>".$rez->getNbUnit()." ".$bareme['unite']." pour un prix de : ".$rez->getCout()." €</h2>
+                      <h4>Supplement : ".$rez->getNbSupplement()."</h4>";
                       if(strcmp($rez->getDateDebut(),$rez->getDateFin()) != 0){
-                        echo "<h4>Commence le : ".$rez->getDateDebut()." et finit le : ".$rez->getDateFin()." avec ".$rez->getNbHeure()." heures par jour</h4>";
+                        echo "<h4>Commence le : ".$rez->getDateDebut()." et finit le : ".$rez->getDateFin()." avec ".$rez->getNbUnit()." ".$bareme['unite']." par jour</h4>";
                         $nbJoursTime = strtotime($rez->getDateFin()) - strtotime($rez->getDateDebut());
                         $nbJours = ($nbJoursTime/86400) + 1;
-                        $totH = $nbJours * $rez->getNbHeure();
+                        $totH = $nbJours * $rez->getNbUnit();
                       }
                       else{
-                        echo "<h4>A lieu le : ".$rez->getDateDebut()." pendant ".$rez->getNbHeure()." heures</h4>";
-                        $totH = $rez->getNbHeure();
+                        echo "<h4>A lieu le : ".$rez->getDateDebut()." pendant ".$rez->getNbUnit()." ".$bareme['unite']."</h4>";
+                        $totH = $rez->getNbUnit();
                       }
                       if($sous['heure_restante'] >= $totH){
                         echo "<button class=\"btn btn-primary\" onclick=\"deleteHours('".$i."','".$totH."')\">L'avoir gratuitement</button>";
@@ -68,7 +71,7 @@
                     echo "</div>";
                     $i+=1;
             }
-            echo "<br /><br />Total : ".$cout."<br /><br />";
+            echo "<br /><br />Total : ".$cout." €<br /><br />";
             try{
               $session = \Stripe\Checkout\Session::create([
                 'customer' => $user['stripe_id'],
@@ -98,7 +101,7 @@
               print_r($rez);
               echo "<br />";
               $cout += $rez->getCout();
-              echo $rez->getNbHeure()."<br />";
+              echo $rez->getNbUnit()."<br />";
             }
             echo "Total : ".$cout."<br /><br />";
             try{

@@ -13,43 +13,40 @@
     $req1->execute(array($user['id_user']));
     $sous = $req1->fetch();
     $heure = $sous['heure_restante'] - $_GET['heure'];
-    $req2=$cx->prepare('UPDATE souscription SET heure_restante = ? WHERE user_id_user = ?');
-    $req2->execute(array($heure,$user['id_user']));
 
-    $req3=$cx->prepare('INSERT INTO reservation(date_debut,date_fin,nb_heure,supplement,user_id_user,user_ville_reference,prestation_id_prestation,prestation_ville) VALUES (DATE(?),DATE(?),?,?,?,?,?,?)');
-    $req4=$cx->prepare('SELECT * FROM prestation WHERE id_prestation = ?');
-    $req5=$cx->prepare('INSERT INTO facturation(date,cout,id_user,reservation_id_reservation) VALUES(NOW(),?,?,?)');
-
-    $rez= unserialize($_SESSION['reservations'][$_GET['index']]);
-    $req4->execute(array($rez->getPID()));
-    $PVR = $req4->fetch();
-    $req3->execute(array(
+    $rez= unserialize($_SESSION['reservations'][$_GET['index']])
+    $reqReservation=$cx->prepare('INSERT INTO reservation(date_debut,date_fin,nb_unite,id_supplement,nb_unit_suplement,user_id_user,user_ville_reference,prestation_id_prestation,prestation_ville) VALUES(?,?,?,?,?,?,?,?,?)');
+    $reqFacturation=$cx->prepare('INSERT INTO facturation(date,cout,id_user,reservation_id_reservation,prestataire_id_prestataire,prestataire_ville) VALUES(NOW(),?,?,?,?,?)');
+    $reqReservation->execute(array(
       $rez->getDateDebut(),
       $rez->getDateFin(),
-      $rez->getNbHeure(),
-      $rez->getSupplement(),
-      $rez->getUID(),
-      $rez->getUVR(),
-      $rez->getPID(),
-      $PVR['categorie_ville']
+      $rez->getNbUnit(),
+      $rez->getIdSupplement(),
+      $rez->getNbSupplement(),
+      $rez->getUserIdUser(),
+      $rez->getUserVilleReference(),
+      $rez->getPrestationIdPrestation(),
+      $rez->getPrestationVille()
     ));
     $lastId = $cx->lastInsertId();
-    echo $lastId;
-    $req5->execute(array(
+    $reqFacturation->execute(array(
       0,
-      $rez->getUID(),
-      $lastId
+      $rez->getUserIdUser(),
+      $lastId,
+      $rez->getPrestataireId(),
+      $rez->getPrestataireVille()
     ));
 
+    $req2=$cx->prepare('UPDATE souscription SET heure_restante = ? WHERE user_id_user = ?');
+    $req2->execute(array($heure,$user['id_user']));
 
     unset($_SESSION['reservations'][$_GET['index']]);
     $_SESSION['reservations'] = array_values($_SESSION['reservations']);
 
     echo "Votre réservation gratuite à bien été prise en compte !<br />";
 
-
-
   }
+
   if(isset($_SESSION['mail']) && !empty($_SESSION['mail']) && isset($_SESSION['reservations']) && !empty($_SESSION['reservations'])){
     $req = $cx->prepare('SELECT * FROM user WHERE mail = ?');
     $req->execute(array($_SESSION['mail']));
@@ -61,34 +58,34 @@
     $cout = 0;
     $nb_heure = 0;
     if($sous != NULL){
-        echo "Il vous reste ".$sous['heure_restante']." heure gratuite grâce à votre abonnement !<br />";
+        echo "Il vous reste ".$sous['heure_restante']." unités gratuite grâce à votre abonnement !<br />";
         $req2= $cx->prepare('SELECT * FROM prestation WHERE id_prestation = ?');
+        $req3= $cx->prepare('SELECT * FROM bareme WHERE prestation_id_prestation = ?');
         $i = 0;
-        echo "<div id=\"totalPrestaPannel\">";
         foreach ($_SESSION['reservations'] as $res) {
 
           $rez = unserialize($res);
           $cout += $rez->getCout();
-          $req2->execute(array($rez->getPID()));
+          $req2->execute(array($rez->getPrestationIdPrestation()));
           $pres = $req2->fetch();
+          $req3->execute(array($rez->getPrestationIdPrestation()));
+          $bareme = $req3->fetch();
           echo "<div class=\"prestapannel\">
                   <h2>Prestation : ".$pres['nom']."</h1>
-                  <h4>".$rez->getNbHeure()." heures pour un prix de : ".$rez->getCout()." €</h2>
-                  <h4>Supplement : ".$rez->getSupplement()."</h4>";
+                  <h4>".$rez->getNbUnit()." ".$bareme['unite']." pour un prix de : ".$rez->getCout()." €</h2>
+                  <h4>Supplement : ".$rez->getNbSupplement()."</h4>";
                   if(strcmp($rez->getDateDebut(),$rez->getDateFin()) != 0){
-                    echo "<h4>Commence le : ".$rez->getDateDebut()." et finit le : ".$rez->getDateFin()." avec ".$rez->getNbHeure()." heures par jour</h4>";
+                    echo "<h4>Commence le : ".$rez->getDateDebut()." et finit le : ".$rez->getDateFin()." avec ".$rez->getNbUnit()." ".$bareme['unite']." par jour</h4>";
                     $nbJoursTime = strtotime($rez->getDateFin()) - strtotime($rez->getDateDebut());
                     $nbJours = ($nbJoursTime/86400) + 1;
-                    $totH = $nbJours * $rez->getNbHeure();
-                    echo " total de ".$totH."heures<br />";
+                    $totH = $nbJours * $rez->getNbUnit();
                   }
                   else{
-                    echo "<h4>A lieu le : ".$rez->getDateDebut()." pendant ".$rez->getNbHeure()." heures</h4>";
-                    $totH = $rez->getNbHeure();
-                    echo " total de ".$totH."heures<br />";
+                    echo "<h4>A lieu le : ".$rez->getDateDebut()." pendant ".$rez->getNbUnit()." ".$bareme['unite']."</h4>";
+                    $totH = $rez->getNbUnit();
                   }
-                  if($sous['heure_restante'] > $totH){
-                    echo "<button class=\"btn btn-primary\" onclick=\"deleteHours('".$i."')\">L'avoir gratuitement</button>";
+                  if($sous['heure_restante'] >= $totH){
+                    echo "<button class=\"btn btn-primary\" onclick=\"deleteHours('".$i."','".$totH."')\">L'avoir gratuitement</button>";
                   }
 
 
@@ -96,7 +93,7 @@
                 echo "</div>";
                 $i+=1;
         }
-        echo "<br /><br />Total : ".$cout."<br /><br />";
+        echo "<br /><br />Total : ".$cout." €<br /><br />";
         try{
           $session = \Stripe\Checkout\Session::create([
             'customer' => $user['stripe_id'],
@@ -126,7 +123,7 @@
           print_r($rez);
           echo "<br />";
           $cout += $rez->getCout();
-          echo $rez->getNbHeure()."<br />";
+          echo $rez->getNbUnit()."<br />";
         }
         echo "Total : ".$cout."<br /><br />";
         try{
@@ -151,5 +148,8 @@
             $_SESSION['reservations'] = array();
           }
       }
+  }
+  else{
+    echo "Votre panier est vide !";
   }
 ?>

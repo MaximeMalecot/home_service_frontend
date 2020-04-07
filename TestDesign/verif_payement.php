@@ -106,6 +106,7 @@
 							else{
 								$req4 = $cx->prepare('UPDATE souscription SET abonnement_id_abonnement = ?, date = NOW(), heure_restante = ?, stripe_id = ? WHERE user_id_user = ?');
 								$req4->execute(array($abo['id_abonnement'], $abo['nb_heure'], $sub['id'], $user['id_user']));
+								header( "refresh:5;url=index.php" );
 								echo "<div class=\"container\">
 												<h1 id=\"congratz\">Félicitations pour avoir changer d'abonnement, profitez de vos nouveaux avantages dès maintenant!</h1>
 											</div>";
@@ -113,7 +114,7 @@
 						}
 					}
 					catch(Exception $e){
-						print_r($e);
+						header( "refresh:5;url=index.php" );
 						echo "<div class=\"container\">
 										<h1 id=\"congratz\">Une erreur est servenue au niveau du payement !</h1>
 									</div>";
