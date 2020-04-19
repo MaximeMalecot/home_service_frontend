@@ -1,6 +1,7 @@
 <?php
   require_once "Class/Reservation.php";
   require_once "config.php";
+  require_once "functions.php";
 
   require_once "requireStripe.php";
   \Stripe\Stripe::setApiKey('sk_test_qMXWSSMoE6DTqXNR7kMQ0k6V00sh4hnDbe');
@@ -8,33 +9,7 @@
 
 
 
-  function prepareQuery($arrayData, $QueryStart, $type, $QueryEnd){
-    $nbArgs = count($arrayData);
-    $prepareStringReq = $QueryStart;
-    $i =0;
-    while($i < $nbArgs){
-      if($type != null){
-        if($i===0){
-          $prepareStringReq = $prepareStringReq.$type."(?)";
-        }
-        else{
-          $prepareStringReq = $prepareStringReq.", ".$type."(?)";
-        }
-        $i+=1;
-      }
-      else{
-        if($i===0){
-          $prepareStringReq = $prepareStringReq."?";
-        }
-        else{
-          $prepareStringReq = $prepareStringReq.", ?";
-        }
-        $i+=1;
-      }
-    }
-    $prepareStringReq = $prepareStringReq.$QueryEnd;
-    return $prepareStringReq;
-  }
+
 
 
 
@@ -128,10 +103,9 @@
           $Query = prepareQuery($allDays, "SELECT TIME(date_debut), TIME(date_fin), prestataire_id_prestataire FROM planning WHERE DATE(date_debut) IN (", "DATE", ") AND prestataire_id_prestataire = ?");
           $nbArgs = count($allDays);
           $i = 0;
+          $reqJours = $cx->prepare($Query);
           foreach($affectations as $a){
             $allDays[$nbArgs] = $a['prestataire_id_prestataire'];
-
-            $reqJours = $cx->prepare($Query);
             $reqJours->execute($allDays);
             $Jours = $reqJours->fetchAll();
 
@@ -181,7 +155,54 @@
 
     }
     else{
-      echo "ahbah";
+      $pres_dispo = array();
+      $rdd = DateTime::createFromFormat("Y-m-d", $date_debut);//date_debut format DateTime
+      $rdf = DateTime::createFromFormat("Y-m-d", $date_fin);//$date_fin format DateTime
+
+      $totaltime = $unit * $bareme['time_per_unit'];
+      $hd = new DateTime ($_POST['time']);//Récupère l'heure de début
+      $hf = new DateTime ($_POST['time']);//Mets une datetime égale à l'heure de début
+      $hf->modify("+".$totaltime." hours");//Ajoute le temps nécessaire à l'heure du début pour avoir l'heure de fin
+
+      $Query= "SELECT TIME(date_debut), TIME(date_fin), prestataire_id_prestataire FROM planning WHERE DATE(date_debut) IN (DATE(?)) AND  prestataire_id_prestataire = ?";
+      $reqJours= $cx->prepare($Query);
+
+      foreach($affectations as $a){
+
+        $reqJours->execute(array(
+          $hd->format("Y-m-d"),
+          $a['prestataire_id_prestataire']
+        ));
+        $Jours = $reqJours->fetch();
+        if($Jours['TIME(date_debut)'] < $hd->format('H:i:s') && $Jours['TIME(date_fin)'] >  $hf->format('H:i:s')){
+          array_push($pres_dispo, $a['prestataire_id_prestataire']);
+        }
+      }
+      if(count($pres_dispo) === 0){
+        echo "<h3>Malheureusement aucun de nos prestataire ne sera disponible pour vous à ces horaires-ci</h3>";
+      }
+      else{
+        $Query = prepareQuery($pres_dispo, "SELECT id_prestataire FROM prestataire WHERE prix_recurrent = (SELECT MIN(prix_recurrent) FROM prestataire WHERE id_prestataire IN (", null, ") ".prepareQuery($pres_dispo,"AND id_prestataire IN (",null,"))"), ") ");
+        foreach($pres_dispo as $p){
+          array_push($pres_dispo,$p);
+        }
+        $reqFinalPresta = $cx->prepare($Query);
+        $reqFinalPresta->execute($pres_dispo);
+        $Prestataire = $reqFinalPresta->fetch();
+
+        $reserv = new Reservation($hd,$hf,$unit,$supplement['id_supplement'],$nb_supplement,$_SESSION['mail'],$prestation['id_prestation'], $Prestataire['id_prestataire']);
+        $reserv->setManCout($bareme['id_bareme']);
+        if($reserv->getCout() > 0){
+          echo "<div>
+                  <h2>Votre prestation vous couterais : ".$reserv->getCout()." €</h2>
+                  <button id=\"btnPanl\" class=\"btn btn-primary\" onclick=\"addshop('".htmlspecialchars(json_encode($reserv))."')\" style=\"visibility: visible\">Ajouter au panier</button>
+                </div>
+                ";
+        }
+        else{
+          echo "<h2>Il y a eu une erreur dans vos dates, réessayez</h2>";
+        }
+      }
     }
   }
   else{

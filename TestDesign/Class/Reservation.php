@@ -78,11 +78,11 @@
         $reqSup->execute(array($bareme['id_bareme']));
         $supplement = $reqSup->fetch();
 
-        if(strcmp($this->date_debut,$this->date_fin) == 0){
+        if($this->date_debut === $this->date_fin){
           $this->cout = ($this->nb_unit * $bareme['prix_unite']) + ($this->nb_supplement * $supplement['prix_unite']);
         }
         else{
-          $nbJoursTime = strtotime($this->date_fin) - strtotime($this->date_debut);
+          $nbJoursTime = strtotime($this->date_fin->format("Y-m-d")) - strtotime($this->date_debut->format("Y-m-d"));
           $nbJours = ($nbJoursTime/86400) + 1;
           $this->cout = (($this->nb_unit * $bareme['prix_unit_recurrent']) * $nbJours) + ($this->nb_supplement * $supplement['prix_unite']);
         }

@@ -84,7 +84,7 @@
                   'quantity' => 1,
                 ]],
                 'success_url' => URL."/finalpresta.php?session_id={CHECKOUT_SESSION_ID}",
-                'cancel_url' => URL."/verifcostpresta.php?session_id=cancel",
+                'cancel_url' => URL."/panier.php?session_id=cancel",
               ]);
               echo "<button class=\"btn btn-primary\" onclick=\"gotoCheckout('".$session->id."')\">Procéder au payement</button>";
               }
@@ -116,7 +116,7 @@
                   'quantity' => 1,
                 ]],
                 'success_url' => URL."/finalpresta.php?session_id={CHECKOUT_SESSION_ID}",
-                'cancel_url' => URL."/verifcostpresta.php?session_id=cancel",
+                'cancel_url' => URL."/panier.php?session_id=cancel",
               ]);
               echo "<button class=\"btn btn-primary\" onclick=\"gotoCheckout('".$session->id."')\">Procéder au payement</button>";
               }
