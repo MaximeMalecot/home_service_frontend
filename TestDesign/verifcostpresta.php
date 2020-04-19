@@ -5,6 +5,41 @@
   require_once "requireStripe.php";
   \Stripe\Stripe::setApiKey('sk_test_qMXWSSMoE6DTqXNR7kMQ0k6V00sh4hnDbe');
 
+
+
+
+  function prepareQuery($arrayData, $QueryStart, $type, $QueryEnd){
+    $nbArgs = count($arrayData);
+    $prepareStringReq = $QueryStart;
+    $i =0;
+    while($i < $nbArgs){
+      if($type != null){
+        if($i===0){
+          $prepareStringReq = $prepareStringReq.$type."(?)";
+        }
+        else{
+          $prepareStringReq = $prepareStringReq.", ".$type."(?)";
+        }
+        $i+=1;
+      }
+      else{
+        if($i===0){
+          $prepareStringReq = $prepareStringReq."?";
+        }
+        else{
+          $prepareStringReq = $prepareStringReq.", ?";
+        }
+        $i+=1;
+      }
+    }
+    $prepareStringReq = $prepareStringReq.$QueryEnd;
+    return $prepareStringReq;
+  }
+
+
+
+
+
   if(isset($_POST['unit']) && !empty($_POST['unit'])){
     $unit = $_POST['unit'];
   }
@@ -62,15 +97,92 @@
     $req2 = $cx->prepare('SELECT * FROM prestation WHERE id_prestation = ?');
     $req2->execute(array($_POST['id']));
     $prestation = $req2->fetch();
+    $reqAffect = $cx->prepare('SELECT * FROM affectation WHERE prestation_id_prestation = ?');
+    $reqAffect->execute(array($_POST['id']));
+    $affectations = $reqAffect->fetchAll();
+    $reqPlanning = $cx->prepare('SELECT DATE(date_debut), TIME(date_debut), TIME(date_fin) FROM planning WHERE prestataire_id_prestataire = ?');
+    $reqPrestataire = $cx->prepare('SELECT * FROM prestataire WHERE id_prestataire = ?');
 
-    $reserv = new Reservation($date_debut,$date_fin,$unit,$supplement['id_supplement'],$nb_supplement,$_SESSION['mail'],$prestation['id_prestation'], $bareme['prestataire_id_prestataire']);
-    $reserv->setManCout($bareme['id_bareme']);
+    if($date_debut != $date_fin){
+          $pres_dispo = array();
+          $rdd = DateTime::createFromFormat("Y-m-d", $date_debut);//date_debut format DateTime
+          $rdf = DateTime::createFromFormat("Y-m-d", $date_fin);//$date_fin format DateTime
+          $rdi = DateTime::createFromFormat("Y-m-d", $date_debut);//date_debut format DateTime utilisée pour incrémenter dans les boucles
 
-    echo "<div>
-            <h2>Votre prestation vous couterais : ".$reserv->getCout()." €</h2>
-            <button id=\"btnPanl\" class=\"btn btn-primary\" onclick=\"addshop('".htmlspecialchars(json_encode($reserv))."')\" style=\"visibility: visible\">Ajouter au panier</button>
-          </div>
-          ";
+
+          $totaltime = $unit * $bareme['time_per_unit'];////Récupère le temps nécessaire avec le temps pour l'unité et le nombre d'unité
+          $hd = new DateTime ($_POST['time']);//Récupère l'heure de début
+          $hf = new DateTime ($_POST['time']);//Mets une datetime égale à l'heure de début
+          $hf->modify("+".$totaltime." hours");//Ajoute le temps nécessaire à l'heure du début pour avoir l'heure de fin
+
+          $count = 0;
+          $Jours = $rdd->diff($rdf);//nbJours->days = LA DIFFERENCE DE JOURS ENTRE LES DEUX DATES
+          $nbJours = $Jours->days + 1;
+          $allDays = array();
+
+          while ($rdi <= $rdf){
+            array_push($allDays, $rdi->format("Y-m-d"));
+            $rdi->modify("+1 day");
+          }
+
+          $Query = prepareQuery($allDays, "SELECT TIME(date_debut), TIME(date_fin), prestataire_id_prestataire FROM planning WHERE DATE(date_debut) IN (", "DATE", ") AND prestataire_id_prestataire = ?");
+          $nbArgs = count($allDays);
+          $i = 0;
+          foreach($affectations as $a){
+            $allDays[$nbArgs] = $a['prestataire_id_prestataire'];
+
+            $reqJours = $cx->prepare($Query);
+            $reqJours->execute($allDays);
+            $Jours = $reqJours->fetchAll();
+
+            if(count($Jours) == $nbJours){
+              foreach($Jours as $j){
+                if($j['TIME(date_debut)'] < $hd->format('H:i:s') && $j['TIME(date_fin)'] >  $hf->format('H:i:s')){
+                    $i+=1;
+                }
+              }
+              if($i === count($allDays) - 1){
+                array_push($pres_dispo, $a['prestataire_id_prestataire']);
+              }
+            }
+            $i = 0;
+
+          }
+
+          if(count($pres_dispo) === 0){
+            echo "<h3>Malheureusement aucun de nos prestataire ne sera disponible pour vous à ces horaires-ci</h3>";
+          }
+          else{
+            $Query = prepareQuery($pres_dispo, "SELECT id_prestataire FROM prestataire WHERE prix_recurrent = (SELECT MIN(prix_recurrent) FROM prestataire WHERE id_prestataire IN (", null, ") ".prepareQuery($pres_dispo,"AND id_prestataire IN (",null,"))"), ") ");
+            foreach($pres_dispo as $p){
+              array_push($pres_dispo,$p);
+            }
+            $reqFinalPresta = $cx->prepare($Query);
+            $reqFinalPresta->execute($pres_dispo);
+            $Prestataire = $reqFinalPresta->fetch();
+
+
+            $rdd ->setTime($hd->format("H"),$hd->format("i"),$hd->format("s"));
+            $rdf->setTime($hf->format("H"),$hf->format("i"),$hf->format("s"));
+
+            $reserv = new Reservation($rdd,$rdf,$unit,$supplement['id_supplement'],$nb_supplement,$_SESSION['mail'],$prestation['id_prestation'], $Prestataire['id_prestataire']);
+            $reserv->setManCout($bareme['id_bareme']);
+            if($reserv->getCout() > 0){
+              echo "<div>
+                      <h2>Votre prestation vous couterais : ".$reserv->getCout()." €</h2>
+                      <button id=\"btnPanl\" class=\"btn btn-primary\" onclick=\"addshop('".htmlspecialchars(json_encode($reserv))."')\" style=\"visibility: visible\">Ajouter au panier</button>
+                    </div>
+                    ";
+            }
+            else{
+              echo "<h2>Il y a eu une erreur dans vos dates, réessayez</h2>";
+            }
+          }
+
+    }
+    else{
+      echo "ahbah";
+    }
   }
   else{
     echo "connectez vous et vous pourrez réserver !";

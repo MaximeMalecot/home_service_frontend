@@ -270,6 +270,7 @@ function getcost(id,bareme){
   let unit =  document.getElementById('heure').value;
   let date_debut = document.getElementById('date_debut').value;
   let date_fin = document.getElementById('date_fin').value;
+  let time = document.getElementById('time_start').value;
 
   if(document.getElementById('supplement').checked == true){
     var supplement = document.getElementById('spec').value;
@@ -277,8 +278,6 @@ function getcost(id,bareme){
   else{
     var supplement = "0";
   }
-
-  console.log("id=" + id + ", bareme=" + bareme + ", type=" + type + ", heure=" + heure + ", dd=" + date_debut + ", df=" + date_fin + ", sup=" + supplement);
 
   request.open('POST', 'verifcostpresta.php', true);
 
@@ -292,7 +291,7 @@ function getcost(id,bareme){
       ;
     }
   }
-  request.send("id=" + id + "&bareme=" + bareme + "&type=" + type + "&unit=" + unit + "&dd=" + date_debut + "&df=" + date_fin + "&sup=" + supplement);
+  request.send("id=" + id + "&bareme=" + bareme + "&type=" + type + "&unit=" + unit + "&dd=" + date_debut + "&df=" + date_fin + "&sup=" + supplement + "&time=" + time);
 
 }
 
@@ -307,6 +306,24 @@ function addshop(json){
   request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 
   request.onreadystatechange = function(addshop) {
+    if(request.readyState === 4 && request.status == 200){
+      document.getElementById('added').innerHTML = request.responseText ;
+    }else {
+      document.getElementById('added').innerHTML = '<span style="color:red">Erreur!</span>';
+      ;
+    }
+  }
+  request.send();
+}
+
+function replace(json,id){
+  const request = new XMLHttpRequest();
+
+  request.open('GET', 'replace.php?object=' + json + "&id=" + id);
+
+  request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+  request.onreadystatechange = function(replace) {
     if(request.readyState === 4 && request.status == 200){
       document.getElementById('added').innerHTML = request.responseText ;
     }else {

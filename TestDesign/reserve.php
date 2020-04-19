@@ -3,15 +3,12 @@
   require_once "Class/Reservation.php";
   ini_set('display_errors', '1');
   if(isset($_POST['nom']) && isset($_POST['id'])){
-    /*$req = $cx->prepare('SELECT * FROM prestataire WHERE categorie_nom = ?');
-    $req->execute(array($_POST['nom']));
-    $prestataires = $req->fetchAll();*/
-    $req = $cx->prepare('SELECT * FROM bareme WHERE prestation_id_prestation = ?');
+    $req = $cx->prepare('SELECT * FROM prestation WHERE id_prestation = ?');
     $req->execute(array($_POST['id']));
-    $bareme = $req->fetch();
-    $req1 = $cx->prepare('SELECT * FROM prestataire WHERE id_prestataire = ?');
-    $req1->execute(array($bareme['prestataire_id_prestataire']));
-    $prestataire = $req1->fetch();
+    $prestation = $req->fetch();
+    $req1 = $cx->prepare('SELECT * FROM bareme WHERE id_bareme = ?');
+    $req1->execute(array($prestation['bareme_id_bareme']));
+    $bareme = $req1->fetch();
     $req2 = $cx->prepare('SELECT * FROM supplement WHERE bareme_id_bareme = ?');
     $req2->execute(array($bareme['id_bareme']));
     $supplement = $req2->fetch();
@@ -47,6 +44,14 @@
                 </td>
                </tr>
                <br/>
+               <tr>
+                <td align=\"center\">
+                  <label>Heure de début :</label>
+                </td>
+                <td>
+                  <input type=\"time\" id=\"time_start\" class =\"form-control\" name=\"time_start\" />
+                </td>
+               </tr>
                <tr>
                  <td align=\"center\">
                    <label>Date : </label>

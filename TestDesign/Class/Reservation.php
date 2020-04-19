@@ -22,7 +22,7 @@
     private $prestataire_id;
     private $prestataire_ville;
 
-    public function __construct(string $dd, string $df, float $h, int $idsup, int $sup, string $m, int $pid, int $prestataire)
+    public function __construct(DateTime $dd, DateTime $df, float $h, ?int $idsup, ?int $sup, string $m, int $pid, int $prestataire)
     {
       ////////////RESERVE//////////////
       $this->date_debut = $dd;
@@ -73,17 +73,29 @@
       $reqBar = $cx->prepare('SELECT * FROM bareme WHERE id_bareme = ?');
       $reqBar->execute(array($idb));
       $bareme = $reqBar->fetch();
-      $reqSup = $cx->prepare('SELECT * FROM supplement WHERE bareme_id_bareme = ?');
-      $reqSup->execute(array($bareme['id_bareme']));
-      $supplement = $reqSup->fetch();
+      if($this->id_supplement != null){
+        $reqSup = $cx->prepare('SELECT * FROM supplement WHERE bareme_id_bareme = ?');
+        $reqSup->execute(array($bareme['id_bareme']));
+        $supplement = $reqSup->fetch();
 
-      if(strcmp($this->date_debut,$this->date_fin) == 0){
-        $this->cout = ($this->nb_unit * $bareme['prix_unite']) + ($this->nb_supplement * $supplement['prix_unite']);
+        if(strcmp($this->date_debut,$this->date_fin) == 0){
+          $this->cout = ($this->nb_unit * $bareme['prix_unite']) + ($this->nb_supplement * $supplement['prix_unite']);
+        }
+        else{
+          $nbJoursTime = strtotime($this->date_fin) - strtotime($this->date_debut);
+          $nbJours = ($nbJoursTime/86400) + 1;
+          $this->cout = (($this->nb_unit * $bareme['prix_unit_recurrent']) * $nbJours) + ($this->nb_supplement * $supplement['prix_unite']);
+        }
       }
       else{
-        $nbJoursTime = strtotime($this->date_fin) - strtotime($this->date_debut);
-        $nbJours = ($nbJoursTime/86400) + 1;
-        $this->cout = (($this->nb_unit * $bareme['prix_unit_recurrent']) * $nbJours) + ($this->nb_supplement * $supplement['prix_unite']);
+        if(strcmp($this->date_debut->format("Y-m-d"),$this->date_fin->format("Y-m-d")) == 0){
+          $this->cout = ($this->nb_unit * $bareme['prix_unite']);
+        }
+        else{
+          $nbJoursTime = strtotime($this->date_fin->format("Y-m-d")) - strtotime($this->date_debut->format("Y-m-d"));
+          $nbJours = ($nbJoursTime/86400) + 1;
+          $this->cout = (($this->nb_unit * $bareme['prix_unit_recurrent']) * $nbJours);
+        }
       }
     }
 
