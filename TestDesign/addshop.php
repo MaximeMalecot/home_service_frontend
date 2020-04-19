@@ -28,6 +28,7 @@
                 <h3>Nombre d'unités :".$rez->getNbUnit()."</h3>
                 <button id=\"btnPanl\" class=\"btn btn-primary\" onclick=\"replace('".htmlspecialchars(json_encode($NewReservation))."', '".$i."')\">Remplacer</button>
               </div>";
+              $equal+=1;
       }
       else if($NewResdf <= $rezdf && $NewResdf >= $rezdd && $NewResdd <= $rezdd){
         echo "<div>
@@ -38,6 +39,7 @@
                 <h3>Nombre d'unités :".$rez->getNbUnit()."</h3>
                 <button id=\"btnPanl\" class=\"btn btn-primary\" onclick=\"replace('".htmlspecialchars(json_encode($NewReservation))."', '".$i."')\">Remplacer</button>
               </div>";
+              $equal+=1;
       }
       else if($NewResdd >= $rezdd && $NewResdd <= $rezdf && $NewResdf >=$rezdd && $NewResdf <= $rezdf){
         echo "<div>
@@ -48,13 +50,14 @@
                 <h3>Nombre d'unités :".$rez->getNbUnit()."</h3>
                 <button id=\"btnPanl\" class=\"btn btn-primary\" onclick=\"replace('".htmlspecialchars(json_encode($NewReservation))."', '".$i."')\">Remplacer</button>
               </div>";
-      }
-      else{
-          array_push($_SESSION['reservations'], serialize($NewReservation));
-          echo "<br/>Votre prestation a bien été ajoutés au panier ! Vous avez actuellement ".count($_SESSION['reservations'])." prestations dans votre panier<br/>";
+              $equal+=1;
       }
       echo "<br />";
       $i+=1;
+    }
+    if($equal === 0){
+      array_push($_SESSION['reservations'], serialize($NewReservation));
+      echo "<br/>Votre prestation a bien été ajoutés au panier ! Vous avez actuellement ".count($_SESSION['reservations'])." prestations dans votre panier<br/>";
     }
   }
   else{
