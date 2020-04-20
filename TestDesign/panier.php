@@ -19,7 +19,7 @@
     <?php
       require_once "config.php";
       require_once "Class/Reservation.php";
-      require_once "requireStripe.php";
+      require_once "Stripe/init.php";
       \Stripe\Stripe::setApiKey('sk_test_qMXWSSMoE6DTqXNR7kMQ0k6V00sh4hnDbe');
       ini_set('display_errors', '1');
 

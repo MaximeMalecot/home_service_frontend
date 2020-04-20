@@ -3,18 +3,6 @@
   require_once "config.php";
   require_once "functions.php";
 
-  require_once "requireStripe.php";
-  \Stripe\Stripe::setApiKey('sk_test_qMXWSSMoE6DTqXNR7kMQ0k6V00sh4hnDbe');
-
-
-
-
-
-
-
-
-
-
   if(isset($_POST['unit']) && !empty($_POST['unit'])){
     $unit = $_POST['unit'];
   }
@@ -170,7 +158,7 @@
       foreach($affectations as $a){
 
         $reqJours->execute(array(
-          $hd->format("Y-m-d"),
+          $rdd->format("Y-m-d"),
           $a['prestataire_id_prestataire']
         ));
         $Jours = $reqJours->fetch();
@@ -190,7 +178,10 @@
         $reqFinalPresta->execute($pres_dispo);
         $Prestataire = $reqFinalPresta->fetch();
 
-        $reserv = new Reservation($hd,$hf,$unit,$supplement['id_supplement'],$nb_supplement,$_SESSION['mail'],$prestation['id_prestation'], $Prestataire['id_prestataire']);
+        $rdd ->setTime($hd->format("H"),$hd->format("i"),$hd->format("s"));
+        $rdf->setTime($hf->format("H"),$hf->format("i"),$hf->format("s"));
+
+        $reserv = new Reservation($rdd,$rdf,$unit,$supplement['id_supplement'],$nb_supplement,$_SESSION['mail'],$prestation['id_prestation'], $Prestataire['id_prestataire']);
         $reserv->setManCout($bareme['id_bareme']);
         if($reserv->getCout() > 0){
           echo "<div>

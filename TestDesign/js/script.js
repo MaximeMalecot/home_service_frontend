@@ -23,7 +23,6 @@ function prestation(){
       document.getElementById('prestation').innerHTML = request.responseText ;
     }else {
       document.getElementById('prestation').innerHTML = '<span style="color:red">Erreur!</span>';
-      ;
     }
   }
   request.send();
@@ -40,7 +39,6 @@ function abonnement(){
       document.getElementById('abonnement').innerHTML = request.responseText ;
     }else {
       document.getElementById('abonnement').innerHTML = '<span style="color:red">Erreur!</span>';
-      ;
     }
   }
   request.send();
@@ -58,7 +56,6 @@ function home(){
       document.getElementById('home').innerHTML = request.responseText ;
     }else {
       document.getElementById('home').innerHTML = '<span style="color:red">Erreur!</span>';
-      ;
     }
   }
   request.send();
@@ -77,7 +74,6 @@ function prestationcontent(name)
       document.getElementById('prestationcontent').innerHTML = request.responseText ;
     }else {
       document.getElementById('prestationcontent').innerHTML = '<span style="color:red">Erreur!</span>';
-      ;
     }
   }
   request.send();
@@ -95,7 +91,6 @@ function connection(){
       document.getElementById('connect').innerHTML = request.responseText ;
     }else {
       document.getElementById('connect').innerHTML = '<span style="color:red">Erreur!</span>';
-      ;
     }
   }
   request.send();
@@ -115,8 +110,7 @@ function verifconnect(){
       if(request.readyState === 4 && request.status == 200){
         document.getElementById('connect').innerHTML = request.responseText ;
       }else {
-        document.getElementById('connect').innerHTML = '<span style="color:red">Il y a eu une erreur dans la connection veuillez réessayer ultérieurement!</span>';
-        ;
+        document.getElementById('connect').innerHTML = '<span style="color:red"></span>';
       }
     }
     request.send("mail=" + mail + "&mdp=" + mdp);
@@ -133,7 +127,6 @@ function cancelco(){
       document.getElementById('connect').innerHTML = request.responseText ;
     }else {
       document.getElementById('connect').innerHTML = '<span style="color:red">Erreur!</span>';
-      ;
     }
   }
   request.send();
@@ -151,7 +144,6 @@ function reserve(id,categorie){
       document.getElementById('prestationcontent').innerHTML = request.responseText ;
     }else {
       document.getElementById('prestationcontent').innerHTML = '<span style="color:red">Erreur!</span>';
-      ;
     }
   }
   request.send("id=" + id + "&nom=" + categorie);
@@ -168,7 +160,6 @@ function newPresta(){
       document.getElementById('prestationcontent').innerHTML = request.responseText ;
     }else {
       document.getElementById('prestationcontent').innerHTML = '<span style="color:red">Erreur!</span>';
-      ;
     }
   }
   request.send();
@@ -201,7 +192,6 @@ function createAsk(id,ville){
       document.getElementById('resultask').innerHTML = request.responseText ;
     }else {
       document.getElementById('resultask').innerHTML = '<span style="color:red">Erreur!</span>';
-      ;
     }
   }
   request.send("user=" + id + "&ville=" + ville + "&descript=" + text);
@@ -219,7 +209,6 @@ function getabo(id){
       document.getElementById('abonnements').innerHTML = request.responseText ;
     }else {
       document.getElementById('abonnements').innerHTML = '<span style="color:red">Erreur!</span>';
-      ;
     }
   }
   request.send();
@@ -247,7 +236,6 @@ function select_langue(){
       document.getElementsByTagName('html').innerHTML = request.responseText ;
     }else {
       document.getElementsByTagName('html').innerHTML = '<span style="color:red">Erreur!</span>';
-      ;
     }
   }
   request.send();
@@ -288,7 +276,6 @@ function getcost(id,bareme){
       document.getElementById('finalpresta').innerHTML = request.responseText ;
     }else {
       document.getElementById('finalpresta').innerHTML = '<span style="color:red">Erreur!</span>';
-      ;
     }
   }
   request.send("id=" + id + "&bareme=" + bareme + "&type=" + type + "&unit=" + unit + "&dd=" + date_debut + "&df=" + date_fin + "&sup=" + supplement + "&time=" + time);
@@ -310,7 +297,6 @@ function addshop(json){
       document.getElementById('added').innerHTML = request.responseText ;
     }else {
       document.getElementById('added').innerHTML = '<span style="color:red">Erreur!</span>';
-      ;
     }
   }
   request.send();
@@ -328,7 +314,6 @@ function replace(json,id){
       document.getElementById('added').innerHTML = request.responseText ;
     }else {
       document.getElementById('added').innerHTML = '<span style="color:red">Erreur!</span>';
-      ;
     }
   }
   request.send();
@@ -362,7 +347,6 @@ function deleteHours(int,h){
       document.getElementById('totalPrestaPannel').innerHTML = request.responseText ;
     }else {
       document.getElementById('totalPrestaPannel').innerHTML = '<span style="color:red">Erreur!</span>';
-      ;
     }
   }
   request.send();
@@ -380,7 +364,6 @@ function AskFinish(id){
       document.getElementById('AllAskUs').innerHTML = request.responseText ;
     }else {
       document.getElementById('AllAskUs').innerHTML = '<span style="color:red">Erreur!</span>';
-      ;
     }
   }
   request.send();

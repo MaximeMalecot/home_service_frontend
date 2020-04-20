@@ -13,7 +13,7 @@
   echo "
   <form id=\"form_connect\" method=\"POST\">
     <input type=\"mail\" placeholder=\"".$xml->header->formconnect->mail."\" id=\"mail\" class=\"form-control\" name=\"mail\"/>
-    <input type=\"password\" placeholder=\"".$xml->header->formconnect->password."\" id=\"mdp\" class=\"form-control\" name=\"mdp\"/>
+    <input type=\"password\" placeholder=\"".$xml->header->formconnect->password."\" onchange=\"verifconnect()\"id=\"mdp\" class=\"form-control\" name=\"mdp\"/>
     <input class=\"btn btn-primary\" id = 'formconnexion'  onclick=\"verifconnect()\"value=\"".$xml->header->formconnect->connect."\" />
     <button class=\"btn btn-primary\" onclick=\"cancelco()\" id='cancelco'>".$xml->header->formconnect->cancel."</button>
   </form>";
