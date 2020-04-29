@@ -8,9 +8,10 @@
        echo 'Une erreur est survenue, veuillez réessayer!';
    }
 
-   $req = $cx->prepare('SELECT * FROM prestation WHERE categorie_nom = :nom');
+   $req = $cx->prepare('SELECT * FROM prestation WHERE categorie_nom = :nom AND categorie_ville = :ville');
    $req->execute(array(
-     'nom'=>$nom
+     'nom'=>$nom,
+     'ville'=>VILLE
    ));
    $prestations = $req->fetchAll();
 

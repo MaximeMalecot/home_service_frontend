@@ -18,8 +18,8 @@
 
 <?php
   require_once "config.php";
-  $req = $cx->prepare('SELECT * FROM categorie');
-  $req->execute();
+  $req = $cx->prepare('SELECT * FROM categorie WHERE ville = ?');
+  $req->execute(array(VILLE));
   $categories = $req->fetchAll();
 
   foreach ($categories as $categorie ) {

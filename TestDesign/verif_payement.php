@@ -58,11 +58,11 @@
 							]);
 
 							$sub = \Stripe\Subscription::retrieve($CurrentSession['subscription']);
-							print_r($sub['id']);
 
 
 							$req5 = $cx->prepare('INSERT INTO souscription(abonnement_id_abonnement,date,heure_restante,user_id_user,user_ville_reference,stripe_id) VALUES(?,NOW(), ?, ?, ?,?)');
 							$req5->execute(array($abo['id_abonnement'],$abo['nb_heure'],$user['id_user'],$user['ville_reference'],$sub['id']));
+							header( "refresh:5;url=index.php" );
 							echo "<div class=\"container\">
 											<h1 id=\"congratz\">Félicitations, vous êtes désormais abonné.e et pouvez donc désormais profitez de vos avantages !</h1>
 										</div>";

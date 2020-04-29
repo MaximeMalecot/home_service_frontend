@@ -102,7 +102,7 @@
 						));
 	        }
 					$_SESSION['reservations'] = array();
-					header( "refresh:5;url=index.php" );
+					header( "refresh:5;url=settings.php" );
 					echo "<h1>Vos réservations ont bien été prises en compte, merci de votre confiance !</h1>";
 					echo "<h2>Retrouvez vos factures dans votre espace client</h2>";
 				}
@@ -111,7 +111,7 @@
 				}
 		}
 		else{
-			header( "refresh:5;url=index.php" );
+			header( "refresh:5;url=settings.php" );
 			echo "Une erreur est survenue lors du chargement de votre panier";
 		}
     ?>
