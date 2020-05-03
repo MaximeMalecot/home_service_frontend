@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 19, 2020 at 10:42 PM
+-- Generation Time: May 03, 2020 at 10:49 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -39,6 +39,14 @@ CREATE TABLE `abonnement` (
   `stripe_id` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `abonnement`
+--
+
+INSERT INTO `abonnement` (`id_abonnement`, `nom`, `cout`, `nb_heure`, `temps`, `heure_debut`, `heure_fin`, `stripe_id`) VALUES
+(1, 'Abonnement de base', 2400, 12, 5, 9, 20, 'prod_HBg8yyk7I9jZqA'),
+(2, 'Abonnement familial', 3600, 25, 6, 9, 20, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -59,9 +67,10 @@ CREATE TABLE `affectation` (
 --
 
 INSERT INTO `affectation` (`prestataire_id_prestataire`, `prestataire_categorie_ville`, `prestataire_categorie_nom`, `prestation_id_prestation`, `prestation_categorie_ville`, `prestation_categorie_nom`) VALUES
-(1, 'Lille', 'Plomberie', 1, 'Lille', 'Plomberie'),
+(1, 'Lille', 'Plomberie', 3, 'Lille', 'Plomberie'),
 (2, 'Lille', 'Administratif', 2, 'Lille', 'Administratif'),
-(3, 'Lille', 'Plomberie', 1, 'Lille', 'Plomberie');
+(5, 'Lille', 'Plomberie', 1, 'Lille', 'Plomberie'),
+(5, 'Lille', 'Plomberie', 3, 'Lille', 'Plomberie');
 
 -- --------------------------------------------------------
 
@@ -83,8 +92,10 @@ CREATE TABLE `bareme` (
 --
 
 INSERT INTO `bareme` (`id_bareme`, `unite`, `prix_unite`, `prix_unit_recurrent`, `nb_unite_minimum`, `time_per_unit`) VALUES
-(1, 'heure', 20, 18, 5, 1),
-(2, 'document', 25, 22, 3, 0.5);
+(1, 'heure', 130, 117, 20, 1),
+(2, 'document', 25, 22, 3, 0.5),
+(3, 'heure', 20, 18, 2, 1),
+(6, 'heure', 3.3, 2.8, 4, 1);
 
 -- --------------------------------------------------------
 
@@ -103,7 +114,9 @@ CREATE TABLE `categorie` (
 
 INSERT INTO `categorie` (`nom`, `ville`) VALUES
 ('Administratif', 'Lille'),
-('Plomberie', 'Lille');
+('Menage', 'Lille'),
+('Plomberie', 'Lille'),
+('testJava', 'Paris');
 
 -- --------------------------------------------------------
 
@@ -121,6 +134,13 @@ CREATE TABLE `contrat` (
   `prestataire_id_prestataire` int(11) NOT NULL,
   `prestataire_ville` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `contrat`
+--
+
+INSERT INTO `contrat` (`id_contrat`, `duree`, `path_contrat`, `salaire`, `date_debut`, `date_fin`, `prestataire_id_prestataire`, `prestataire_ville`) VALUES
+(6, 0, NULL, 6, '2020-05-02 10:00:00', '2020-05-02 11:00:00', 2, 'Lille');
 
 -- --------------------------------------------------------
 
@@ -159,6 +179,15 @@ CREATE TABLE `devis` (
   `user_ville_reference` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `devis`
+--
+
+INSERT INTO `devis` (`idDevis`, `date`, `cout`, `date_debut`, `date_fin`, `nb_unite`, `id_supplement`, `nb_unit_supplement`, `prestation_id_prestation`, `prestation_categorie_ville`, `prestation_categorie_nom`, `user_id_user`, `user_ville_reference`) VALUES
+(2, '2020-05-02 18:49:27', 198, '2020-05-20 14:00:00', '2020-05-22 19:00:00', 3, NULL, 0, 2, 'Lille', 'Administratif', 1, 'Paris'),
+(4, '2020-05-02 19:10:19', 88, '2020-05-07 15:00:00', '2020-05-08 16:00:00', 2, NULL, 0, 2, 'Lille', 'Administratif', 1, 'Paris'),
+(5, '2020-05-02 19:13:11', 88, '2020-05-07 15:00:00', '2020-05-08 16:00:00', 2, NULL, 0, 2, 'Lille', 'Administratif', 1, 'Paris');
+
 -- --------------------------------------------------------
 
 --
@@ -184,7 +213,19 @@ INSERT INTO `facturation` (`id_facturation`, `date`, `cout`, `id_user`, `reserva
 (2, '2020-04-19 23:06:01', 72, 1, 2, 3, 'Lille'),
 (3, '2020-04-19 23:09:44', 72, 1, 3, 3, 'Lille'),
 (4, '2020-04-19 23:13:57', 82, 1, 4, 3, 'Lille'),
-(5, '2020-04-19 23:28:47', 54, 1, 5, 3, 'Lille');
+(5, '2020-04-19 23:28:47', 54, 1, 5, 3, 'Lille'),
+(6, '2020-04-20 19:29:42', 36, 1, 6, 1, 'Lille'),
+(7, '2020-04-20 19:38:51', 36, 1, 7, 3, 'Lille'),
+(8, '2020-04-20 19:40:27', 36, 1, 8, 3, 'Lille'),
+(9, '2020-04-20 19:43:18', 36, 1, 9, 3, 'Lille'),
+(10, '2020-04-20 19:43:18', 36, 1, 10, 3, 'Lille'),
+(11, '2020-04-20 19:45:40', 36, 1, 11, 3, 'Lille'),
+(12, '2020-04-20 19:45:40', 162, 1, 12, 3, 'Lille'),
+(13, '2020-04-29 18:47:34', 0, 1, 13, 2, 'Lille'),
+(14, '2020-04-29 21:46:17', 0, 1, 14, 2, 'Lille'),
+(15, '2020-04-29 21:46:52', 88, 1, 15, 2, 'Lille'),
+(16, '2020-05-02 19:53:37', 132, 1, 16, 2, 'Lille'),
+(17, '2020-05-02 19:57:48', 132, 1, 17, 2, 'Lille');
 
 -- --------------------------------------------------------
 
@@ -206,14 +247,48 @@ CREATE TABLE `planning` (
 --
 
 INSERT INTO `planning` (`id_planning`, `date_debut`, `date_fin`, `prestataire_id_prestataire`, `prestataire_categorie_ville`, `prestataire_categorie_nom`) VALUES
-(1, '2020-04-19 08:00:00', '2020-04-19 10:00:00', 3, 'Lille', 'Plomberie'),
-(2, '2020-04-20 13:00:00', '2020-04-20 17:00:00', 3, 'Lille', 'Plomberie'),
+(1, '2020-04-19 09:00:00', '2020-04-19 20:00:00', 3, 'Lille', 'Plomberie'),
+(2, '2020-04-20 08:00:00', '2020-04-20 11:00:00', 3, 'Lille', 'Plomberie'),
 (3, '2020-04-21 13:00:00', '2020-04-21 17:00:00', 3, 'Lille', 'Plomberie'),
 (4, '2020-04-22 13:00:00', '2020-04-22 17:00:00', 3, 'Lille', 'Plomberie'),
-(5, '2020-04-23 13:00:00', '2020-04-23 17:00:00', 3, 'Lille', 'Plomberie'),
-(6, '2020-04-20 09:00:00', '2020-04-20 14:15:00', 1, 'Lille', 'Plomberie'),
+(5, '2020-04-23 00:00:00', '2020-04-23 00:00:00', 3, 'Lille', 'Plomberie'),
+(6, '2020-04-20 09:00:00', '2020-04-20 11:00:00', 1, 'Lille', 'Plomberie'),
 (8, '2020-04-21 09:00:00', '2020-04-21 14:00:00', 1, 'Lille', 'Plomberie'),
-(9, '2020-04-19 05:00:00', '2020-04-19 18:00:00', 1, 'Lille', 'Plomberie');
+(9, '2020-04-19 05:00:00', '2020-04-19 18:00:00', 1, 'Lille', 'Plomberie'),
+(10, '2020-04-25 09:00:00', '2020-04-25 20:00:00', 3, 'Lille', 'Plomberie'),
+(11, '2020-04-26 09:00:00', '2020-04-26 20:00:00', 4, 'Lille', 'Plomberie'),
+(12, '2020-04-26 09:00:00', '2020-04-26 20:00:00', 3, 'Lille', 'Plomberie'),
+(13, '2020-04-27 09:00:00', '2020-04-27 20:00:00', 3, 'Lille', 'Plomberie'),
+(14, '2020-04-26 09:00:00', '2020-04-26 20:00:00', 2, 'Lille', 'Administratif'),
+(15, '2020-04-27 09:00:00', '2020-04-27 20:00:00', 2, 'Lille', 'Administratif'),
+(16, '2020-04-28 09:00:00', '2020-04-28 20:00:00', 2, 'Lille', 'Administratif'),
+(17, '2020-04-29 09:00:00', '2020-04-29 20:00:00', 2, 'Lille', 'Administratif'),
+(18, '2020-04-30 12:00:00', '2020-04-30 20:00:00', 2, 'Lille', 'Administratif'),
+(19, '2020-04-26 09:00:00', '2020-04-26 20:00:00', 1, 'Lille', 'Plomberie'),
+(20, '2020-04-27 09:00:00', '2020-04-27 20:00:00', 1, 'Lille', 'Plomberie'),
+(21, '2020-04-27 09:00:00', '2020-04-27 20:00:00', 4, 'Lille', 'Plomberie'),
+(22, '2020-04-28 09:00:00', '2020-04-28 20:00:00', 4, 'Lille', 'Plomberie'),
+(23, '2020-04-29 09:00:00', '2020-04-29 20:00:00', 4, 'Lille', 'Plomberie'),
+(24, '2020-04-30 09:00:00', '2020-04-30 20:00:00', 4, 'Lille', 'Plomberie'),
+(25, '2020-05-01 09:00:00', '2020-05-01 20:00:00', 4, 'Lille', 'Plomberie'),
+(26, '2020-04-28 09:00:00', '2020-04-28 20:00:00', 1, 'Lille', 'Plomberie'),
+(27, '2020-04-27 09:00:00', '2020-04-27 20:00:00', 5, 'Lille', 'Plomberie'),
+(28, '2020-04-28 09:00:00', '2020-04-28 20:00:00', 5, 'Lille', 'Plomberie'),
+(29, '2020-04-30 09:00:00', '2020-04-30 20:00:00', 3, 'Lille', 'Plomberie'),
+(30, '2020-05-01 09:00:00', '2020-05-01 20:00:00', 3, 'Lille', 'Plomberie'),
+(31, '2020-05-02 09:00:00', '2020-05-02 20:00:00', 3, 'Lille', 'Plomberie'),
+(32, '2020-05-03 09:00:00', '2020-05-03 20:00:00', 3, 'Lille', 'Plomberie'),
+(33, '2020-05-04 09:00:00', '2020-05-04 20:00:00', 3, 'Lille', 'Plomberie'),
+(34, '2020-05-01 12:00:00', '2020-05-01 20:00:00', 2, 'Lille', 'Administratif'),
+(35, '2020-05-02 12:00:00', '2020-05-02 20:00:00', 2, 'Lille', 'Administratif'),
+(36, '2020-05-03 09:00:00', '2020-05-03 20:00:00', 2, 'Lille', 'Administratif'),
+(37, '2020-05-04 09:00:00', '2020-05-04 20:00:00', 2, 'Lille', 'Administratif'),
+(38, '2020-05-05 09:00:00', '2020-05-05 13:00:00', 2, 'Lille', 'Administratif'),
+(39, '2020-05-06 09:00:00', '2020-05-06 13:00:00', 2, 'Lille', 'Administratif'),
+(40, '2020-05-07 09:00:00', '2020-05-07 20:00:00', 2, 'Lille', 'Administratif'),
+(41, '2020-05-08 09:00:00', '2020-05-08 20:00:00', 2, 'Lille', 'Administratif'),
+(42, '2020-05-09 09:00:00', '2020-05-09 20:00:00', 2, 'Lille', 'Administratif'),
+(43, '2020-05-10 09:00:00', '2020-05-10 20:00:00', 2, 'Lille', 'Administratif');
 
 -- --------------------------------------------------------
 
@@ -234,7 +309,7 @@ CREATE TABLE `prestataire` (
   `code_postal` int(11) DEFAULT NULL,
   `email` varchar(60) DEFAULT NULL,
   `nb_heure_min` float DEFAULT NULL,
-  `prix_recurrent` varchar(45) DEFAULT NULL,
+  `prix_recurrent` double DEFAULT NULL,
   `categorie_ville` varchar(45) NOT NULL,
   `categorie_nom` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -244,9 +319,11 @@ CREATE TABLE `prestataire` (
 --
 
 INSERT INTO `prestataire` (`id_prestataire`, `nom`, `tel_mobile`, `tel_fixe`, `adresse_entreprise`, `url_qrcode`, `prix_heure`, `supplement`, `company_name`, `code_postal`, `email`, `nb_heure_min`, `prix_recurrent`, `categorie_ville`, `categorie_nom`) VALUES
-(1, 'SuperPlombier', '0606060606', '0101010101', '5 rue de STDN', NULL, 6, 'Par outils 4 euros', NULL, 75000, 'Leroy@merlin.com', 3, '5', 'Lille', 'Plomberie'),
-(2, 'SecretaireSpe', '0707070707', '0909090909', '4 place jeola', NULL, 3, 'Par visa 5euros', NULL, 60000, 'super@secretaire.com', 3, '2', 'Lille', 'Administratif'),
-(3, 'PlombierTest', '0707070707', '0101010101', '9 rue de Paris', NULL, 1, NULL, 'PaCher', 55555, 'Plombier@test.com', 1, '1', 'Lille', 'Plomberie');
+(1, 'SuperPlombier', '0606060606', '0101010101', '5 rue de STDN', NULL, 6, 'Par outils 4 euros', NULL, 75000, 'Leroy@merlin.com', 3, 5, 'Lille', 'Plomberie'),
+(2, 'SecretaireSpe', '0707070707', '0909090909', '4 place jeola', NULL, 3, 'Par visa 5euros', NULL, 60000, 'super@secretaire.com', 3, 2, 'Lille', 'Administratif'),
+(3, 'PlombierTest', '0707070707', '0101010101', '9 rue de Paris', NULL, 1, NULL, 'PaCher', 55555, 'Plombier@test.com', 1, 1, 'Lille', 'Plomberie'),
+(4, 'Tet', '0000000000', '1111111111', 'rue test', NULL, 100, NULL, 'TestTest', 55555, 'test@test.com', 20, 90, 'Lille', 'Plomberie'),
+(5, 'PrestaPrem', '2222222222', '6666666666', NULL, NULL, 40, NULL, NULL, 92300, 'presta@prem.com', 20, 38, 'Lille', 'Plomberie');
 
 -- --------------------------------------------------------
 
@@ -269,7 +346,9 @@ CREATE TABLE `prestation` (
 
 INSERT INTO `prestation` (`id_prestation`, `nom`, `description`, `categorie_ville`, `categorie_nom`, `bareme_id_bareme`) VALUES
 (1, 'Plomberie', 'On refait tous ', 'Lille', 'Plomberie', 1),
-(2, 'Secretariat', 'Tous vos documents sont bien avec nous', 'Lille', 'Administratif', 2);
+(2, 'Secretariat', 'Tous vos documents sont bien avec nous', 'Lille', 'Administratif', 2),
+(3, 'La plombe', 'on plombe tous', 'Lille', 'Plomberie', 1),
+(4, 'Prestation tah les ouf', 'on est des ouf', 'Paris', 'testJava', 6);
 
 -- --------------------------------------------------------
 
@@ -299,7 +378,19 @@ INSERT INTO `reservation` (`id_reservation`, `date_debut`, `date_fin`, `nb_unite
 (2, '2020-04-20 14:00:00', '2020-04-23 15:00:00', 1, NULL, 1, 'Paris', 1, 'Lille', 0),
 (3, '2020-04-20 10:00:00', '2020-04-21 12:00:00', 2, NULL, 1, 'Paris', 1, 'Lille', 0),
 (4, '2020-04-22 10:00:00', '2020-04-23 12:00:00', 2, 1, 1, 'Paris', 1, 'Lille', 2),
-(5, '2020-04-19 11:00:00', '2020-04-19 14:00:00', 3, 1, 1, 'Paris', 1, 'Lille', 0);
+(5, '2020-04-19 11:00:00', '2020-04-19 14:00:00', 3, 1, 1, 'Paris', 1, 'Lille', 0),
+(6, '2020-04-20 12:00:00', '2020-04-20 14:00:00', 2, 1, 1, 'Paris', 1, 'Lille', 0),
+(7, '2020-04-20 12:00:00', '2020-04-20 14:00:00', 2, 1, 1, 'Paris', 1, 'Lille', 0),
+(8, '2020-04-20 12:00:00', '2020-04-20 14:00:00', 2, 1, 1, 'Paris', 1, 'Lille', 0),
+(9, '2020-04-20 12:00:00', '2020-04-20 14:00:00', 2, 1, 1, 'Paris', 1, 'Lille', 0),
+(10, '2020-04-22 12:00:00', '2020-04-22 14:00:00', 2, 1, 1, 'Paris', 1, 'Lille', 0),
+(11, '2020-04-20 12:00:00', '2020-04-20 14:00:00', 2, 1, 1, 'Paris', 1, 'Lille', 0),
+(12, '2020-04-21 09:00:00', '2020-04-23 12:00:00', 3, 1, 1, 'Paris', 1, 'Lille', 0),
+(13, '2020-04-30 10:00:00', '2020-04-30 11:00:00', 2, NULL, 1, 'Paris', 2, 'Lille', 0),
+(14, '2020-05-02 10:00:00', '2020-05-02 11:00:00', 2, NULL, 1, 'Paris', 2, 'Lille', 0),
+(15, '2020-04-30 10:00:00', '2020-05-01 11:00:00', 2, NULL, 1, 'Paris', 2, 'Lille', 0),
+(16, '2020-05-05 14:00:00', '2020-05-06 19:00:00', 3, NULL, 1, 'Paris', 2, 'Lille', 0),
+(17, '2020-05-05 14:00:00', '2020-05-06 19:00:00', 3, NULL, 1, 'Paris', 2, 'Lille', 0);
 
 -- --------------------------------------------------------
 
@@ -315,6 +406,13 @@ CREATE TABLE `souscription` (
   `user_ville_reference` varchar(45) NOT NULL,
   `stripe_id` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `souscription`
+--
+
+INSERT INTO `souscription` (`abonnement_id_abonnement`, `date`, `heure_restante`, `user_id_user`, `user_ville_reference`, `stripe_id`) VALUES
+(1, '2020-04-29 18:31:12', 12, 1, 'Paris', 'sub_HBg9nHAEz7kVbA');
 
 -- --------------------------------------------------------
 
@@ -485,19 +583,19 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `abonnement`
 --
 ALTER TABLE `abonnement`
-  MODIFY `id_abonnement` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_abonnement` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `bareme`
 --
 ALTER TABLE `bareme`
-  MODIFY `id_bareme` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_bareme` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `contrat`
 --
 ALTER TABLE `contrat`
-  MODIFY `id_contrat` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_contrat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `demande`
@@ -506,34 +604,40 @@ ALTER TABLE `demande`
   MODIFY `id_demande` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `devis`
+--
+ALTER TABLE `devis`
+  MODIFY `idDevis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `facturation`
 --
 ALTER TABLE `facturation`
-  MODIFY `id_facturation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_facturation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `planning`
 --
 ALTER TABLE `planning`
-  MODIFY `id_planning` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_planning` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `prestataire`
 --
 ALTER TABLE `prestataire`
-  MODIFY `id_prestataire` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_prestataire` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `prestation`
 --
 ALTER TABLE `prestation`
-  MODIFY `id_prestation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_prestation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `id_reservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_reservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `supplement`
