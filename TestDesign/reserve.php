@@ -74,11 +74,11 @@
                if(!empty($supplement)){
                echo "
                      <tr>
-                      <td align=\"center\" style=\"visibility: hidden\" >
+                      <td align=\"center\" >
                         <label>".$supplement['description']."</label>
                       </td>
                       <td>
-                        <input type=\"checkbox\" style=\"visibility: hidden\"  id=\"supplement\" name=\"supplement\" onchange=\"addsuppl()\"/>
+                        <input type=\"checkbox\" id=\"supplement\" name=\"supplement\" onchange=\"addsuppl()\"/>
                       </td>
                      </tr>
                      <tr style=\"visibility: hidden\" id=\"input_spec\">

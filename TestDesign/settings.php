@@ -49,7 +49,6 @@
 					$pay +=1;
 					echo "<section id=\"subscription_invoice\">Vos payements suite à votre abonnement sur : ".$abonnement['nom']."<br/>";
 
-					$tes = \Stripe\Subscription::retrieve($souscription['stripe_id']);
 					$invoices  = \Stripe\Invoice::all();
 					foreach($invoices as $invoice){
 						if($invoice->subscription == $souscription['stripe_id']){
@@ -88,16 +87,17 @@
 							$reqBar->execute(array($presta['bareme_id_bareme']));
 							$bareme = $reqBar->fetch();
 
+							$rdd = DateTime::createFromFormat("Y-m-d H:i:s", $d['date_debut']);//date_debut format DateTime
+							$rdf = DateTime::createFromFormat("Y-m-d H:i:s", $d['date_fin']);//$date_fin format DateTime
+
 							echo "<div class=\"histoPresta\">
 											Devis pour la prestation : ".$presta['nom']."<br />
 											Nombre d'unités : ".$d['nb_unite']."<br />";
-											if(strcmp($d['date_debut'], $d['date_fin']) != 0){
+											if( strcmp( $rdd->format("Y-m-d"),$rdf->format("Y-m-d")) != 0){
 												echo "Date de début de la prestation : ".$d['date_debut']."<br/>".
 															"Date de fin de la prestation : ".$d['date_fin']."<br/>";
 
 															$pres_dispo = array();
-										          $rdd = DateTime::createFromFormat("Y-m-d H:i:s", $d['date_debut']);//date_debut format DateTime
-										          $rdf = DateTime::createFromFormat("Y-m-d H:i:s", $d['date_fin']);//$date_fin format DateTime
 										          $rdi = DateTime::createFromFormat("Y-m-d H:i:s", $d['date_debut']);//date_debut format DateTime utilisée pour incrémenter dans les boucles
 
 															$totaltime = $d['nb_unite'] * $bareme['time_per_unit'];////Récupère le temps nécessaire avec le temps pour l'unité et le nombre d'unité
@@ -139,12 +139,10 @@
 												echo "Date pour la prestation : ".$d['date_debut']."<br/>";
 
 												$pres_dispo = array();
-												$rdd = DateTime::createFromFormat("Y-m-d H:i:s", $d['date_debut']);//date_debut format DateTime
-												$rdf = DateTime::createFromFormat("Y-m-d H:i:s", $d['date_fin']);//$date_fin format DateTime
 
 									      $totaltime = $d['nb_unite'] * $bareme['time_per_unit'];
-									      $hd = new DateTime ($_POST['time']);//Récupère l'heure de début
-									      $hf = new DateTime ($_POST['time']);//Mets une datetime égale à l'heure de début
+									      $hd = new DateTime ($rdd->format("H:i:s"));//Récupère l'heure de début
+									      $hf = new DateTime ($rdf->format("H:i:s"));//Mets une datetime égale à l'heure de début
 									      $hf->modify("+".$totaltime." hours");//Ajoute le temps nécessaire à l'heure du début pour avoir l'heure de fin
 
 									      $Query= "SELECT TIME(date_debut), TIME(date_fin), prestataire_id_prestataire FROM planning WHERE DATE(date_debut) IN (DATE(?)) AND  prestataire_id_prestataire = ?";
@@ -161,6 +159,7 @@
 														array_push($pres_dispo, $a['prestataire_id_prestataire']);
 													}
 												}
+												print_r($pres_dispo);
 											}
 
 							echo	"Cout : ".$d['cout'];

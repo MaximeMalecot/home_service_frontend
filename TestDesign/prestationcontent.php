@@ -35,6 +35,9 @@
                             <input class=\"btn btn-primary\" onclick=\"newPresta()\" value=\"Faire une demande\"/>".
                           "</div>";
                     }
+              else if($souscription != false){
+                echo "Vous n'êtes pas dans la tranche d'heure de votre abonnement pour faire des demandes !</h2></div>";
+              }
               else{
                 echo "Si vous voulez pouvoir créer une prestation en fonction de vos besoins, abonnez vous et nous répondrons dans les plus brefs délais !</h2></div>";
               }
