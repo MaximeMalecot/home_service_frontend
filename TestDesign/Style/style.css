@@ -305,10 +305,27 @@ textarea {
   border: 2px solid #F7AF42;
   margin: 5px;
   padding: 5px;
-  height: 325px;
+  height: 225px;
   overflow-y: scroll;
 }
 #subscription_invoice > div{
+  background-color: #FAFAFA;
+  border: 2px solid #F7AF42;
+  margin: 5px;
+  padding: 5px;
+}
+#devis{
+  position: relative;
+  left: 25%;
+  width: 50%;
+  background-color: #FAFAFA;
+  border: 2px solid #F7AF42;
+  margin: 5px;
+  padding: 5px;
+  height: 225px;
+  overflow-y: scroll;
+}
+#devis>div{
   background-color: #FAFAFA;
   border: 2px solid #F7AF42;
   margin: 5px;
@@ -322,7 +339,7 @@ textarea {
   border: 2px solid #F7AF42;
   margin: 5px;
   padding: 5px;
-  height: 325px;
+  height: 225px;
   overflow-y: scroll;
 }
 .histoPresta{

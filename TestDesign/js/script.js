@@ -282,11 +282,33 @@ function getcost(id,bareme){
 
 }
 
+function devis(json){
+  const request = new XMLHttpRequest();
+  var btn = document.getElementById('btnPanl');
+  var btn2 = document.getElementById('btnDevis');
+  btn.style.visibility = "hidden";
+  btn2.style.visibility = "hidden";
+
+  request.open('GET', 'devis.php?object=' + json);
+
+  request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+  request.onreadystatechange = function(addshop) {
+    if(request.readyState === 4 && request.status == 200){
+      document.getElementById('added').innerHTML = request.responseText ;
+    }else {
+      document.getElementById('added').innerHTML = '<span style="color:red">Erreur!</span>';
+    }
+  }
+  request.send();
+}
 
 function addshop(json){
   const request = new XMLHttpRequest();
   var btn = document.getElementById('btnPanl');
+  var btn2 = document.getElementById('btnDevis');
   btn.style.visibility = "hidden";
+  btn2.style.visibility = "hidden";
 
   request.open('GET', 'addshop.php?object=' + json);
 

@@ -16,13 +16,14 @@
     private $user_stripe_id;
     private $prestation_id_prestation;
     private $prestation_ville;
+    private $prestation_categorie;
 
     //////////////ATTRIBUTS POUR LA TABLE FACTURATION /////////////////
     private $cout;
     private $prestataire_id;
     private $prestataire_ville;
 
-    public function __construct(DateTime $dd, DateTime $df, float $h, ?int $idsup, ?int $sup, string $m, int $pid, int $prestataire)
+    public function __construct(DateTime $dd, DateTime $df, float $h, ?int $idsup, ?int $sup, string $m, int $prestation, int $prestataire)
     {
       ////////////RESERVE//////////////
       $this->date_debut = $dd;
@@ -31,8 +32,10 @@
       $this->id_supplement = $idsup;
       $this->nb_supplement = $sup;
       $this->setUser($m);
-      $this->setPresta($pid);
-      $this->setPrestataire($prestataire);
+      $this->setPresta($prestation);
+      if($prestataire !=0){
+        $this->setPrestataire($prestataire);
+      }
     }
 
     public function setUser(string $mail):void{
@@ -54,6 +57,7 @@
 
       $this->prestation_id_prestation = $idp;
       $this->prestation_ville = $presta['categorie_ville'];
+      $this->prestation_categorie = $presta['categorie_nom'];
 
     }
 
@@ -219,6 +223,18 @@
       $this->prestation_ville = $prestation_ville;
 
       return $this;
+      }
+
+      public function getPrestationCategorie()
+      {
+        return $this->prestation_categorie;
+      }
+
+      public function setPrestationCategorie($prestation_categorie)
+      {
+        $this->prestation_categorie = $prestation_categorie;
+
+        return $this;
       }
 
       public function getCout()

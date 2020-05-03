@@ -63,8 +63,6 @@
     $reqAffect = $cx->prepare('SELECT * FROM affectation WHERE prestation_id_prestation = ?');
     $reqAffect->execute(array($_POST['id']));
     $affectations = $reqAffect->fetchAll();
-    $reqPlanning = $cx->prepare('SELECT DATE(date_debut), TIME(date_debut), TIME(date_fin) FROM planning WHERE prestataire_id_prestataire = ?');
-    $reqPrestataire = $cx->prepare('SELECT * FROM prestataire WHERE id_prestataire = ?');
 
     if($date_debut != $date_fin){
           $pres_dispo = array();
@@ -78,7 +76,6 @@
           $hf = new DateTime ($_POST['time']);//Mets une datetime égale à l'heure de début
           $hf->modify("+".$totaltime." hours");//Ajoute le temps nécessaire à l'heure du début pour avoir l'heure de fin
 
-          $count = 0;
           $Jours = $rdd->diff($rdf);//nbJours->days = LA DIFFERENCE DE JOURS ENTRE LES DEUX DATES
           $nbJours = $Jours->days + 1;
           $allDays = array();
@@ -113,6 +110,17 @@
 
           if(count($pres_dispo) === 0){
             echo "<h3>Malheureusement aucun de nos prestataire ne sera disponible pour vous à ces horaires-ci</h3>";
+            $rdd ->setTime($hd->format("H"),$hd->format("i"),$hd->format("s"));
+            $rdf->setTime($hf->format("H"),$hf->format("i"),$hf->format("s"));
+
+            $reserv = new Reservation($rdd,$rdf,$unit,$supplement['id_supplement'],$nb_supplement,$_SESSION['mail'],$prestation['id_prestation'], 0);
+            $reserv->setManCout($bareme['id_bareme']);
+
+            echo "<div>
+                    <h2>Votre prestation vous couterais : ".$reserv->getCout()." €</h2>
+                    <button id=\"btnDevis\" class=\"btn btn-primary\" onclick=\"devis('".htmlspecialchars(json_encode($reserv))."')\" style=\"visibility: visible\">Enregister un devis</button>
+                  </div>
+                  ";
           }
           else{
             $Query = prepareQuery($pres_dispo, "SELECT id_prestataire FROM prestataire WHERE prix_recurrent = (SELECT MIN(prix_recurrent) FROM prestataire WHERE id_prestataire IN (", null, ") ".prepareQuery($pres_dispo,"AND id_prestataire IN (",null,"))"), ") ");
@@ -132,7 +140,8 @@
             if($reserv->getCout() > 0){
               echo "<div>
                       <h2>Votre prestation vous couterais : ".$reserv->getCout()." €</h2>
-                      <button id=\"btnPanl\" class=\"btn btn-primary\" onclick=\"addshop('".htmlspecialchars(json_encode($reserv))."')\" style=\"visibility: visible\">Ajouter au panier</button>
+                      <button id=\"btnDevis\" class=\"btn btn-primary\" onclick=\"addshop('".htmlspecialchars(json_encode($reserv))."')\" style=\"visibility: visible\">Ajouter au panier</button>
+                      <button id=\"btnPanl\" class=\"btn btn-primary\" onclick=\"devis('".htmlspecialchars(json_encode($reserv))."')\" style=\"visibility: visible\">Enregister un devis</button>
                     </div>
                     ";
             }
@@ -168,6 +177,12 @@
       }
       if(count($pres_dispo) === 0){
         echo "<h3>Malheureusement aucun de nos prestataire ne sera disponible pour vous à ces horaires-ci</h3>";
+
+        $rdd ->setTime($hd->format("H"),$hd->format("i"),$hd->format("s"));
+        $rdf->setTime($hf->format("H"),$hf->format("i"),$hf->format("s"));
+
+        $reserv = new Reservation($rdd,$rdf,$unit,$supplement['id_supplement'],$nb_supplement,$_SESSION['mail'],$prestation['id_prestation'], 0);
+        $reserv->setManCout($bareme['id_bareme']);
       }
       else{
         $Query = prepareQuery($pres_dispo, "SELECT id_prestataire FROM prestataire WHERE prix_recurrent = (SELECT MIN(prix_recurrent) FROM prestataire WHERE id_prestataire IN (", null, ") ".prepareQuery($pres_dispo,"AND id_prestataire IN (",null,"))"), ") ");
@@ -186,6 +201,7 @@
         if($reserv->getCout() > 0){
           echo "<div>
                   <h2>Votre prestation vous couterais : ".$reserv->getCout()." €</h2>
+                  <button id=\"btnDevis\" class=\"btn btn-primary\" onclick=\"devis('".htmlspecialchars(json_encode($reserv))."')\" style=\"visibility: visible\">Enregister un devis</button>
                   <button id=\"btnPanl\" class=\"btn btn-primary\" onclick=\"addshop('".htmlspecialchars(json_encode($reserv))."')\" style=\"visibility: visible\">Ajouter au panier</button>
                 </div>
                 ";
